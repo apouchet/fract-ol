@@ -51,6 +51,14 @@ typedef struct	s_data
 	int			fix;
 	int			x;
 	int			y;
+	int			fract;
+	
+	double		c_r;
+	double		c_i;
+	double		z_r;
+	double		z_i;
+	double		size_x;
+	double		size_y;
 	t_picture	p;
 }				t_data;
 

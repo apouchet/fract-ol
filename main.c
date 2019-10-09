@@ -53,9 +53,9 @@ int		ft_key(int key,	t_data *data)
 	if (key == 21)
 		data->mode = 3;
 	if (key == 22)
-		a += 0.25;
+		data->fract = 0;
 	if (key == 23)
-		a -= 0.25;
+		data->fract = 1;
 	if (key == 24)
 		b += 0.25;
 	if (key == 25)
@@ -68,8 +68,8 @@ int		mouse_release_hook(int x, int y, t_data *data)
 {
 	if (!(data->fix))
 	{
-		data->x = x;
-		data->y = y;
+		data->c_r = (x - FENETRE_X / 2) / (FENETRE_X / 2.4);
+		data->c_i = (y - FENETRE_Y / 2) / (FENETRE_Y / 2.7);
 	}
 	return (0);
 }
@@ -105,6 +105,7 @@ int		main(int argc, char **argv)
 
 	a = 0.5;
 	b = 0.5;
+	data.fract = 0;
 	ft_start_data(&data);
 	// ft_base(argv[1], &val);
 	// mlx_hook(val.mlx[1], 2, 0, &ft_key_on, &val);

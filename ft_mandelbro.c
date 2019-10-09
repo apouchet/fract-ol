@@ -12,6 +12,23 @@
 
 #include "fract.h"
 
+static void	ft_switch(t_data *data, int x, int y, double zoom_x, double zoom_y)
+{
+	if (data->fract == 0)
+	{
+		data->z_r = 0;
+		data->z_i = 0;
+		data->c_r = ((x + data->move_x) / zoom_x - 2.1) * data->zoom;
+		data->c_i = ((y + data->move_y) / zoom_y - 1.2) * data->zoom;
+
+	}
+	else if (data->fract == 1)
+	{
+		data->z_r = ((x + data->move_x) / zoom_x - 1) * data->zoom;
+		data->z_i = ((y + data->move_y) / zoom_y - 1.2) * data->zoom;
+	}
+}
+
 static int		ft_calcul_mandelbrot(double z_r, double z_i, double c_r, double c_i, int max)
 {
 	double tmp;
@@ -24,13 +41,17 @@ static int		ft_calcul_mandelbrot(double z_r, double z_i, double c_r, double c_i,
 	
 	z_r = z_r * z_r - z_i * z_i + c_r;
 	z_i = 2 * z_i * tmp + c_i;
+
 	pow_r = z_r * z_r;
 	pow_i = z_i * z_i;
 	while (pow_r + pow_i < 4 && ++i < max)
 	{
 		tmp = z_r;
+
 		z_r = pow_r - pow_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
+
+
 		pow_r = z_r * z_r;
 		pow_i = z_i * z_i;
 	}
@@ -88,8 +109,8 @@ static void		ft_mandelbrot_semi_opti(t_data *d, int x, int y, double zoom_x, dou
 				d->img[d->p.sl * y + x] = d->img[d->p.sl * (y - 1) + x];
 			else
 			{
-				i = ft_calcul_mandelbrot(0, 0, ((x + d->move_x) / zoom_x - 2.1) * d->zoom,
-					((y + d->move_y) / zoom_y - 1.2) * d->zoom, d->iteration_max);
+				ft_switch(d, x, y, zoom_x, zoom_y);
+				i = ft_calcul_mandelbrot(d->z_r, d->z_i, d->c_r, d->c_i, d->iteration_max);
 				if (i != d->iteration_max)
 					d->img[d->p.sl * y + x] =  ft_color(i, d->iteration_max);
 				else
@@ -116,8 +137,8 @@ static void	ft_mandelbrot_opti(t_data *d, int x, int y, double zoom_x, double zo
 				d->img[d->p.sl * y + x] = d->img[d->p.sl * (y - 1) + x + 1];
 			else
 			{
-				i = ft_calcul_mandelbrot(0, 0, ((x + d->move_x) / zoom_x - 2.1) * d->zoom,
-					((y + d->move_y) / zoom_y - 1.2) * d->zoom, d->iteration_max);
+				ft_switch(d, x, y, zoom_x, zoom_y);
+				i = ft_calcul_mandelbrot(d->z_r, d->z_i, d->c_r, d->c_i, d->iteration_max);
 				if (i != d->iteration_max)
 					d->img[d->p.sl * y + x] =  ft_color(i, d->iteration_max);
 				else
@@ -131,8 +152,8 @@ static void	ft_mandelbrot_opti(t_data *d, int x, int y, double zoom_x, double zo
 
 int		ft_mandelbrot(t_data *d, double size_x, double size_y)
 {
-	double zoom_x = FENETRE_X / size_x ;
-	double zoom_y = FENETRE_Y / size_y ;
+	double zoom_x = FENETRE_X / size_x;
+	double zoom_y = FENETRE_Y / size_y;
 	int i;
 	int x;
 	int y;
@@ -152,8 +173,8 @@ int		ft_mandelbrot(t_data *d, double size_x, double size_y)
 		// y = 0;
 		while (y < FENETRE_Y)
 		{
-			i = ft_calcul_mandelbrot(0, 0, ((x + d->move_x) / zoom_x - 2.1) * d->zoom,
-				((y + d->move_y) / zoom_y - 1.2) * d->zoom, d->iteration_max);
+			ft_switch(d, x, y, zoom_x, zoom_y);
+			i = ft_calcul_mandelbrot(d->z_r, d->z_i, d->c_r, d->c_i, d->iteration_max);
 			if (i != d->iteration_max)
 				d->img[d->p.sl * y + x] = ft_color(i, d->iteration_max);
 			else
