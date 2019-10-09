@@ -3,18 +3,11 @@
 #include <stdlib.h>
 
 
-#define FENETRE 800
+#define FENETRE_X 1500
+#define FENETRE_Y 1286
 #define R 0x00FF0000
 #define G 0x0000FF00
 #define B 0x000000FF
-
-typedef struct	s_data
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-	void		*p_image;
-	char		*image;
-}				t_data;
 
 typedef struct	s_picture
 {
@@ -23,87 +16,87 @@ typedef struct	s_picture
 	int			endian;
 }				t_picture;
 
-int		ft_mandelbrot(t_data *data)
+typedef struct	s_data
 {
-int iteration_max = 50;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*p_image;
+	int			*image;
+	double		zoom;
+	double		move_x;
+	double		move_y;
+	int			scale;
+	t_picture	p;
+}				t_data;
 
-// on calcule la taille de l'image :
-double zoom_x = FENETRE/(0.6 + 2.1) ;
-double zoom_y = FENETRE/(1.2 + 1.2) ;
+int		ft_calcul_mandelbrot(double z_r, double z_i, double c_r, double c_i, int max)
+{
+	double tmp;
+	double pow_r;
+	double pow_i;
+	int i;
 
-	for (int x = 0; x < FENETRE; x++)
+	i = 0;
+	tmp = z_r;
+	
+	z_r = z_r * z_r - z_i * z_i + c_r;
+	z_i = 2 * z_i * tmp + c_i;
+	pow_r = z_r * z_r;
+	pow_i = z_i * z_i;
+	while (pow_r + pow_i < 4 && ++i < max)
 	{
-		for (int y = 0; y < FENETRE; y++)
-		{
-			double c_r = x / zoom_x - 2.1;
-			double c_i = y / zoom_y - 1.2;
-			double z_r = 0;
-			double z_i = 0;
-			int i = 0;
-
-			do
-			{
-				double tmp = z_r;
-				z_r = z_r * z_r - z_i * z_i + c_r;
-				z_i = 2 * z_i * tmp + c_i;
-				i++;
-			}
-			while (z_r * z_r + z_i * z_i < 4 && i < iteration_max);
-			// printf("i = %d\n", i);
-			if (i == iteration_max)
-				data->image[4 * FENETRE * y + 4 * x] = 0xFF;
-		}
+		tmp = z_r;
+		z_r = pow_r - pow_i + c_r;
+		z_i = 2 * z_i * tmp + c_i;
+		pow_r = z_r * z_r;
+		pow_i = z_i * z_i;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->p_image, 0, 0);
-	return (0);
+	return (i);
 }
 
-int		ft_affich(t_data *data)
+int		ft_color(int i, int len)
 {
-	int x;
-	int y;
-	double a = 0, b = 0;
-	char *img;
+	int color;
 
-	// a = a * 2 – b * 2 + 1;
-	// b = 2 a * b + 1;
-	x = 0;
-	y = 0;
-	int c = 0, z = 0, i = 0;
-	int iteration_max = 50;
-	while (y <= FENETRE)
+	if (i <= len / 6)
+		color = B + R - ((R * i * 6 / len) & R);
+	else if (i <= len / 3)
+		color = B + ((G * i * 3 / len) & G);
+	else if (i <= len / 2)
+		color = G + B - ((B * i * 2 / len) & 2);
+	else if (i <= 2 * len / 3)
+		color = G + ((R * (1 - i * 2 / len)) & R);
+	else if (i <= 5 * len / 6)
+		color = R + G - ((G * (1 - i  * 3 / len)) & G);
+	else
+		color = R + ((B * (1 - i * 6 / len)) & B);
+	return(color);
+}
+
+int		ft_mandelbrot(t_data *data)
+{
+	int iteration_max = 20 + data->scale;
+	double c_r;
+	double c_i;
+	int i;
+	// on calcule la taille de l'image :
+	double zoom_x = FENETRE_X/((0.6 + 2.1) * data->zoom);
+	double zoom_y = FENETRE_Y/((1.2 + 1.2) * data->zoom);
+	
+	if (i > iteration_max)
+		data->c = 0;
+	for (int x = 0; x < FENETRE_X; x++)
 	{
-		while (x <= FENETRE)
+		for (int y = 0; y < FENETRE_Y; y++)
 		{
-			c = a + i * b;
-
-			z = z * z + c;
-			i = i + 1;
-			// printf("i = %d, z = %d\n", i, z);
-			if (z >= 2 || i > iteration_max)
-				i = 0;
-			if (i == iteration_max)
-			{
-				data->image[4 * FENETRE * y + 4 * x] = c;
-				i = 0;
-			}
-			// Tant que module de z < 2 et i < iteration_max
-
-			// si i = iteration_max
-			// dessiner le pixel correspondant au point de coordonné (x; y)
-			// finSi
-			// finPour
-			
-			// data->image[4 * FENETRE * y + 4 * x] = 127;
-			// data->image[4 * FENETRE * y + 4 * x + 1] = 0xFF;
-			// data->image[4 * FENETRE * y + 4 * x + 2] = 0;
-			// mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, (R));
-			x++;
-			a = x / FENETRE;
+			// c_r = (x / zoom_x - 2.1) * data->zoom ;//+ data->move_x * data->zoom;
+			// c_i = (y / zoom_y - 1.2) * data->zoom ;//+ data->move_y * data->zoom;
+			i = ft_calcul_mandelbrot(0, 0, (x / zoom_x - 2.1) * data->zoom, (y / zoom_y - 1.2) * data->zoom, iteration_max);
+			if (i != iteration_max)
+				data->image[data->p.s_l * y + x] =  ft_color(i, iteration_max);
+			else
+				data->image[data->p.s_l * y + x] = 0;
 		}
-		x = 0;
-		y++;
-		b = y / FENETRE;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->p_image, 0, 0);
 	return (0);
@@ -114,27 +107,47 @@ int		ft_key(int key,	t_data *data)
 	printf("key = %d\n", key);
 	if (key == 53)
 		exit(0);
+	if (key == 126)
+		data->move_y -= 0.1;
+	if (key == 125)
+		data->move_y += 0.1;
+	if (key == 123)
+		data->move_x -= 0.1;
+	if (key == 124)
+		data->move_x += 0.1;
+	if (key == 78)
+		data->zoom *= 1.1;
+	if (key == 69)
+		data->zoom *= 0.9;
+	if (key == 83)
+		data->scale++;
+	if (key == 82)
+		data->scale--;
 	ft_mandelbrot(data);
 	return (1);
 }
 
 int		main(int argc, char **argv)
 {
-	
-	t_picture	p;
 	t_data		data;
 
 	data.mlx_ptr = mlx_init();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, FENETRE, FENETRE, "mlx");
-	data.p_image = mlx_new_image(data.mlx_ptr, FENETRE, FENETRE);
-	data.image = mlx_get_data_addr(data.p_image, &p.bpp, &p.s_l, &p.endian);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");
+	data.p_image = mlx_new_image(data.mlx_ptr, FENETRE_X, FENETRE_Y);
+	data.image = (int*)mlx_get_data_addr(data.p_image, &data.p.bpp, &data.p.s_l, &data.p.endian);
+	data.p.bpp /= 4;
+	data.p.s_l /= 4;
+	data.zoom = 1;
+	data.move_x = 0;
+	data.move_y = 0;
+	data.scale = 0;
 	// ft_base(argv[1], &val);
 	// mlx_hook(val.mlx[1], 2, 0, &ft_key_on, &val);
-	mlx_key_hook(data.win_ptr, &ft_key, &data);
+	mlx_hook(data.win_ptr, 2, 0, &ft_key, &data);
 	mlx_loop_hook(data.mlx_ptr, &ft_mandelbrot, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
 
-// -lmlx -framework OpenGL -framwork AppKit
+// -lmlx -framework OpenGL -framework AppKit
 // man /usr/share/man/man3/
