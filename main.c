@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/11 00:00:25 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/11 01:44:04 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		ft_key(int key,	t_data *data)
 	printf("key = %d\n", key);
 	printf("iteration_max = %d\n", data->iteration_max);
 	printf("zoom = %d\n", data->zoom);
+	printf("zr = %.100lf, zi = %.100lf\n", data->z_r, data->z_i);
 	if (key == 12)
 		data->fix = (data->fix + 1) % 2;
 	if (key == 53)
@@ -70,30 +71,34 @@ int		ft_key(int key,	t_data *data)
 		data->x_a += data->step_x;
 		data->x_b += data->step_x;
 	}
-	if (key == 78 && data->x_a > -5 && data->x_b < 5) // touch -
+	if (key == 13 && (data->x_b - data->x_a) <= (0.6 + 2.1) * 2) // touch -
 	{
+		if (data->iteration_max > 21 && data->zoom + 20 < data->iteration_max)
+			data->iteration_max--;
 		data->zoom--;
 		double tmp;
 		tmp = (data->x_a - data->x_b);
-		data->x_a -= (data->x_b - data->x_a) * 0.01;
-		data->x_b -= tmp * 0.01;
+		data->x_a -= (data->x_b - data->x_a) * 0.125;
+		data->x_b -= tmp * 0.125;
 
 		tmp = (data->y_a - data->y_b);
-		data->y_a -= (data->y_b - data->y_a) * 0.01;
-		data->y_b -= tmp * 0.01;
+		data->y_a -= (data->y_b - data->y_a) * 0.125;
+		data->y_b -= tmp * 0.125;
 
 		data->step_x = (data->x_b - data->x_a) * 0.01;
 		data->step_y = (data->y_b - data->y_a) * 0.01;
 	}
-	if (key == 69 && data->zoom < 150) // touch +
+	if (key == 12 && data->zoom < 150) // touch +
 	{
+		if (data->iteration_max < 130)
+			data->iteration_max++;
 		data->zoom++;
 		double tmp;
 		tmp = (data->x_a - data->x_b);
 		data->x_a += (data->x_b - data->x_a) * 0.1;
 		data->x_b += tmp * 0.1;
 
-	tmp = (data->y_a - data->y_b);
+		tmp = (data->y_a - data->y_b);
 		data->y_a += (data->y_b - data->y_a) * 0.1;
 		data->y_b += tmp * 0.1;
 
@@ -150,7 +155,6 @@ int		ft_key(int key,	t_data *data)
 	// data->x_b *= data->zoom;
 	// data->y_a *= data->zoom;
 	// data->y_b *= data->zoom;
-	printf("zr = %lf, zi = %lf\n", data->z_r, data->z_i);
 	ft_affich(data);
 	return (1);
 }
