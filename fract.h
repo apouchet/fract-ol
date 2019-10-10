@@ -42,7 +42,7 @@ typedef struct	s_data
 	void		*win_ptr;
 	void		*p_img;
 	int			*img;
-	double		zoom;
+	int		zoom;
 	double		move_x;
 	double		move_y;
 	int			scale;
@@ -52,6 +52,8 @@ typedef struct	s_data
 	int			x;
 	int			y;
 	int			fract;
+	double		step_x;
+	double		step_y;
 	
 	double		x_a;
 	double		x_b;

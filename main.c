@@ -19,10 +19,29 @@ int		ft_affich(t_data *data)
 	return (0);
 }
 
+void	reset_data(t_data *data)
+{
+	data->zoom = 5;
+	data->move_x = 0;
+	data->move_y = 0;
+	data->iteration_max = 20;
+	data->mode = 0;
+	data->fix = 0;
+	data->x = 0;
+	data->y = 0;
+	data->x_a = -2.1;
+	data->x_b = 0.6;
+	data->y_a = -1.2;
+	data->y_b = 1.2;
+	data->div_q = 1;
+	data->div = data->iteration_max / data->div_q;
+}
+
 int		ft_key(int key,	t_data *data)
 {
 	printf("key = %d\n", key);
 	printf("iteration_max = %d\n", data->iteration_max);
+	printf("zoom = %d\n", data->zoom);
 	if (key == 12)
 		data->fix = (data->fix + 1) % 2;
 	if (key == 53)
@@ -30,49 +49,56 @@ int		ft_key(int key,	t_data *data)
 	if (key == 126)
 	{
 		// data->move_y -= 20;
-		data->y_a -= 0.05 * (data->zoom * data->zoom);
-		data->y_b -= 0.05 * (data->zoom * data->zoom);
+		data->y_a -= data->step_y;
+		data->y_b -= data->step_y;
 	}
 	if (key == 125)
 	{
-		// data->move_y += 20;
-		data->y_a += 0.05 * (data->zoom * data->zoom);
-		data->y_b += 0.05 * (data->zoom * data->zoom);
+		// data->movedata->step;
+		data->y_a += data->step_y;
+		data->y_b += data->step_y;
 	}
 	if (key == 123)
 	{
-		// data->move_x -= 20;
-		data->x_a -= 0.05 * (data->zoom * data->zoom);
-		data->x_b -= 0.05 * (data->zoom * data->zoom);
+		// data->movedata->step;
+		data->x_a -= data->step_x;
+		data->x_b -= data->step_x;
 	}
 	if (key == 124)
 	{
-		// data->move_x += 20;
-		data->x_a += 0.05 * (data->zoom * data->zoom);
-		data->x_b += 0.05 * (data->zoom * data->zoom);
+		// data->movedata->step;
+		data->x_a += data->step_x;
+		data->x_b += data->step_x;
 	}
-	if (key == 78) // touch -
+	if (key == 78 && data->zoom > 0) // touch -
 	{
-		// data->move_x -= (FENETRE_X / (data->x_b - data->x_a) * data->zoom) * 1.1;
-		// data->move_y -= (FENETRE_X / (data->x_b - data->x_a) * data->zoom) * 1.1;
-		// data->move_x += (FENETRE_X * (data->zoom * 1.1) - FENETRE_X * data->zoom) / 2;
-		// data->move_y += (FENETRE_Y * (data->zoom * 1.1) - FENETRE_Y * data->zoom) / 2;
-		data->zoom = 1.1;
-		data->x_a *= data->zoom;
-		data->x_b *= data->zoom;
+		data->zoom--;
+		double tmp;
+		tmp = (data->x_a - data->x_b);
+		data->x_a -= (data->x_b - data->x_a) * 0.01;
+		data->x_b -= tmp * 0.01;
 
-		data->y_a *= data->zoom;
-		data->y_b *= data->zoom;
+		tmp = (data->y_a - data->y_b);
+		data->y_a -= (data->y_b - data->y_a) * 0.01;
+		data->y_b -= tmp * 0.01;
+
+		data->step_x = (data->x_b - data->x_a) * 0.01;
+		data->step_y = (data->y_b - data->y_a) * 0.01;
 	}
-	if (key == 69) // touch +
+	if (key == 69 && data->zoom < 150) // touch +
 	{
-		// data->move_x -= (FENETRE_X * (data->zoom * 0.9) - FENETRE_X * data->zoom) / 2;
-		// data->move_y -= (FENETRE_Y * (data->zoom * 0.9) - FENETRE_Y * data->zoom) / 2;
-		data->zoom = 0.9;
-		data->x_a *= data->zoom;
-		data->x_b *= data->zoom;
-		data->y_a *= data->zoom;
-		data->y_b *= data->zoom;
+		data->zoom++;
+		double tmp;
+		tmp = (data->x_a - data->x_b);
+		data->x_a += (data->x_b - data->x_a) * 0.1;
+		data->x_b += tmp * 0.1;
+
+	tmp = (data->y_a - data->y_b);
+		data->y_a += (data->y_b - data->y_a) * 0.1;
+		data->y_b += tmp * 0.1;
+
+		data->step_x = (data->x_b - data->x_a) * 0.01;
+		data->step_y = (data->y_b - data->y_a) * 0.01;
 	}
 	if (key == 83)
 		data->iteration_max += 20;
@@ -117,10 +143,14 @@ int		ft_key(int key,	t_data *data)
 		data->div_q--;
 		data->div = data->iteration_max / data->div_q;
 	}
+
+	if (key == 15)
+		reset_data(data);
 	// data->x_a *= data->zoom;
 	// data->x_b *= data->zoom;
 	// data->y_a *= data->zoom;
 	// data->y_b *= data->zoom;
+	printf("zr = %lf, zi = %lf\n", data->z_r, data->z_i);
 	ft_affich(data);
 	return (1);
 }
@@ -150,7 +180,7 @@ void	ft_start_data(t_data *data)
 	data->img = (int*)mlx_get_data_addr(data->p_img, &data->p.bpp, &data->p.sl, &data->p.endian);
 	data->p.bpp /= 4;
 	data->p.sl /= 4;
-	data->zoom = 1;
+	data->zoom = 5;
 	data->move_x = 0;
 	data->move_y = 0;
 	data->iteration_max = 20;
@@ -164,6 +194,8 @@ void	ft_start_data(t_data *data)
 	data->y_b = 1.2;
 	data->div_q = 1;
 	data->div = data->iteration_max / data->div_q;
+	data->step_x = (data->x_b - data->x_a) * 0.01;
+	data->step_y = (data->y_b - data->y_a) * 0.01;
 }
 
 int		main(int argc, char **argv)
