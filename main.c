@@ -15,30 +15,64 @@
 
 int		ft_affich(t_data *data)
 {
-	ft_mandelbrot(data, (0.6 + 2.1), (1.2 + 1.2));
+	ft_mandelbrot(data, (data->x_b - data->x_a), (data->y_b - data->y_a));
 	return (0);
 }
 
 int		ft_key(int key,	t_data *data)
 {
 	printf("key = %d\n", key);
-	printf("iteration_max = %d\n", data->scale + 20);
+	printf("iteration_max = %d\n", data->iteration_max);
 	if (key == 12)
 		data->fix = (data->fix + 1) % 2;
 	if (key == 53)
 		exit(0);
 	if (data->fix && key == 126)
-		data->move_y -= 20;
+	{
+		// data->move_y -= 20;
+		data->y_a -= 0.1;
+		data->y_b -= 0.1;
+	}
 	if (data->fix && key == 125)
-		data->move_y += 20;
+	{
+		// data->move_y += 20;
+		data->y_a += 0.1;
+		data->y_b += 0.1;
+	}
 	if (data->fix && key == 123)
-		data->move_x -= 20;
+	{
+		// data->move_x -= 20;
+		data->x_a -= 0.1;
+		data->x_b -= 0.1;
+	}
 	if (data->fix && key == 124)
-		data->move_x += 20;
-	if (data->fix && key == 78)
-		data->zoom *= 1.1;
-	if (data->fix && key == 69)
-		data->zoom *= 0.9;
+	{
+		// data->move_x += 20;
+		data->x_a += 0.1;
+		data->x_b += 0.1;
+	}
+	if (data->fix && key == 78) // touch -
+	{
+		// data->move_x -= (FENETRE_X / (data->x_b - data->x_a) * data->zoom) * 1.1;
+		// data->move_y -= (FENETRE_X / (data->x_b - data->x_a) * data->zoom) * 1.1;
+		// data->move_x += (FENETRE_X * (data->zoom * 1.1) - FENETRE_X * data->zoom) / 2;
+		// data->move_y += (FENETRE_Y * (data->zoom * 1.1) - FENETRE_Y * data->zoom) / 2;
+		data->zoom = 1.1;
+		data->x_a *= data->zoom;
+		data->x_b *= data->zoom;
+		data->y_a *= data->zoom;
+		data->y_b *= data->zoom;
+	}
+	if (data->fix && key == 69) // touch +
+	{
+		// data->move_x -= (FENETRE_X * (data->zoom * 0.9) - FENETRE_X * data->zoom) / 2;
+		// data->move_y -= (FENETRE_Y * (data->zoom * 0.9) - FENETRE_Y * data->zoom) / 2;
+		data->zoom = 0.9;
+		data->x_a *= data->zoom;
+		data->x_b *= data->zoom;
+		data->y_a *= data->zoom;
+		data->y_b *= data->zoom;
+	}
 	if (data->fix && key == 83)
 		data->iteration_max++;
 	if (data->fix && key == 82 && data->iteration_max > 1)
@@ -60,6 +94,10 @@ int		ft_key(int key,	t_data *data)
 		b += 0.25;
 	if (key == 25)
 		b -= 0.25;
+	// data->x_a *= data->zoom;
+	// data->x_b *= data->zoom;
+	// data->y_a *= data->zoom;
+	// data->y_b *= data->zoom;
 	ft_affich(data);
 	return (1);
 }
@@ -97,6 +135,10 @@ void	ft_start_data(t_data *data)
 	data->fix = 0;
 	data->x = 0;
 	data->y = 0;
+	data->x_a = -2.1;
+	data->x_b = 0.6;
+	data->y_a = -1.2;
+	data->y_b = 1.2;
 }
 
 int		main(int argc, char **argv)

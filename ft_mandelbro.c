@@ -18,14 +18,14 @@ static void	ft_switch(t_data *data, int x, int y, double zoom_x, double zoom_y)
 	{
 		data->z_r = 0;
 		data->z_i = 0;
-		data->c_r = ((x + data->move_x) / zoom_x - 2.1) * data->zoom;
-		data->c_i = ((y + data->move_y) / zoom_y - 1.2) * data->zoom;
+		data->c_r = x / zoom_x + data->x_a;
+		data->c_i = y / zoom_y + data->y_a;
 
 	}
 	else if (data->fract == 1)
 	{
-		data->z_r = ((x + data->move_x) / zoom_x - 1) * data->zoom;
-		data->z_i = ((y + data->move_y) / zoom_y - 1.2) * data->zoom;
+		data->z_r = x / zoom_x - 1;
+		data->z_i = y / zoom_y - 1.2;
 	}
 }
 
@@ -84,15 +84,12 @@ static  int		ft_check_opti(t_data *d, int x, int y, int type)
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
 				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * y + x + 1]
 				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * (y - 1) + x]
-				&& d->img[d->p.sl * y + x + 1] == d->img[d->p.sl * (y - 1) + x]);
+				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * (y + 1) + x]);
 	else // opti
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
-				&& d->img[d->p.sl * (y - 1) + x - 1]
-				== d->img[d->p.sl * (y - 1) + x + 1]
-				&& d->img[d->p.sl * (y + 1) + x - 1]
-				== d->img[d->p.sl * (y + 1) + x + 1]
-				&& d->img[d->p.sl * (y - 1) + x + 1]
-				== d->img[d->p.sl * (y + 1) + x + 1]);
+				&& d->img[d->p.sl * (y - 1) + x - 1] == d->img[d->p.sl * (y - 1) + x + 1]
+				&& d->img[d->p.sl * (y - 1) + x - 1] == d->img[d->p.sl * (y + 1) + x + 1]
+				&& d->img[d->p.sl * (y - 1) + x - 1] == d->img[d->p.sl * (y + 1) + x - 1]);
 
 }
 
@@ -152,8 +149,8 @@ static void	ft_mandelbrot_opti(t_data *d, int x, int y, double zoom_x, double zo
 
 int		ft_mandelbrot(t_data *d, double size_x, double size_y)
 {
-	double zoom_x = FENETRE_X / size_x;
-	double zoom_y = FENETRE_Y / size_y;
+	double zoom_x = (FENETRE_X / (d->x_b - d->x_a));// * d->zoom;
+	double zoom_y = (FENETRE_Y / (d->y_b - d->y_a));// * d->zoom;
 	int i;
 	int x;
 	int y;

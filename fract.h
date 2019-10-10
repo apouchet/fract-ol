@@ -53,6 +53,11 @@ typedef struct	s_data
 	int			y;
 	int			fract;
 	
+	double		x_a;
+	double		x_b;
+	double		y_a;
+	double		y_b;
+	
 	double		c_r;
 	double		c_i;
 	double		z_r;
