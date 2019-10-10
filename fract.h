@@ -6,22 +6,22 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/09 16:04:22 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/10 21:36:10 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACT_H
 # define FRACT_H
 
-# include "mlx.h"
+# include "mlx/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <time.h>
 # include <fcntl.h>
 # include <unistd.h>
 
-# define FENETRE_X 1500
-# define FENETRE_Y 1286
+# define FENETRE_X (1500 / 2)
+# define FENETRE_Y (1286 / 2)
 # define R 0x00FF0000
 # define G 0x0000FF00
 # define B 0x000000FF

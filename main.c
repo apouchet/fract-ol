@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/09 16:04:19 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/11 00:00:25 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		ft_key(int key,	t_data *data)
 		data->x_a += data->step_x;
 		data->x_b += data->step_x;
 	}
-	if (key == 78 && data->zoom > 0) // touch -
+	if (key == 78 && data->x_a > -5 && data->x_b < 5) // touch -
 	{
 		data->zoom--;
 		double tmp;
