@@ -64,6 +64,8 @@ typedef struct	s_data
 	double		z_i;
 	double		size_x;
 	double		size_y;
+	int			div;
+	int			div_q;
 	t_picture	p;
 }				t_data;
 

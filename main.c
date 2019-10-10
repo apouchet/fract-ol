@@ -27,31 +27,31 @@ int		ft_key(int key,	t_data *data)
 		data->fix = (data->fix + 1) % 2;
 	if (key == 53)
 		exit(0);
-	if (data->fix && key == 126)
+	if (key == 126)
 	{
 		// data->move_y -= 20;
-		data->y_a -= 0.1;
-		data->y_b -= 0.1;
+		data->y_a -= 0.05 * (data->zoom * data->zoom);
+		data->y_b -= 0.05 * (data->zoom * data->zoom);
 	}
-	if (data->fix && key == 125)
+	if (key == 125)
 	{
 		// data->move_y += 20;
-		data->y_a += 0.1;
-		data->y_b += 0.1;
+		data->y_a += 0.05 * (data->zoom * data->zoom);
+		data->y_b += 0.05 * (data->zoom * data->zoom);
 	}
-	if (data->fix && key == 123)
+	if (key == 123)
 	{
 		// data->move_x -= 20;
-		data->x_a -= 0.1;
-		data->x_b -= 0.1;
+		data->x_a -= 0.05 * (data->zoom * data->zoom);
+		data->x_b -= 0.05 * (data->zoom * data->zoom);
 	}
-	if (data->fix && key == 124)
+	if (key == 124)
 	{
 		// data->move_x += 20;
-		data->x_a += 0.1;
-		data->x_b += 0.1;
+		data->x_a += 0.05 * (data->zoom * data->zoom);
+		data->x_b += 0.05 * (data->zoom * data->zoom);
 	}
-	if (data->fix && key == 78) // touch -
+	if (key == 78) // touch -
 	{
 		// data->move_x -= (FENETRE_X / (data->x_b - data->x_a) * data->zoom) * 1.1;
 		// data->move_y -= (FENETRE_X / (data->x_b - data->x_a) * data->zoom) * 1.1;
@@ -60,10 +60,11 @@ int		ft_key(int key,	t_data *data)
 		data->zoom = 1.1;
 		data->x_a *= data->zoom;
 		data->x_b *= data->zoom;
+
 		data->y_a *= data->zoom;
 		data->y_b *= data->zoom;
 	}
-	if (data->fix && key == 69) // touch +
+	if (key == 69) // touch +
 	{
 		// data->move_x -= (FENETRE_X * (data->zoom * 0.9) - FENETRE_X * data->zoom) / 2;
 		// data->move_y -= (FENETRE_Y * (data->zoom * 0.9) - FENETRE_Y * data->zoom) / 2;
@@ -73,10 +74,10 @@ int		ft_key(int key,	t_data *data)
 		data->y_a *= data->zoom;
 		data->y_b *= data->zoom;
 	}
-	if (data->fix && key == 83)
-		data->iteration_max++;
-	if (data->fix && key == 82 && data->iteration_max > 1)
-		data->iteration_max--;
+	if (key == 83)
+		data->iteration_max += 20;
+	if (key == 82 && data->iteration_max > 1)
+		data->iteration_max -= 20;
 
 	if (key == 18)
 		data->mode = 0;
@@ -86,14 +87,36 @@ int		ft_key(int key,	t_data *data)
 		data->mode = 2;
 	if (key == 21)
 		data->mode = 3;
-	if (key == 22)
+	if (key == 22 && data->fract != 0)
+	{
 		data->fract = 0;
-	if (key == 23)
+		data->x_a = -2.1;
+		data->x_b = 0.6;
+		data->y_a = -1.2;
+		data->y_b = 1.2;
+	}
+	if (key == 23  && data->fract != 1)
+	{
 		data->fract = 1;
+		data->x_a = -1.5;
+		data->x_b = 1.5;
+		data->y_a = -1.2;
+		data->y_b = 1.2;
+	}
 	if (key == 24)
 		b += 0.25;
 	if (key == 25)
 		b -= 0.25;
+	if (key == 84 && data->div_q < data->iteration_max)
+	{
+		data->div_q++;
+		data->div = data->iteration_max / data->div_q;
+	}
+	if (key == 85 && data->div_q > 1)
+	{
+		data->div_q--;
+		data->div = data->iteration_max / data->div_q;
+	}
 	// data->x_a *= data->zoom;
 	// data->x_b *= data->zoom;
 	// data->y_a *= data->zoom;
@@ -139,6 +162,8 @@ void	ft_start_data(t_data *data)
 	data->x_b = 0.6;
 	data->y_a = -1.2;
 	data->y_b = 1.2;
+	data->div_q = 1;
+	data->div = data->iteration_max / data->div_q;
 }
 
 int		main(int argc, char **argv)
@@ -160,5 +185,5 @@ int		main(int argc, char **argv)
 	return (0);
 }
 
-// gcc -lmlx -framework OpenGL -framework AppKit main.c
+// gcc -lmlx -framework OpenGL -framework AppKit main.c ft_mandelbrot.c
 // man /usr/share/man/man3/
