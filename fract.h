@@ -61,12 +61,8 @@ typedef struct	s_data
 	int			scale;
 	int			iteration_max;
 	int			mode;
-	int			fix;
 	double		mouse_x;
 	double		mouse_y;
-	int			mouse_z;
-	int			x;
-	int			y;
 	int			fract;
 	double		step_x;
 	double		step_y;
@@ -103,6 +99,14 @@ int		mouse_release(int button, int x, int y, t_data *data);
 int		ft_affich(t_data *data);
 
 void	ft_screen(t_data *data);
+
+void	ft_zoom(int key, t_data *data);
+
+void	ft_init_mandelbrot(t_data *data);
+
+void	ft_init_julia(t_data *data);
+
+// void	ft_start_data(t_data *data, int mode);
 
 
 #endif

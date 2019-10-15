@@ -16,7 +16,7 @@ INCLUDE = -framework AppKit -framework openGL -lmlx
 
 NAME = fract-ol
 
-SRC = ./main.c ./ft_mandelbrot.c ./key.c ./mouse.c
+SRC = ./main.c ./ft_mandelbrot.c ./key.c ./mouse.c ./ft_zoom.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -32,7 +32,3 @@ fclean : clean
 		rm -rf $(NAME)
 
 re : fclean all
-
-#‘sdl-config --libs‘ -lSDL_ttf
-# -L ~/.brew/lib -lSDL2 -L ~/.brew/lib -libSDL2_ttf -I ~/.brew/include -framework Cocoa
-# brew install sdl2_ttf

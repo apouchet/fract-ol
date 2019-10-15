@@ -80,14 +80,17 @@ static  int		ft_check_opti(t_data *d, int x, int y, int type)
 
 	if (type == 1) // semi opti
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
-				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * y + x + 1]
 				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * (y - 1) + x]
-				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * (y + 1) + x]);
+				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * (y + 1) + x]
+				&& d->img[d->p.sl * y + x - 1] == d->img[d->p.sl * y + x + 1]);
 	else // opti
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
-				&& d->img[d->p.sl * (y - 1) + x - 1] == d->img[d->p.sl * (y - 1) + x + 1]
-				&& d->img[d->p.sl * (y - 1) + x - 1] == d->img[d->p.sl * (y + 1) + x + 1]
-				&& d->img[d->p.sl * (y - 1) + x - 1] == d->img[d->p.sl * (y + 1) + x - 1]);
+				&& d->img[d->p.sl * (y - 1) + x - 1]
+				== d->img[d->p.sl * (y - 1) + x + 1]
+				&& d->img[d->p.sl * (y - 1) + x - 1]
+				== d->img[d->p.sl * (y + 1) + x + 1]
+				&& d->img[d->p.sl * (y - 1) + x - 1]
+				== d->img[d->p.sl * (y + 1) + x - 1]);
 
 }
 
