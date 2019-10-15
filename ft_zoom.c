@@ -12,7 +12,7 @@
 
 #include "fract.h"
 
-static void		ft_zoom_out(int key, t_data *d)
+static void		ft_zoom_out(t_data *d)
 {
 	double tmp;
 
@@ -55,8 +55,6 @@ static void		ft_zoom_in(int key, t_data *data)
 
 void			ft_zoom(int key, t_data *data)
 {
-	double tmp;
-
 	if ((key == -5 || key == 24 || key == 69) && data->zoom < 150)
 	{
 		if (data->iteration_max < 130)
@@ -72,7 +70,7 @@ void			ft_zoom(int key, t_data *data)
 		if (data->iteration_max > 21 && data->zoom + 20 < data->iteration_max)
 			data->iteration_max--;
 		data->zoom--;
-		ft_zoom_out(key, data);
+		ft_zoom_out(data);
 		data->step_x = (data->x_b - data->x_a) * 0.01;
 		data->step_y = (data->y_b - data->y_a) * 0.01;
 	}

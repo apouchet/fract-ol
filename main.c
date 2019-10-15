@@ -14,7 +14,9 @@
 
 int		ft_affich(t_data *data)
 {
-	ft_mandelbrot(data, (data->x_b - data->x_a), (data->y_b - data->y_a));
+	data->ratio_x = FENETRE_X / (data->x_b - data->x_a);
+	data->ratio_y = FENETRE_Y / (data->y_b - data->y_a);
+	ft_mandelbrot_julia(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->p_img, 0, 0);
 	return (0);
 }
@@ -57,7 +59,7 @@ void	ft_screen(t_data *data)
 	free(print);
 }
 
-int		red_cross(t_data *data)
+int		red_cross(void)
 {
 	exit(0);
 	return (0);
@@ -105,7 +107,7 @@ int		main(int argc, char **argv)
 	mlx_hook(data.win_ptr, 6, 0, mouse_release_hook, &data);
 	mlx_hook(data.win_ptr, 5, 0, &mouse_release, &data);
 	mlx_mouse_hook(data.win_ptr, &mouse_hook, &data);
-	mlx_hook(data.win_ptr, 17, 0, red_cross, &data);
+	mlx_hook(data.win_ptr, 17, 0, red_cross, NULL);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

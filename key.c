@@ -24,6 +24,8 @@ void	reset_data(t_data *data)
 		ft_init_mandelbrot(data);
 	else if (data->fract == 1)
 		ft_init_julia(data);
+	data->ratio_x = FENETRE_X / (data->x_b - data->x_a);
+	data->ratio_y = FENETRE_Y / (data->y_b - data->y_a);
 	data->div_q = 1;
 	data->div = data->iteration_max / data->div_q;
 	data->step_x = (data->x_b - data->x_a) * 0.01;
@@ -31,7 +33,7 @@ void	reset_data(t_data *data)
 	data->mouse_button = 0;
 }
 
-int		ft_key_move(int key, t_data *data)
+static int		ft_key_move(int key, t_data *data)
 {
 	if (key == 126)
 	{
@@ -58,7 +60,7 @@ int		ft_key_move(int key, t_data *data)
 	return (1);
 }
 
-int		ft_key_switch_fractal(int key, t_data *data)
+static int		ft_key_switch_fractal(int key, t_data *data)
 {
 	if (key == 22 && data->fract != 0)
 	{
@@ -75,7 +77,7 @@ int		ft_key_switch_fractal(int key, t_data *data)
 	return (1);
 }
 
-int		ft_key_color_and_mode(int key, t_data *data)
+static int		ft_key_color_and_mode(int key, t_data *data)
 {
 	if (key == 18)
 		data->mode = 0;

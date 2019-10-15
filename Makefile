@@ -10,7 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS = #-Wall -Werror -Wextra
+CC = gcc
+
+CFLAGS = #-Wall -Werror -Wextra
 
 INCLUDE = -framework AppKit -framework openGL -lmlx
 
@@ -20,10 +22,15 @@ SRC = ./main.c ./ft_mandelbrot.c ./key.c ./mouse.c ./ft_zoom.c
 
 OBJ = $(SRC:.c=.o)
 
+.PHONY : $(NAME) clean fclean re
+
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-		gcc $(FLAGS) $(INCLUDE) $(OBJ) -o $(NAME)
+		$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) -o $(NAME)
+
+%.o: %.c
+	@$(CC) -o $@ -c $< $(CFLAGS)
 
 clean :
 		rm -rf $(OBJ)

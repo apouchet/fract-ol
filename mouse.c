@@ -16,7 +16,6 @@ int		mouse_release_hook(int x, int y, t_data *data)
 {
 	static int x_prec;
 	static int y_prec;
-	static int mouse_prec;
 	double tmp;
 
 	if (data->mouse_button == 1)
@@ -46,7 +45,8 @@ int		mouse_hook(int button, int x, int y, t_data *data)
 	// if (button == 1)
 	// printf("button = %d\n", button);
 	// printf("x = %d, y = %d\n", x, y);
-
+	x++;
+	y++;
 	data->mouse_button = button;
 	if (button == 5 || button == 4)
 		ft_key(-button, data);
@@ -55,6 +55,9 @@ int		mouse_hook(int button, int x, int y, t_data *data)
 
 int		mouse_release(int button, int x, int y, t_data *data)
 {
+	x++;
+	y++;
+	button++;
 	data->mouse_button = 0;
 	return (0);
 }

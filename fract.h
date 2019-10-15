@@ -55,22 +55,24 @@ typedef struct	s_data
 	void		*win_ptr;
 	void		*p_img;
 	int			*img;
-	int			zoom;
 	double		move_x;
 	double		move_y;
+	int			zoom;
 	int			scale;
 	int			iteration_max;
 	int			mode;
 	double		mouse_x;
 	double		mouse_y;
-	int			fract;
 	double		step_x;
 	double		step_y;
+	int			fract;
 	
 	double		x_a;
 	double		x_b;
 	double		y_a;
 	double		y_b;
+	double		ratio_x;
+	double		ratio_y;
 	
 	double		c_r;
 	double		c_i;
@@ -84,7 +86,7 @@ typedef struct	s_data
 	t_picture	p;
 }				t_data;
 
-int		ft_mandelbrot(t_data *d, double size_x, double size_y);
+int		ft_mandelbrot_julia(t_data *d);
 
 void	reset_data(t_data *data);
 
