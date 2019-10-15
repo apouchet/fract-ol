@@ -1,5 +1,8 @@
+test.c
+fract-ol
 # Prerequisites
 *.d
+*.tga
 
 # Object files
 *.o
