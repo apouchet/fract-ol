@@ -20,14 +20,11 @@
 # include <fcntl.h>
 # include <unistd.h>
 
-# define FENETRE_X (1500 / 2)
-# define FENETRE_Y (1286 / 2)
+# define FENETRE_X (1500)
+# define FENETRE_Y (1286)
 # define R 0x00FF0000
 # define G 0x0000FF00
 # define B 0x000000FF
-
-double a;
-double b;
 
 typedef struct	s_picture
 {
@@ -65,6 +62,9 @@ typedef struct	s_data
 	int			iteration_max;
 	int			mode;
 	int			fix;
+	double		mouse_x;
+	double		mouse_y;
+	int			mouse_z;
 	int			x;
 	int			y;
 	int			fract;
@@ -89,5 +89,20 @@ typedef struct	s_data
 }				t_data;
 
 int		ft_mandelbrot(t_data *d, double size_x, double size_y);
+
+void	reset_data(t_data *data);
+
+int		ft_key(int key,	t_data *data);
+
+int		mouse_release_hook(int x, int y, t_data *data);
+
+int		mouse_hook(int button, int x, int y, t_data *data);
+
+int		mouse_release(int button, int x, int y, t_data *data);
+
+int		ft_affich(t_data *data);
+
+void	ft_screen(t_data *data);
+
 
 #endif

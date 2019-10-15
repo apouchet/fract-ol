@@ -48,7 +48,9 @@
 
 // z_r = (z_r * z_r) - (z_i * z_i) + c_r;
 
-// z_i = 2 * z_i * tmp + c_i;
+((z_r * z_r) - (z_i * z_i) + c_r * (z_r * z_r) - (z_i * z_i) + c_r) + ((z_r * z_r) - (z_i * z_i) + c_r * (z_r * z_r) - (z_i * z_i) + c_r) = 4
+
+// (z_r * z_r) - (z_i * z_i) + c_r;
 
 
 // z_r = (z_r * z_r) - (z_i * z_i) + c_r;
