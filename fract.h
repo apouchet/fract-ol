@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/10 21:36:10 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/13 15:33:51 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,29 @@ typedef struct	s_picture
 	int			endian;
 }				t_picture;
 
+typedef struct		s_tga
+{
+	char			id_length;
+	char			colour_map;
+	char			data_type;
+	short int		colour_origin;
+	short int		colour_length;
+	char			colour_depth;
+	short int		x_origin;
+	short int		y_origin;
+	short int		width;
+	short int		height;
+	char			bpp;
+	char			imagedescriptor;
+}					t_tga;
+
 typedef struct	s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*p_img;
 	int			*img;
-	int		zoom;
+	int			zoom;
 	double		move_x;
 	double		move_y;
 	int			scale;
@@ -68,6 +84,7 @@ typedef struct	s_data
 	double		size_y;
 	int			div;
 	int			div_q;
+	int			mouse_button;
 	t_picture	p;
 }				t_data;
 

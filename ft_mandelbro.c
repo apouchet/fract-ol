@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/09 16:04:26 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/13 21:22:21 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static void		ft_mandelbrot_semi_opti(t_data *d, double zoom_x, double zoom_y)
 				if (i != d->iteration_max)
 					d->img[d->p.sl * y + x] =  ft_color(i, d->iteration_max, d);
 				else
-					d->img[d->p.sl * y + x] = 0;
+					d->img[d->p.sl * y + x] = 0; /// ????????
 			}
 			y += 2;
 		}
@@ -155,6 +155,7 @@ int		ft_mandelbrot(t_data *d, double size_x, double size_y)
 {
 	double zoom_x = (FENETRE_X / (d->x_b - d->x_a));// * d->zoom;
 	double zoom_y = (FENETRE_Y / (d->y_b - d->y_a));// * d->zoom;
+	// printf("zoom x = %lf\n", zoom_x);
 	int i;
 	int x;
 	int y;
@@ -179,7 +180,7 @@ int		ft_mandelbrot(t_data *d, double size_x, double size_y)
 			if (i != d->iteration_max)
 				d->img[d->p.sl * y + x] = ft_color(i, d->iteration_max, d);
 			else if (d->mode != 3)
-				d->img[d->p.sl * y + x] = 0;
+				d->img[d->p.sl * y + x] = 0;//xFF000000;
 			y += y_step;
 		}
 		x += x_step;
@@ -188,6 +189,5 @@ int		ft_mandelbrot(t_data *d, double size_x, double size_y)
 		ft_mandelbrot_opti(d, zoom_x, zoom_y);
 	if (d->mode == 1 || d->mode == 2)
 		ft_mandelbrot_semi_opti(d, zoom_x, zoom_y);
-	mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->p_img, 0, 0);
 	return (0);
 }

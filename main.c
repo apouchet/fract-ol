@@ -6,18 +6,59 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/11 01:44:04 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/13 21:22:14 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 
-
 int		ft_affich(t_data *data)
 {
 	ft_mandelbrot(data, (data->x_b - data->x_a), (data->y_b - data->y_a));
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->p_img, 0, 0);
+	// printf("data->mouse_button = %d\n", data->mouse_button);
 	return (0);
 }
+
+void	ft_screen(t_data *data)
+{
+	t_tga	tga;
+	int		fd;
+	// int		print[FENETRE_X * FENETRE_Y * 4];
+	int		*print;
+	int		mode_tmp;
+
+	print = (int*)malloc(sizeof(int) * (FENETRE_X * FENETRE_Y * 4));
+	mode_tmp = data->mode;
+	data->mode = 0;
+	ft_affich(data);
+	data->mode = mode_tmp;
+
+	tga.id_length = 0;
+	tga.colour_map = 0;
+	tga.data_type = 2;
+	tga.colour_origin = 0;
+	tga.colour_length = 0;
+	tga.colour_depth = 0;
+	tga.x_origin = 0;
+	tga.y_origin = 0;
+	tga.width = FENETRE_X;
+	tga.height = FENETRE_Y;
+	tga.bpp = 8 * 4;
+	tga.imagedescriptor = 32;
+	fd = open("a.tga", O_RDWR | O_CREAT , 0777);
+	write(fd, &tga, 7);
+	write(fd, &tga.colour_depth, 1);
+	write(fd, &tga.x_origin, 10);
+	for (int i = 0; i < FENETRE_X * FENETRE_Y; i++)
+		print[i] = data->img[i] + 0xFF000000;
+	if (write(fd, print, FENETRE_X * FENETRE_Y * 4) == -1)
+		perror("Error : ");
+	close(fd);
+	free(print);
+}
+
+
 
 void	reset_data(t_data *data)
 {
@@ -42,9 +83,11 @@ int		ft_key(int key,	t_data *data)
 	printf("key = %d\n", key);
 	printf("iteration_max = %d\n", data->iteration_max);
 	printf("zoom = %d\n", data->zoom);
-	printf("zr = %.100lf, zi = %.100lf\n", data->z_r, data->z_i);
+	// printf("zr = %.100lf, zi = %.100lf\n", data->z_r, data->z_i);
 	if (key == 12)
 		data->fix = (data->fix + 1) % 2;
+	if (key == 35)
+		ft_screen(data);
 	if (key == 53)
 		exit(0);
 	if (key == 126)
@@ -77,13 +120,16 @@ int		ft_key(int key,	t_data *data)
 			data->iteration_max--;
 		data->zoom--;
 		double tmp;
-		tmp = (data->x_a - data->x_b);
-		data->x_a -= (data->x_b - data->x_a) * 0.125;
-		data->x_b -= tmp * 0.125;
+		tmp = (((data->x_a - data->x_b) / (1 - (0.1 * 2))) - (data->x_a - data->x_b)) / 2;
+		// printf("source = %lf\n", (data->x_a - data->x_b));
+		printf("1 tmp '-' = %lf\n", tmp);
+		printf("2 tmp '-' = %lf\n", (((data->x_b - data->x_a) / (1 - (0.1 * 2))) - (data->x_b - data->x_a)) / 2);
+		data->x_a -= -tmp;
+		data->x_b -= tmp;
 
-		tmp = (data->y_a - data->y_b);
-		data->y_a -= (data->y_b - data->y_a) * 0.125;
-		data->y_b -= tmp * 0.125;
+		tmp = (((data->y_a - data->y_b) / (1 - (0.1 * 2))) - (data->y_a - data->y_b)) / 2;
+		data->y_a -= -tmp;
+		data->y_b -= tmp;
 
 		data->step_x = (data->x_b - data->x_a) * 0.01;
 		data->step_y = (data->y_b - data->y_a) * 0.01;
@@ -94,21 +140,23 @@ int		ft_key(int key,	t_data *data)
 			data->iteration_max++;
 		data->zoom++;
 		double tmp;
-		tmp = (data->x_a - data->x_b);
+		tmp = (data->x_a - data->x_b) * 0.1;
+		printf("1 tmp '+' = %lf\n", tmp);
+		printf("2 tmp '+' = %lf\n", (data->x_b - data->x_a) * 0.1);
 		data->x_a += (data->x_b - data->x_a) * 0.1;
-		data->x_b += tmp * 0.1;
+		data->x_b += tmp;
 
-		tmp = (data->y_a - data->y_b);
+		tmp = (data->y_a - data->y_b) * 0.1;
 		data->y_a += (data->y_b - data->y_a) * 0.1;
-		data->y_b += tmp * 0.1;
+		data->y_b += tmp;
 
 		data->step_x = (data->x_b - data->x_a) * 0.01;
 		data->step_y = (data->y_b - data->y_a) * 0.01;
 	}
-	if (key == 83)
-		data->iteration_max += 20;
-	if (key == 82 && data->iteration_max > 1)
-		data->iteration_max -= 20;
+	if (key == 0)
+		data->iteration_max += 5;
+	if (key == 1 && data->iteration_max > 1)
+		data->iteration_max -= 5;
 
 	if (key == 18)
 		data->mode = 0;
@@ -161,7 +209,37 @@ int		ft_key(int key,	t_data *data)
 
 int		mouse_release_hook(int x, int y, t_data *data)
 {
-	if (!(data->fix))
+	static int x_prec;
+	static int y_prec;
+	static int mouse_prec;
+	// if (button == 1)
+	// printf("button = %d\n", button);
+	// (FENETRE_X / (d->x_b - d->x_a))
+	// (FENETRE_Y / (d->y_b - d->y_a))
+	// printf("button while = %d\n", data->mouse_button);
+	// printf("x_prec = %d, y_prec = %d\n", x_prec, y_prec);
+	if (data->mouse_button != 1)
+	{
+		x_prec = x;
+		y_prec = y;
+	}
+	if (data->mouse_button == 1)
+	{
+		double tmp;
+		tmp = (x - x_prec) / (FENETRE_X / (data->x_b - data->x_a));
+		data->x_a -= (x - x_prec) / (FENETRE_X / (data->x_b - data->x_a));
+		data->x_b -= tmp;
+
+		tmp = (y - y_prec) / (FENETRE_Y / (data->y_b - data->y_a));
+		data->y_a -= (y - y_prec) / (FENETRE_Y / (data->y_b - data->y_a));
+		data->y_b -= tmp;
+		// printf("move x  = %f, move y = %f\n", (FENETRE_X / (data->x_b - data->x_a)), (FENETRE_Y / (data->y_b - data->y_a)));
+		// printf("(x - x_prec) = %d, (y - y_prec) = %d\n", (x - x_prec), (y - y_prec));
+		// printf("echel = %f\n", (FENETRE_X / (data->x_b - data->x_a)));
+		x_prec = x;
+		y_prec = y;
+	}
+	if (!(data->fix) && data->mouse_button == 2)
 	{
 		data->c_r = (x - FENETRE_X / 2) / (FENETRE_X / 2.4);
 		data->c_i = (y - FENETRE_Y / 2) / (FENETRE_Y / 2.7);
@@ -200,6 +278,36 @@ void	ft_start_data(t_data *data)
 	data->div = data->iteration_max / data->div_q;
 	data->step_x = (data->x_b - data->x_a) * 0.01;
 	data->step_y = (data->y_b - data->y_a) * 0.01;
+	data->mouse_button = 0;
+}
+
+int		mouse_hook(int button, int x, int y, t_data *data)
+{
+	// if (button == 1)
+	// printf("button = %d\n", button);
+	// printf("x = %d, y = %d\n", x, y);
+
+	data->mouse_button = button;
+	if (!(data->fix) && (data->mouse_button == 1))
+	{
+		data->c_r = (x - FENETRE_X / 2) / (FENETRE_X / 2.4);
+		data->c_i = (y - FENETRE_Y / 2) / (FENETRE_Y / 2.7);
+	}
+	return (0);
+}
+int		mouse_release(int button, int x, int y, t_data *data)
+{
+	// if (button == 1)
+	// printf("button release = %d\n", button);
+	// printf("x = %d, y = %d\n", x, y);
+
+	data->mouse_button = 0;
+	// if (!(data->fix) && (button == 1))
+	// {
+	// 	data->c_r = (x - FENETRE_X / 2) / (FENETRE_X / 2.4);
+	// 	data->c_i = (y - FENETRE_Y / 2) / (FENETRE_Y / 2.7);
+	// }
+	return (0);
 }
 
 int		main(int argc, char **argv)
@@ -215,6 +323,8 @@ int		main(int argc, char **argv)
 	mlx_hook(data.win_ptr, 2, 0, &ft_key, &data);
 	mlx_loop_hook(data.mlx_ptr, &ft_affich, &data);
 	mlx_hook(data.win_ptr, 6, 0, mouse_release_hook, &data);
+	mlx_hook(data.win_ptr, 5, 0, &mouse_release, &data);
+	mlx_mouse_hook(data.win_ptr, &mouse_hook, &data);
 	mlx_hook(data.win_ptr, 17, 0, red_cross, &data);
 	
 	mlx_loop(data.mlx_ptr);
