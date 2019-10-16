@@ -6,20 +6,20 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 13:48:08 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:19:50 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACT_H
 # define FRACT_H
 
-# include "mlx/mlx.h"
+# include "../mlx/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <time.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include "libftprintf/include/libprintf.h"
+# include "../libftprintf/include/libprintf.h"
 
 # define FENETRE_X (1500)
 # define FENETRE_Y (1286)
