@@ -6,7 +6,7 @@
 #    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/16 14:21:03 by floblanc         ###   ########.fr        #
+#    Updated: 2019/10/16 14:23:18 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ $(NAME) : $(LIBFT)/$(LIBFTA) $(OBJ)
 		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
 		@echo "\n"
 		@$(CC) $(FDF_FLAGS) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)/$(LIBFTA)
-		@echo "$(_GREEN)[ FDF DONE ]$(_END)"
+		@echo "$(_GREEN)[ FRACT-OL DONE ]$(_END)"
 
 clean :
 	@make clean -C $(LIBFT)
