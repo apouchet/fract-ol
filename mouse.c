@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:35 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/15 14:31:38 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 
-int		mouse_release_hook(int x, int y, t_data *data)
+int		mouse_release_hook(int x, int y, t_fract *data)
 {
 	static int x_prec;
 	static int y_prec;
@@ -40,7 +40,7 @@ int		mouse_release_hook(int x, int y, t_data *data)
 }
 
 
-int		mouse_hook(int button, int x, int y, t_data *data)
+int		mouse_hook(int button, int x, int y, t_fract *data)
 {
 	// if (button == 1)
 	// printf("button = %d\n", button);
@@ -53,7 +53,7 @@ int		mouse_hook(int button, int x, int y, t_data *data)
 	return (0);
 }
 
-int		mouse_release(int button, int x, int y, t_data *data)
+int		mouse_release(int button, int x, int y, t_fract *data)
 {
 	x++;
 	y++;

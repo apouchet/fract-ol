@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/13 21:22:14 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:53:47 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 
-int		ft_affich(t_data *data)
+int		print_usage(void)
+{
+	write(2, "Usage : ./fract-ol Mandelbrot\n\t\t   Julia\n", 41);
+	return (0);
+}
+
+int		ft_affich(t_fract *data)
 {
 	data->ratio_x = FENETRE_X / (data->x_b - data->x_a);
 	data->ratio_y = FENETRE_Y / (data->y_b - data->y_a);
@@ -21,7 +27,7 @@ int		ft_affich(t_data *data)
 	return (0);
 }
 
-void	ft_screen(t_data *data)
+void	ft_screen(t_fract *data)
 {
 	t_tga	tga;
 	int		fd;
@@ -65,7 +71,7 @@ int		red_cross(void)
 	return (0);
 }
 
-void	ft_init_mandelbrot(t_data *data)
+void	ft_init_mandelbrot(t_fract *data)
 {
 	data->x_a = -2.1;
 	data->x_b = 0.6;
@@ -73,7 +79,7 @@ void	ft_init_mandelbrot(t_data *data)
 	data->y_b = 1.2;
 }
 
-void	ft_init_julia(t_data *data)
+void	ft_init_julia(t_fract *data)
 {
 	data->x_a = -1.5;
 	data->x_b = 1.5;
@@ -81,7 +87,7 @@ void	ft_init_julia(t_data *data)
 	data->y_b = 1.2;
 }
 
-static void	ft_start_data(t_data *data)
+static void	ft_start_fract(t_fract *data)
 {
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");
@@ -90,18 +96,19 @@ static void	ft_start_data(t_data *data)
 		&data->p.sl, &data->p.endian);
 	data->p.bpp /= 4;
 	data->p.sl /= 4;
-	data->fract = 0;
 	data->mode = 0;
-	reset_data(data);
+	reset_fract(data);
 	
 }
 
 int		main(int argc, char **argv)
 {
-	t_data		data;
+	t_fract		data;
 
 	data.fract = 0;
-	ft_start_data(&data);
+	if (!(parsing(&data, argc, argv)))
+		return (print_usage());
+	ft_start_fract(&data);	
 	mlx_hook(data.win_ptr, 2, 0, &ft_key, &data);
 	mlx_loop_hook(data.mlx_ptr, &ft_affich, &data);
 	mlx_hook(data.win_ptr, 6, 0, mouse_release_hook, &data);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/15 14:31:35 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 
-void	reset_data(t_data *data)
+void	reset_fract(t_fract *data)
 {
 	data->zoom = 5;
 	data->move_x = 0;
@@ -33,7 +33,7 @@ void	reset_data(t_data *data)
 	data->mouse_button = 0;
 }
 
-static int		ft_key_move(int key, t_data *data)
+static int		ft_key_move(int key, t_fract *data)
 {
 	if (key == 126)
 	{
@@ -60,7 +60,7 @@ static int		ft_key_move(int key, t_data *data)
 	return (1);
 }
 
-static int		ft_key_switch_fractal(int key, t_data *data)
+static int		ft_key_switch_fractal(int key, t_fract *data)
 {
 	if (key == 22 && data->fract != 0)
 	{
@@ -77,7 +77,7 @@ static int		ft_key_switch_fractal(int key, t_data *data)
 	return (1);
 }
 
-static int		ft_key_color_and_mode(int key, t_data *data)
+static int		ft_key_color_and_mode(int key, t_fract *data)
 {
 	if (key == 18)
 		data->mode = 0;
@@ -102,7 +102,7 @@ static int		ft_key_color_and_mode(int key, t_data *data)
 	return (1);
 }
 
-int		ft_key(int key, t_data *data)
+int		ft_key(int key, t_fract *data)
 {
 	printf("key = %d\n", key);
 	printf("iteration_max = %d\n", data->iteration_max);
@@ -116,7 +116,7 @@ int		ft_key(int key, t_data *data)
 	else if (key == 256 && data->iteration_max > 1)
 		data->iteration_max -= 1;
 	else if (key == 15)
-		reset_data(data);
+		reset_fract(data);
 	ft_key_move(key, data);
 	ft_zoom(key, data);
 	ft_key_switch_fractal(key, data);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_zoom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 15:33:42 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/15 15:33:43 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 
-static void		ft_zoom_out(t_data *d)
+static void		ft_zoom_out(t_fract *d)
 {
 	double tmp;
 
@@ -24,7 +24,7 @@ static void		ft_zoom_out(t_data *d)
 	d->y_b -= tmp;
 }
 
-static void		ft_zoom_in(int key, t_data *data)
+static void		ft_zoom_in(int key, t_fract *data)
 {
 	double tmp;
 	double tmp2;
@@ -53,7 +53,7 @@ static void		ft_zoom_in(int key, t_data *data)
 	}
 }
 
-void			ft_zoom(int key, t_data *data)
+void			ft_zoom(int key, t_fract *data)
 {
 	if ((key == -5 || key == 24 || key == 69) && data->zoom < 150)
 	{

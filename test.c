@@ -64,7 +64,7 @@ int		main(void)
 }
 
 
-// int		ft_mandelbrot(t_data *d)
+// int		ft_mandelbrot(t_fract *d)
 // {
 // 	// mode 0 == normal
 // 	// mode 1 == semi opti

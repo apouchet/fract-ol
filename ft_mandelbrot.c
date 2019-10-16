@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mandelbrot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/13 21:22:21 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 #include <strings.h>
 
-static void	ft_switch(t_data *data, int x, int y)
+static void	ft_switch(t_fract *data, int x, int y)
 {
 	if (data->fract == 0)
 	{
@@ -29,7 +29,7 @@ static void	ft_switch(t_data *data, int x, int y)
 	}
 }
 
-static int		ft_calcul_mdb_julia(t_data *data)
+static int		ft_calcul_mdb_julia(t_fract *data)
 {
 	double tmp;
 	double pow_r;
@@ -55,7 +55,7 @@ static int		ft_calcul_mdb_julia(t_data *data)
 	return (i);
 }
 
-static  int		ft_color(int i, t_data *d)
+static  int		ft_color(int i, t_fract *d)
 {
 	int		color;
 
@@ -76,7 +76,7 @@ static  int		ft_color(int i, t_data *d)
 	return(color);
 }
 
-static  int		ft_check_opti(t_data *d, int x, int y, int type)
+static  int		ft_check_opti(t_fract *d, int x, int y, int type)
 {
 
 	if (type == 1) // semi opti
@@ -95,7 +95,7 @@ static  int		ft_check_opti(t_data *d, int x, int y, int type)
 
 }
 
-static void	ft_mdb_julia_opti(t_data *d)
+static void	ft_mdb_julia_opti(t_fract *d)
 {
 	int x;
 	int y;
@@ -120,7 +120,7 @@ static void	ft_mdb_julia_opti(t_data *d)
 	}
 }
 
-static void		ft_mdb_julia_semi_opti(t_data *d)
+static void		ft_mdb_julia_semi_opti(t_fract *d)
 {
 	int x;
 	int y;
@@ -148,7 +148,7 @@ static void		ft_mdb_julia_semi_opti(t_data *d)
 }
 
 
-int		ft_mandelbrot_julia(t_data *d)
+int		ft_mandelbrot_julia(t_fract *d)
 {
 	int x;
 	int y;

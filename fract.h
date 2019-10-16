@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fract.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/13 15:33:51 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:48:08 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <time.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include "libftprintf/include/libprintf.h"
 
 # define FENETRE_X (1500)
 # define FENETRE_Y (1286)
@@ -49,7 +50,7 @@ typedef struct		s_tga
 	char			imagedescriptor;
 }					t_tga;
 
-typedef struct	s_data
+typedef struct	s_fract
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
@@ -84,31 +85,33 @@ typedef struct	s_data
 	int			div_q;
 	int			mouse_button;
 	t_picture	p;
-}				t_data;
+}				t_fract;
 
-int		ft_mandelbrot_julia(t_data *d);
+int		parsing(t_fract *data, int ac, char ** av);
 
-void	reset_data(t_data *data);
+int		ft_mandelbrot_julia(t_fract *d);
 
-int		ft_key(int key,	t_data *data);
+void	reset_fract(t_fract *data);
 
-int		mouse_release_hook(int x, int y, t_data *data);
+int		ft_key(int key,	t_fract *data);
 
-int		mouse_hook(int button, int x, int y, t_data *data);
+int		mouse_release_hook(int x, int y, t_fract *data);
 
-int		mouse_release(int button, int x, int y, t_data *data);
+int		mouse_hook(int button, int x, int y, t_fract *data);
 
-int		ft_affich(t_data *data);
+int		mouse_release(int button, int x, int y, t_fract *data);
 
-void	ft_screen(t_data *data);
+int		ft_affich(t_fract *data);
 
-void	ft_zoom(int key, t_data *data);
+void	ft_screen(t_fract *data);
 
-void	ft_init_mandelbrot(t_data *data);
+void	ft_zoom(int key, t_fract *data);
 
-void	ft_init_julia(t_data *data);
+void	ft_init_mandelbrot(t_fract *data);
 
-// void	ft_start_data(t_data *data, int mode);
+void	ft_init_julia(t_fract *data);
+
+// void	ft_start_fract(t_fract *data, int mode);
 
 
 #endif
