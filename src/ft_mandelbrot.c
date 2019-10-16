@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/16 18:21:34 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_switch(t_fract *fract, int x, int y)
 	}
 }
 
-static int		ft_calcul_mdb_julia(t_fract fract, int x, int y)
+static int	ft_calcul_mdb_julia(t_fract fract, int x, int y)
 {
 	double tmp;
 	double pow_r;
@@ -43,7 +43,6 @@ static int		ft_calcul_mdb_julia(t_fract fract, int x, int y)
 
 	pow_r = fract.z_r * fract.z_r;
 	pow_i = fract.z_i * fract.z_i;
-	
 	while (pow_r + pow_i < 4 && ++i < fract.iteration_max)
 	{
 		tmp = fract.z_r;
@@ -55,7 +54,7 @@ static int		ft_calcul_mdb_julia(t_fract fract, int x, int y)
 	return (i);
 }
 
-static  int		ft_color(int i, t_fract f)
+static int	ft_color(int i, t_fract f)
 {
 	int		color;
 
@@ -68,15 +67,15 @@ static  int		ft_color(int i, t_fract f)
 	else if (i % (f.div) <= f.div / 2)
 		color = G + B - ((B * i * 2 / f.div) & B);
 	else if (i % (f.div) <= 2 * f.div / 3)
-		color = G + ((R *  2 * (1 - i / f.div)) & R);
+		color = G + ((R * 2 * (1 - i / f.div)) & R);
 	else if (i % (f.div) <= 5 * f.div / 6)
 		color = R + G - ((G * 3 * (1 - i / f.div)) & G);
 	else
 		color = R + ((B * 6 * (1 - i / f.div)) & B);
-	return(color);
+	return (color);
 }
 
-static  int		ft_check_opti(t_fract *f, int x, int y, int type)
+static int	ft_check_opti(t_fract *f, int x, int y, int type)
 {
 
 	if (type == 1) // semi opti
@@ -142,7 +141,7 @@ void		ft_mdb_julia_semi_opti(t_fract *f)
 }
 
 
-void	*ft_mandelbrot_julia(void *fract)
+void		*ft_mandelbrot_julia(void *fract)
 {
 	int x;
 	int y;
@@ -152,6 +151,7 @@ void	*ft_mandelbrot_julia(void *fract)
 
 	f = (t_fract*)fract;
 	x = f->x++;
+	x *= (f->mode >= 2 ? 2 : 1);
 	x_step = (f->mode >= 2 ? 2 : 1) * f->nb_thread;
 	y_step = (f->mode == 0 ? 1 : 2);
 	if (f->mode == 3)

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 15:33:42 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/16 17:25:16 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void		ft_zoom_in(int key, t_fract *fract)
 	if (key == -5)
 	{
 		tmp = (fract->x_b - fract->x_a) / 2;
-		fract->x_a -=  tmp2 * tmp - fract->mouse_x;
-		fract->x_b -=  tmp2 * tmp - fract->mouse_x;
-		fract->mouse_x +=  tmp2 * tmp - fract->mouse_x;
+		fract->x_a -= tmp2 * tmp - fract->mouse_x;
+		fract->x_b -= tmp2 * tmp - fract->mouse_x;
+		fract->mouse_x += tmp2 * tmp - fract->mouse_x;
 	}
 	tmp2 = 2 * fract->mouse_y / (fract->y_b - fract->y_a);
 	tmp = (fract->y_a - fract->y_b) * 0.1;
@@ -47,9 +47,9 @@ static void		ft_zoom_in(int key, t_fract *fract)
 	if (key == -5)
 	{
 		tmp = (fract->y_b - fract->y_a) / 2;
-		fract->y_a -=  tmp2 * tmp - fract->mouse_y;
-		fract->y_b -=  tmp2 * tmp - fract->mouse_y;
-		fract->mouse_y +=  tmp2 * tmp - fract->mouse_y;
+		fract->y_a -= tmp2 * tmp - fract->mouse_y;
+		fract->y_b -= tmp2 * tmp - fract->mouse_y;
+		fract->mouse_y += tmp2 * tmp - fract->mouse_y;
 	}
 }
 

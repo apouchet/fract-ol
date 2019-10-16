@@ -6,11 +6,11 @@
 #    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/16 14:23:18 by floblanc         ###   ########.fr        #
+#    Updated: 2019/10/16 18:30:36 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fract-ol
+NAME = fractol
 
 SRC_NAME =	main.c 			\
 			ft_mandelbrot.c	\

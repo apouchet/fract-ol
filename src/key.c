@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/16 17:48:29 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int		ft_key_color_and_mode(int key, t_fract *fract)
 		fract->mode = 1;
 	else if (key == 20)
 		fract->mode = 2;
-	else if (key == 21 && fract->nb_thread == 1)
+	else if (key == 21)
 		fract->mode = 3;
 	else if (key == 8 && fract->div_q < fract->iteration_max)
 	{
@@ -116,9 +116,9 @@ int		ft_key(int key, t_fract *fract)
 		ft_screen(fract);
 	else if (key == 53)
 		exit(0);
-	else if (key == 257)
+	else if (key == 11)
 		fract->iteration_max += 1;
-	else if (key == 256 && fract->iteration_max > 1)
+	else if (key == 45 && fract->iteration_max > 1)
 		fract->iteration_max -= 1;
 	else if (key == 15)
 		reset_fract(fract);
