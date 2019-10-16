@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/16 13:51:03 by floblanc         ###   ########.fr       */
+/*   Created: 2018/11/14 14:54:29 by floblanc          #+#    #+#             */
+/*   Updated: 2019/04/04 11:47:10 by maginist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract.h"
+#include "../include/libprintf.h"
 
-int		parsing(t_fract *fract, int ac, char **av)
+void	ft_putnbr(int n)
 {
-	if (ac != 2)
-		return (0);
-	if (!(ft_strcmp("Mandelbrot", av[1])))
-		fract->fract = 0;
-	else if (!(ft_strcmp("Julia", av[1])))
-		fract->fract = 1;
+	unsigned int	nb;
+
+	nb = n;
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		nb = -n;
+	}
+	if (nb < 10)
+		ft_putchar(nb + '0');
 	else
-		return (0);
-	return (1);
+	{
+		ft_putnbr((nb / 10));
+		ft_putchar((nb % 10) + '0');
+	}
 }

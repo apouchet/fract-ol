@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/16 13:51:03 by floblanc         ###   ########.fr       */
+/*   Created: 2018/11/12 11:43:52 by floblanc          #+#    #+#             */
+/*   Updated: 2019/04/04 11:53:20 by maginist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract.h"
+#include "../include/libprintf.h"
 
-int		parsing(t_fract *fract, int ac, char **av)
+char	*ft_strndup(const char *s, size_t n)
 {
-	if (ac != 2)
+	size_t	i;
+	char	*dst;
+
+	i = 0;
+	if (!(dst = (char*)malloc(sizeof(char) * (n + 1))))
 		return (0);
-	if (!(ft_strcmp("Mandelbrot", av[1])))
-		fract->fract = 0;
-	else if (!(ft_strcmp("Julia", av[1])))
-		fract->fract = 1;
-	else
-		return (0);
-	return (1);
+	while (s[i] && i < n)
+	{
+		dst[i] = s[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
 }

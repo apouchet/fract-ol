@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_jump_white_spaces.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/16 13:51:03 by floblanc         ###   ########.fr       */
+/*   Created: 2019/06/19 14:48:32 by floblanc          #+#    #+#             */
+/*   Updated: 2019/06/26 11:48:15 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract.h"
+#include "../include/libprintf.h"
 
-int		parsing(t_fract *fract, int ac, char **av)
+void	ft_jump_white_spaces(char *str, int *i)
 {
-	if (ac != 2)
-		return (0);
-	if (!(ft_strcmp("Mandelbrot", av[1])))
-		fract->fract = 0;
-	else if (!(ft_strcmp("Julia", av[1])))
-		fract->fract = 1;
-	else
-		return (0);
-	return (1);
+	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
+		(*i)++;
 }

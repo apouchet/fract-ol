@@ -19,6 +19,8 @@
 # include <time.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <pthread.h>
+# include <strings.h>
 # include "../libftprintf/include/libprintf.h"
 
 # define FENETRE_X (1500)
@@ -74,6 +76,8 @@ typedef struct	s_fract
 	double		y_b;
 	double		ratio_x;
 	double		ratio_y;
+	int			nb_thread;
+	int			x;
 	
 	double		c_r;
 	double		c_i;
@@ -87,31 +91,33 @@ typedef struct	s_fract
 	t_picture	p;
 }				t_fract;
 
-int		parsing(t_fract *data, int ac, char ** av);
+int		parsing(t_fract *fract, int ac, char ** av);
 
-int		ft_mandelbrot_julia(t_fract *d);
+void	*ft_mandelbrot_julia(void *fract);
 
-void	reset_fract(t_fract *data);
+void	reset_fract(t_fract *fract);
 
-int		ft_key(int key,	t_fract *data);
+int		ft_key(int key,	t_fract *fract);
 
-int		mouse_release_hook(int x, int y, t_fract *data);
+int		mouse_release_hook(int x, int y, t_fract *fract);
 
-int		mouse_hook(int button, int x, int y, t_fract *data);
+int		mouse_hook(int button, int x, int y, t_fract *fract);
 
-int		mouse_release(int button, int x, int y, t_fract *data);
+int		mouse_release(int button, int x, int y, t_fract *fract);
 
-int		ft_affich(t_fract *data);
+int		ft_affich(t_fract *fract);
 
-void	ft_screen(t_fract *data);
+void	ft_screen(t_fract *fract);
 
-void	ft_zoom(int key, t_fract *data);
+void	ft_zoom(int key, t_fract *fract);
 
-void	ft_init_mandelbrot(t_fract *data);
+void	ft_init_mandelbrot(t_fract *fract);
 
-void	ft_init_julia(t_fract *data);
+void	ft_init_julia(t_fract *fract);
 
-// void	ft_start_fract(t_fract *data, int mode);
+void	ft_mdb_julia_semi_opti(t_fract *f);
+
+// void	ft_start_fract(t_fract *fract, int mode);
 
 
 #endif

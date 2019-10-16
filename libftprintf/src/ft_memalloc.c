@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: floblanc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/16 13:51:03 by floblanc         ###   ########.fr       */
+/*   Created: 2018/11/13 10:21:10 by floblanc          #+#    #+#             */
+/*   Updated: 2019/04/04 11:43:23 by maginist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract.h"
+#include "../include/libprintf.h"
 
-int		parsing(t_fract *fract, int ac, char **av)
+void	*ft_memalloc(size_t size)
 {
-	if (ac != 2)
+	unsigned char	*mem;
+	unsigned int	i;
+
+	i = 0;
+	if (!(mem = (unsigned char*)malloc(sizeof(unsigned char) * size)))
 		return (0);
-	if (!(ft_strcmp("Mandelbrot", av[1])))
-		fract->fract = 0;
-	else if (!(ft_strcmp("Julia", av[1])))
-		fract->fract = 1;
-	else
-		return (0);
-	return (1);
+	while (i < size)
+		mem[i++] = 0;
+	return (mem);
 }

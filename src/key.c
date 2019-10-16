@@ -12,115 +12,120 @@
 
 #include "fract.h"
 
-void	reset_fract(t_fract *data)
+void	reset_fract(t_fract *fract)
 {
-	data->zoom = 5;
-	data->move_x = 0;
-	data->move_y = 0;
-	data->mouse_x = 0;
-	data->mouse_y = 0;
-	data->iteration_max = 20;
-	if (data->fract == 0)
-		ft_init_mandelbrot(data);
-	else if (data->fract == 1)
-		ft_init_julia(data);
-	data->ratio_x = FENETRE_X / (data->x_b - data->x_a);
-	data->ratio_y = FENETRE_Y / (data->y_b - data->y_a);
-	data->div_q = 1;
-	data->div = data->iteration_max / data->div_q;
-	data->step_x = (data->x_b - data->x_a) * 0.01;
-	data->step_y = (data->y_b - data->y_a) * 0.01;
-	data->mouse_button = 0;
+	fract->zoom = 5;
+	fract->move_x = 0;
+	fract->move_y = 0;
+	fract->mouse_x = 0;
+	fract->mouse_y = 0;
+	fract->iteration_max = 20;
+	if (fract->fract == 0)
+		ft_init_mandelbrot(fract);
+	else if (fract->fract == 1)
+		ft_init_julia(fract);
+	fract->ratio_x = FENETRE_X / (fract->x_b - fract->x_a);
+	fract->ratio_y = FENETRE_Y / (fract->y_b - fract->y_a);
+	fract->div_q = 1;
+	fract->div = fract->iteration_max / fract->div_q;
+	fract->step_x = (fract->x_b - fract->x_a) * 0.01;
+	fract->step_y = (fract->y_b - fract->y_a) * 0.01;
+	fract->mouse_button = 0;
 }
 
-static int		ft_key_move(int key, t_fract *data)
+static int		ft_key_move(int key, t_fract *fract)
 {
 	if (key == 126)
 	{
-		data->y_a -= data->step_y;
-		data->y_b -= data->step_y;
+		fract->y_a -= fract->step_y;
+		fract->y_b -= fract->step_y;
 	}
 	else if (key == 125)
 	{
-		data->y_a += data->step_y;
-		data->y_b += data->step_y;
+		fract->y_a += fract->step_y;
+		fract->y_b += fract->step_y;
 	}
 	else if (key == 123)
 	{
-		data->x_a -= data->step_x;
-		data->x_b -= data->step_x;
+		fract->x_a -= fract->step_x;
+		fract->x_b -= fract->step_x;
 	}
 	else if (key == 124)
 	{
-		data->x_a += data->step_x;
-		data->x_b += data->step_x;
+		fract->x_a += fract->step_x;
+		fract->x_b += fract->step_x;
 	}
 	else
 		return (0);
 	return (1);
 }
 
-static int		ft_key_switch_fractal(int key, t_fract *data)
+static int		ft_key_switch_fractal(int key, t_fract *fract)
 {
-	if (key == 22 && data->fract != 0)
+	if (key == 22 && fract->fract != 0)
 	{
-		data->fract = 0;
-		ft_init_mandelbrot(data);
+		fract->fract = 0;
+		ft_init_mandelbrot(fract);
 	}
-	else if (key == 23  && data->fract != 1)
+	else if (key == 23  && fract->fract != 1)
 	{
-		data->fract = 1;
-		ft_init_julia(data);
+		fract->fract = 1;
+		ft_init_julia(fract);
 	}
 	else
 		return (0);
 	return (1);
 }
 
-static int		ft_key_color_and_mode(int key, t_fract *data)
+static int		ft_key_color_and_mode(int key, t_fract *fract)
 {
 	if (key == 18)
-		data->mode = 0;
+		fract->mode = 0;
 	else if (key == 19)
-		data->mode = 1;
+		fract->mode = 1;
 	else if (key == 20)
-		data->mode = 2;
-	else if (key == 21)
-		data->mode = 3;
-	else if (key == 8 && data->div_q < data->iteration_max)
+		fract->mode = 2;
+	else if (key == 21 && fract->nb_thread == 1)
+		fract->mode = 3;
+	else if (key == 8 && fract->div_q < fract->iteration_max)
 	{
-		data->div_q++;
-		data->div = data->iteration_max / data->div_q;
+		fract->div_q++;
+		fract->div = fract->iteration_max / fract->div_q;
 	}
-	else if (key == 9 && data->div_q > 1)
+	else if (key == 9 && fract->div_q > 1)
 	{
-		data->div_q--;
-		data->div = data->iteration_max / data->div_q;
+		fract->div_q--;
+		fract->div = fract->iteration_max / fract->div_q;
 	}
 	else
 		return (0);
 	return (1);
 }
 
-int		ft_key(int key, t_fract *data)
+int		ft_key(int key, t_fract *fract)
 {
 	printf("key = %d\n", key);
-	printf("iteration_max = %d\n", data->iteration_max);
-	printf("zoom = %d\n", data->zoom);
+	printf("iteration_max = %d\n", fract->iteration_max);
+	printf("nb thread = %d\n", fract->nb_thread);
+	// printf("zoom = %d\n", fract->zoom);
+	if (key == 0 && fract->nb_thread > 1)
+		fract->nb_thread--;
+	if (key == 1 && fract->nb_thread < 64)
+		fract->nb_thread++;	
 	if (key == 35)
-		ft_screen(data);
+		ft_screen(fract);
 	else if (key == 53)
 		exit(0);
 	else if (key == 257)
-		data->iteration_max += 1;
-	else if (key == 256 && data->iteration_max > 1)
-		data->iteration_max -= 1;
+		fract->iteration_max += 1;
+	else if (key == 256 && fract->iteration_max > 1)
+		fract->iteration_max -= 1;
 	else if (key == 15)
-		reset_fract(data);
-	ft_key_move(key, data);
-	ft_zoom(key, data);
-	ft_key_switch_fractal(key, data);
-	ft_key_color_and_mode(key, data);
-	ft_affich(data);
+		reset_fract(fract);
+	ft_key_move(key, fract);
+	ft_zoom(key, fract);
+	ft_key_switch_fractal(key, fract);
+	ft_key_color_and_mode(key, fract);
+	ft_affich(fract);
 	return (1);
 }
