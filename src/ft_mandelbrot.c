@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 18:21:34 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/17 19:05:13 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,44 @@
 
 static void	ft_switch(t_fract *fract, int x, int y)
 {
-	if (fract->fract == 0)
+	if (fract->fract == 0  || fract->fract == 2)
 	{
 		fract->z_r = 0;
 		fract->z_i = 0;
 		fract->c_r = x / fract->ratio_x + fract->x_a;
 		fract->c_i = y / fract->ratio_y + fract->y_a;
 	}
-	else if (fract->fract == 1)
+	else if (fract->fract == 1 || fract->fract == 3)
 	{
 		fract->z_r = x / fract->ratio_x + fract->x_a;
 		fract->z_i = y / fract->ratio_y + fract->y_a;
 	}
+}
+
+static int	ft_calcul_bns_juliabns(t_fract fract, int x, int y)
+{
+	double tmp;
+	double pow_r;
+	double pow_i;
+	int i;
+
+	i = 0;
+	ft_switch(&fract, x, y);
+	tmp = fract.z_r;
+	fract.z_r = fract.z_r * fract.z_r - fract.z_i * fract.z_i + fract.c_r;
+	fract.z_i = 2 * fract.z_i * tmp + fract.c_i;
+
+	pow_r = fract.z_r * fract.z_r;
+	pow_i = fract.z_i * fract.z_i;
+	while (pow_r + pow_i < 4 && ++i < fract.iteration_max)
+	{
+		tmp = fract.z_r;
+		fract.z_r = pow_r - pow_i + fract.c_r;
+		fract.z_i = 2 * ft_abs_double(fract.z_i * tmp) + fract.c_i;
+		pow_r = fract.z_r * fract.z_r;
+		pow_i = fract.z_i * fract.z_i;
+	}
+	return (i);
 }
 
 static int	ft_calcul_mdb_julia(t_fract fract, int x, int y)
@@ -161,8 +187,12 @@ void		*ft_mandelbrot_julia(void *fract)
 		y = (f->mode == 1 ? x % 2 : 0);
 		while (y < FENETRE_Y)
 		{
-			f->img[f->p.sl * y + x]
+			if (f->fract < 2)
+				f->img[f->p.sl * y + x]
 				= ft_color(ft_calcul_mdb_julia(*f, x, y), *f);
+			else if (f->fract < 4)
+				f->img[f->p.sl * y + x]
+				= ft_color(ft_calcul_bns_juliabns(*f, x, y), *f);
 			y += y_step;
 		}
 		x += x_step;

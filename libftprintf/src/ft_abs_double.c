@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_abs_double.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/04 18:00:24 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/17 12:24:52 by floblanc         ###   ########.fr       */
+/*   Created: 2019/10/17 12:21:24 by floblanc          #+#    #+#             */
+/*   Updated: 2019/10/17 12:23:28 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libprintf.h"
 
-unsigned int	ft_abs(int nb)
+double	ft_abs_double(double f)
 {
-	if (nb < 0)
-		return ((unsigned int)(-nb));
-	return ((unsigned int)nb);
+	if (f < 0)
+		return (-f);
+	return (f);
 }

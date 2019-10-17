@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/16 18:35:37 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/17 13:49:51 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int		parsing(t_fract *fract, int ac, char **av)
 		fract->fract = 0;
 	else if (!(ft_strcmp("Julia", av[1])))
 		fract->fract = 1;
+	else if (!(ft_strcmp("Burning-Ship", av[1])))
+		fract->fract = 2;
+	else if (!(ft_strcmp("Burning-Julia", av[1])))
+		fract->fract = 3;
 	else
 		return (0);
 	return (1);
