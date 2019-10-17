@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 14:19:50 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:49:18 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <strings.h>
+# include <math.h>
 # include "../libftprintf/include/libprintf.h"
 
 # define FENETRE_X (1500)

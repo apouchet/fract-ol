@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maginist <maginist@student.42.fr>          +#+  +:+       +#+         #
+#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 09:46:56 by maginist          #+#    #+#              #
-#    Updated: 2019/07/23 18:10:00 by maginist         ###   ########.fr        #
+#    Updated: 2019/10/17 12:24:00 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,6 +121,7 @@ FILES = add_pre_flgs.c\
 	  ft_strsearch.c\
 	  ft_tab3size.c\
 	  ft_abs.c\
+	  ft_abs_double.c\
 	  get_next_line.c\
 	  get_next_line_mod.c\
 	  ft_jump_white_spaces.c\

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 13:53:47 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/16 18:35:36 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int		print_usage(void)
 {
-	write(2, "Usage : ./fract-ol Mandelbrot\n\t\t   Julia\n", 41);
+	char	*str;
+
+	str = "Usage : ./fractol Mandelbrot\n\t\t  Julia\nOptional flags : -c for command list\n\t\t -vb for verbose\n";
+	write(2, str, ft_strlen(str));
 	return (0);
 }
 
