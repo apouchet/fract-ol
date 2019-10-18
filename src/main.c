@@ -121,7 +121,7 @@ int		main(int argc, char **argv)
 	fract.fract = 0;
 	if (!(parsing(&fract, argc, argv)))
 		return (print_usage());
-	ft_start_fract(&fract);	
+	ft_start_fract(&fract);
 	mlx_hook(fract.win_ptr, 2, 0, &ft_key, &fract);
 	mlx_loop_hook(fract.mlx_ptr, &ft_affich, &fract);
 	mlx_hook(fract.win_ptr, 6, 0, mouse_release_hook, &fract);

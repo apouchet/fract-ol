@@ -114,9 +114,10 @@ static int		ft_key_color_and_mode(int key, t_fract *fract)
 
 int		ft_key(int key, t_fract *fract)
 {
-	printf("key = %d\n", key);
-	printf("iteration_max = %d\n", fract->iteration_max);
-	printf("nb thread = %d\n", fract->nb_thread);
+	// printf("key = %d\n", key);
+	printf("%d\n", key);
+	// printf("iteration_max = %d\n", fract->iteration_max);
+	// printf("nb thread = %d\n", fract->nb_thread);
 	// printf("zoom = %d\n", fract->zoom);
 	if (key == 0 && fract->nb_thread > 1)
 		fract->nb_thread--;
