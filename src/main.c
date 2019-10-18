@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 18:35:36 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/18 14:38:38 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int		print_usage(void)
 {
 	char	*str;
 
-	str = "Usage : ./fractol Mandelbrot\n\t\t  Julia\nOptional flags : -c for command list\n\t\t -vb for verbose\n";
+	str = "Usage : ./fractol Mandelbrot\n\t\t  Julia\n\t\t  Burning-Ship\n\t\t  Burning-Julia\n\t\t  Newton\n";
 	write(2, str, ft_strlen(str));
 	return (0);
 }
 
 int		ft_affich(t_fract *fract)
 {
-		fract->ratio_x = FENETRE_X / (fract->x_b - fract->x_a);
+	fract->ratio_x = FENETRE_X / (fract->x_b - fract->x_a);
 	fract->ratio_y = FENETRE_Y / (fract->y_b - fract->y_a);
 
 	pthread_t	thread[64];
@@ -97,6 +97,14 @@ void	ft_init_julia(t_fract *fract)
 	fract->x_b = 1.5;
 	fract->y_a = -1.2;
 	fract->y_b = 1.2;
+}
+
+void	ft_init_newton(t_fract *fract)
+{
+	fract->x_a = -2;
+	fract->x_b = 1.5;
+	fract->y_a = -1;
+	fract->y_b = 1;
 }
 
 static void	ft_start_fract(t_fract *fract)

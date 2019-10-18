@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/17 14:27:13 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/18 14:38:13 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	reset_fract(t_fract *fract)
 		ft_init_mandelbrot(fract);
 	else if (fract->fract == 1 || fract->fract == 3)
 		ft_init_julia(fract);
+	else if (fract->fract == 4)
+		ft_init_newton(fract);
 	fract->ratio_x = FENETRE_X / (fract->x_b - fract->x_a);
 	fract->ratio_y = FENETRE_Y / (fract->y_b - fract->y_a);
 	fract->div_q = 1;
@@ -81,6 +83,11 @@ static int		ft_key_switch_fractal(int key, t_fract *fract)
 	{
 		fract->fract = 3;
 		ft_init_julia(fract);
+	}
+	else if (key == 25  && fract->fract != 4)
+	{
+		fract->fract = 4;
+		ft_init_newton(fract);
 	}
 	else
 		return (0);
