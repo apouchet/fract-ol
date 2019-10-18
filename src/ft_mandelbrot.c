@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/18 14:08:28 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/18 16:52:06 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,16 @@ static int	ft_color(int i, t_fract f)
 	return (color);
 }
 
+int		select_calc(t_fract *f, int x, int y)
+{
+	if (f->fract < 2)
+		return (ft_color(ft_calcul_mdb_julia(*f, x, y), *f));
+	else if (f->fract < 4)
+		return (ft_color(ft_calcul_bns_juliabns(*f, x, y), *f));
+	else
+		return (ft_calcul_newton(*f, x, y));
+}
+
 static int	ft_check_opti(t_fract *f, int x, int y, int type)
 {
 
@@ -164,8 +174,7 @@ static void	ft_mdb_julia_opti(t_fract *f)
 			if (ft_check_opti(f, x, y, 0))
 				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 1) + x + 1];
 			else
-				f->img[f->p.sl * y + x]
-					= ft_color(ft_calcul_mdb_julia(*f, x, y), *f);
+				f->img[f->p.sl * y + x] = select_calc(f, x, y);
 			y += 2;
 		}
 		x += 2;
@@ -188,14 +197,12 @@ void		ft_mdb_julia_semi_opti(t_fract *f)
 			if (ft_check_opti(f, x, y, 1))
 				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 1) + x];
 			else
-				f->img[f->p.sl * y + x]
-					= ft_color(ft_calcul_mdb_julia(*f, x, y), *f);
+				f->img[f->p.sl * y + x] = select_calc(f, x, y);
 			y += 2;
 		}
 		x++;
 	}
 }
-
 
 void		*ft_mandelbrot_julia(void *fract)
 {
@@ -217,15 +224,7 @@ void		*ft_mandelbrot_julia(void *fract)
 		y = (f->mode == 1 ? x % 2 : 0);
 		while (y < FENETRE_Y)
 		{
-			if (f->fract < 2)
-				f->img[f->p.sl * y + x]
-				= ft_color(ft_calcul_mdb_julia(*f, x, y), *f);
-			else if (f->fract < 4)
-				f->img[f->p.sl * y + x]
-				= ft_color(ft_calcul_bns_juliabns(*f, x, y), *f);
-			else if (f->fract < 5)
-				f->img[f->p.sl * y + x]
-				= ft_calcul_newton(*f, x, y);
+			f->img[f->p.sl * y + x] = select_calc(f, x, y);
 			y += y_step;
 		}
 		x += x_step;
