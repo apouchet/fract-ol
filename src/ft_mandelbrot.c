@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/17 19:05:13 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/18 16:52:06 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_switch(t_fract *fract, int x, int y)
 {
-	if (fract->fract == 0  || fract->fract == 2)
+	if (fract->fract == 0  || fract->fract == 2 || fract->fract == 4)
 	{
 		fract->z_r = 0;
 		fract->z_i = 0;
@@ -26,6 +26,36 @@ static void	ft_switch(t_fract *fract, int x, int y)
 		fract->z_r = x / fract->ratio_x + fract->x_a;
 		fract->z_i = y / fract->ratio_y + fract->y_a;
 	}
+}
+
+#include <complex.h>
+
+static int	ft_calcul_newton(t_fract fract, int x, int y)
+{
+	complex double	z;
+	complex double	r1;
+	complex double	r2;
+	complex double	r3;
+	int i;
+	
+	i = 0;
+	ft_switch(&fract, x, y);
+
+	z = fract.c_r + fract.c_i * I;
+	r1 = 1;
+	r2 = -0.5 + sin(2 * M_PI / 3) * I;
+	r3 = -0.5 - sin(2 * M_PI / 3) * I;
+	while (++i < fract.iteration_max)
+	{
+		 z = z-(z*z*z-1.0)/(z*z*3.0);
+		 if (cabs(z - r1) < 0.0001)
+		 	return (R - (int)(((double)i / fract.iteration_max) * (double)R) & R);
+		else if (cabs(z - r2) < 0.0001)
+		 	return (G - (int)(((double)i / fract.iteration_max) * (double)G) & G);
+		else if (cabs(z - r3) < 0.0001) 
+		 	return (B - (int)(((double)i / fract.iteration_max) * (double)B) & B);
+	}
+	return (i);
 }
 
 static int	ft_calcul_bns_juliabns(t_fract fract, int x, int y)
@@ -101,6 +131,16 @@ static int	ft_color(int i, t_fract f)
 	return (color);
 }
 
+int		select_calc(t_fract *f, int x, int y)
+{
+	if (f->fract < 2)
+		return (ft_color(ft_calcul_mdb_julia(*f, x, y), *f));
+	else if (f->fract < 4)
+		return (ft_color(ft_calcul_bns_juliabns(*f, x, y), *f));
+	else
+		return (ft_calcul_newton(*f, x, y));
+}
+
 static int	ft_check_opti(t_fract *f, int x, int y, int type)
 {
 
@@ -134,8 +174,7 @@ static void	ft_mdb_julia_opti(t_fract *f)
 			if (ft_check_opti(f, x, y, 0))
 				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 1) + x + 1];
 			else
-				f->img[f->p.sl * y + x]
-					= ft_color(ft_calcul_mdb_julia(*f, x, y), *f);
+				f->img[f->p.sl * y + x] = select_calc(f, x, y);
 			y += 2;
 		}
 		x += 2;
@@ -158,14 +197,12 @@ void		ft_mdb_julia_semi_opti(t_fract *f)
 			if (ft_check_opti(f, x, y, 1))
 				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 1) + x];
 			else
-				f->img[f->p.sl * y + x]
-					= ft_color(ft_calcul_mdb_julia(*f, x, y), *f);
+				f->img[f->p.sl * y + x] = select_calc(f, x, y);
 			y += 2;
 		}
 		x++;
 	}
 }
-
 
 void		*ft_mandelbrot_julia(void *fract)
 {
@@ -187,12 +224,7 @@ void		*ft_mandelbrot_julia(void *fract)
 		y = (f->mode == 1 ? x % 2 : 0);
 		while (y < FENETRE_Y)
 		{
-			if (f->fract < 2)
-				f->img[f->p.sl * y + x]
-				= ft_color(ft_calcul_mdb_julia(*f, x, y), *f);
-			else if (f->fract < 4)
-				f->img[f->p.sl * y + x]
-				= ft_color(ft_calcul_bns_juliabns(*f, x, y), *f);
+			f->img[f->p.sl * y + x] = select_calc(f, x, y);
 			y += y_step;
 		}
 		x += x_step;
