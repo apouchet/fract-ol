@@ -86,3 +86,6 @@ re : fclean all
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -c $< -o $@
+
+# opengl compilation:
+# gcc -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew -framework AppKit -framework OpenGl opengl.c ft_shader_opengl.c file.c ft_control_gl.c

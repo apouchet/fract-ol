@@ -34,11 +34,11 @@ static int		ft_check_shader_compilation(GLuint shader_id, t_gl *gl)
 		glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &gl->log_size);
 		if (!(gl->log = (GLchar*)malloc(gl->log_size)))
 		{
-			printf("Error malloc for log of shader compilation\n");
+			ft_printf("Error malloc for log of shader compilation\n");
 			return (0);
 		}
 		glGetShaderInfoLog(shader_id, gl->log_size, &gl->log_size, gl->log);
-		printf("Compilation error :\n%s", gl->log);
+		ft_printf("Compilation error :\n%s", gl->log);
 		free(gl->log);
 		return (0);
 	}
@@ -47,8 +47,8 @@ static int		ft_check_shader_compilation(GLuint shader_id, t_gl *gl)
 
 static int		ft_shader_start(t_gl *gl, t_shd *shd)
 {
-	shd->vertex_size = strlen(shd->vertex_s);
-	shd->fragment_size = strlen(shd->fragment_s);
+	shd->vertex_size = ft_strlen(shd->vertex_s);
+	shd->fragment_size = ft_strlen(shd->fragment_s);
 	glShaderSource(gl->vertex_id, 1, (const GLchar**)(&shd->vertex_s),
 		&shd->vertex_size);
 	glShaderSource(gl->fragment_id, 1, (const GLchar**)(&shd->fragment_s),
@@ -72,7 +72,7 @@ int				ft_shaders(char *name_vs, char *name_fs, t_gl *gl)
 {
 	t_shd	shd;
 
-	bzero(&shd, sizeof(t_shd));
+	ft_bzero(&shd, sizeof(t_shd));
 	gl->vertex_id = glCreateShader(GL_VERTEX_SHADER);
 	gl->fragment_id = glCreateShader(GL_FRAGMENT_SHADER);
 	if (!(shd.vertex_s = (GLchar*)ft_get_file(name_vs, shd.vertex_s)) ||
@@ -85,12 +85,12 @@ int				ft_shaders(char *name_vs, char *name_fs, t_gl *gl)
 		glGetProgramiv(gl->program_id, GL_INFO_LOG_LENGTH, &gl->log_size);
 		if (!(gl->log = (GLchar*)malloc(gl->log_size)))
 		{
-			printf("Error malloc for log of program compilation\n");
+			ft_printf("Error malloc for log of program compilation\n");
 			return (ft_delete_shader(gl));
 		}
 		glGetProgramInfoLog(gl->program_id, gl->log_size,
 			&gl->log_size, gl->log);
-		printf("Erreur lors du liage du shader:\n%s", gl->log);
+		ft_printf("Erreur lors du liage du shader:\n%s", gl->log);
 		free(gl->log);
 		return (ft_delete_shader(gl));
 	}

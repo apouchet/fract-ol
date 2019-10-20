@@ -13,13 +13,13 @@
 #ifndef GL_H
 #define GL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
-#include <strings.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "libftprintf/include/libprintf.h"
+
+# define FENETRE_X 1286
+# define FENETRE_Y 1500
 
 typedef struct		s_gl
 {
@@ -44,7 +44,7 @@ typedef struct		s_gldata
 	double			y;
 	double			step;
 	int				nb_zoom;
-	int				mouse;
+	int				fractal;
 }					t_gldata;
 
 typedef struct		s_shd
@@ -64,5 +64,9 @@ int					ft_shaders(char *name_vs, char *name_fs, t_gl *gl);
 int					ft_size_file(char *name);
 
 char				*ft_get_file(char *name, char *file);
+
+void				ft_control(t_gl *gl, t_gldata *data);
+
+void				ft_init_data(t_gldata *data);
 
 #endif
