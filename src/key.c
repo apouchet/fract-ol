@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/20 19:41:54 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/20 19:46:06 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static int		ft_key_color_and_mode(int key, t_fract *fract)
 int		ft_key(int key, t_fract *fract)
 {
 	// printf("key = %d\n", key);
-	printf("%d\n", key);
+	//printf("%d\n", key);
 	// printf("iteration_max = %d\n", fract->iteration_max);
 	// printf("nb thread = %d\n", fract->nb_thread);
 	// printf("zoom = %d\n", fract->zoom);
