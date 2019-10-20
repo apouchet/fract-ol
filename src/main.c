@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/18 14:38:38 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/20 19:40:39 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,68 @@ int		print_usage(void)
 
 int		ft_affich(t_fract *fract)
 {
-	fract->ratio_x = FENETRE_X / (fract->x_b - fract->x_a);
-	fract->ratio_y = FENETRE_Y / (fract->y_b - fract->y_a);
-
+	int	i;
+	int	j;
+	char *tmp;
 	pthread_t	thread[64];
 
+	fract->ratio_x = FENETRE_X / (fract->x_b - fract->x_a);
+	fract->ratio_y = FENETRE_Y / (fract->y_b - fract->y_a);
 	fract->x = 0;
-	for (int i = 0; i < fract->nb_thread; i++)
+	i = -1;
+	while (++i < fract->nb_thread)
 		pthread_create(&thread[i], NULL, ft_mandelbrot_julia, (void*)fract);
-	for (int i = 0; i < fract->nb_thread; i++)
+	i = -1;
+	while (++i < fract->nb_thread)
 			pthread_join(thread[i], NULL);
 	if (fract->mode == 1 || fract->mode == 2)
 		ft_mdb_julia_semi_opti(fract);
+	if (fract->info == 2)
+	{
+		j = -1;
+		while (++j < 175)
+		{
+			i = -1;
+			while (++i < 470)
+			{
+				 if (i < 175 && j < 90)
+				 	fract->img[fract->p.sl * (FENETRE_Y - j) + i] = 0x6F6F6F;
+				fract->img[fract->p.sl * (FENETRE_Y - j) - i] = 0x6F6F6F;
+			}
+		}
+	}
 	mlx_put_image_to_window(fract->mlx_ptr, fract->win_ptr, fract->p_img, 0, 0);
+	if (fract->info)
+	{
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 250, 10, 0xFFFFFF, "Press i for informations");
+		tmp = ft_itoa(fract->iteration_max);
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 5, 5, 0xFFFFFF, "Accuracy:");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 100, 5, 0xFFFFFF, tmp);
+		ft_strdel(&tmp);
+		tmp = ft_itoa(fract->nb_thread);
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 5, 22, 0xFFFFFF, "Thread number:");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 150, 22, 0xFFFFFF, tmp);
+		ft_strdel(&tmp);
+	}
+	if (fract->info == 2)
+	{
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 5, FENETRE_Y - 88, 0xFFFFFF, "Julia: 5");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 5, FENETRE_Y - 71, 0xFFFFFF, "Mandelbrot: 6");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 5, FENETRE_Y - 54, 0xFFFFFF, "Burning Julia: 7");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 5, FENETRE_Y - 37, 0xFFFFFF, "Burning Ship: 8");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, 5, FENETRE_Y - 20, 0xFFFFFF, "Newton: 9");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 275, FENETRE_Y - 173, 0xFFFFFF, "Controls");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 156, 0xFFFFFF, "Reset: r");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 139, 0xFFFFFF, "Zoom: w/s or +/- or point and scroll");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 122, 0xFFFFFF, "Accuracy: a/d");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 105, 0xFFFFFF, "Screenshot: p");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 88, 0xFFFFFF, "Calcul mode 1/2/3: 1, 2, 3");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 71, 0xFFFFFF, "Change color: c/v");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 54, 0xFFFFFF, "Thread number: q/e");
+		mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 37, 0xFFFFFF, "Move: Arrows or Left clic + Mouse");
+		if (fract->fract == 1 || fract->fract == 3)
+			mlx_string_put(fract->mlx_ptr, fract->win_ptr, FENETRE_X - 465, FENETRE_Y - 20, 0xFFFFFF, "Unlock Mouvements: Space or Right clic pressed");
+	}
 	return (0);
 }
 
@@ -118,6 +167,7 @@ static void	ft_start_fract(t_fract *fract)
 	fract->p.sl /= 4;
 	fract->mode = 0;
 	fract->nb_thread = 8;
+	fract->info = 1;
 	reset_fract(fract);
 	
 }

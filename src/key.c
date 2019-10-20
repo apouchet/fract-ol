@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/18 14:38:13 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/20 19:46:06 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ static int		ft_key_switch_fractal(int key, t_fract *fract)
 
 static int		ft_key_color_and_mode(int key, t_fract *fract)
 {
-	if (key == 18)
+	if (key == 18 || key == 83)
 		fract->mode = 0;
-	else if (key == 19)
+	else if (key == 19 || key == 84)
 		fract->mode = 1;
-	else if (key == 20)
+	else if (key == 20 || key == 85)
 		fract->mode = 2;
-	else if (key == 21)
-		fract->mode = 3;
+	// else if (key == 21)
+	// 	fract->mode = 3;
 	else if (key == 8 && fract->div_q < fract->iteration_max)
 	{
 		fract->div_q++;
@@ -122,24 +122,26 @@ static int		ft_key_color_and_mode(int key, t_fract *fract)
 int		ft_key(int key, t_fract *fract)
 {
 	// printf("key = %d\n", key);
-	printf("%d\n", key);
+	//printf("%d\n", key);
 	// printf("iteration_max = %d\n", fract->iteration_max);
 	// printf("nb thread = %d\n", fract->nb_thread);
 	// printf("zoom = %d\n", fract->zoom);
-	if (key == 0 && fract->nb_thread > 1)
+	if (key == 12 && fract->nb_thread > 1)
 		fract->nb_thread--;
-	if (key == 1 && fract->nb_thread < 64)
+	if (key == 14 && fract->nb_thread < 64)
 		fract->nb_thread++;	
 	if (key == 35)
 		ft_screen(fract);
 	else if (key == 53)
 		exit(0);
-	else if (key == 11)
+	else if (key == 2)
 		fract->iteration_max += 1;
-	else if (key == 45 && fract->iteration_max > 1)
+	else if (key == 0 && fract->iteration_max > 1)
 		fract->iteration_max -= 1;
 	else if (key == 15)
 		reset_fract(fract);
+	else if (key == 34)
+		fract->info = (fract->info % 2) + 1;
 	ft_key_move(key, fract);
 	ft_zoom(key, fract);
 	ft_key_switch_fractal(key, fract);

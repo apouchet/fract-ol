@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 15:33:42 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 17:25:16 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/20 19:39:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void		ft_zoom_in(int key, t_fract *fract)
 
 void			ft_zoom(int key, t_fract *fract)
 {
-	if ((key == -5 || key == 24 || key == 69) && fract->zoom < 150)
+	if ((key == -5 || key == 24 || key == 69 || key == 13) && fract->zoom < 150)
 	{
 		if (fract->iteration_max < 130)
 			fract->iteration_max++;
@@ -64,7 +64,7 @@ void			ft_zoom(int key, t_fract *fract)
 		fract->step_x = (fract->x_b - fract->x_a) * 0.01;
 		fract->step_y = (fract->y_b - fract->y_a) * 0.01;
 	}
-	else if ((key == -4 || key == 27 || key == 78)
+	else if ((key == -4 || key == 27 || key == 78 || key == 1)
 		&& (fract->x_b - fract->x_a) <= (0.6 + 2.1) * 2)
 	{
 		if (fract->iteration_max > 21 && fract->zoom + 20 < fract->iteration_max)

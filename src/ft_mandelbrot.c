@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/18 16:52:06 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/20 17:55:34 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	ft_calcul_bns_juliabns(t_fract fract, int x, int y)
 	ft_switch(&fract, x, y);
 	tmp = fract.z_r;
 	fract.z_r = fract.z_r * fract.z_r - fract.z_i * fract.z_i + fract.c_r;
-	fract.z_i = 2 * fract.z_i * tmp + fract.c_i;
+	fract.z_i = 2 * ft_abs_double(fract.z_i * tmp) + fract.c_i;
 
 	pow_r = fract.z_r * fract.z_r;
 	pow_i = fract.z_i * fract.z_i;

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/18 14:38:23 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/20 17:40:08 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_fract
 	double		step_x;
 	double		step_y;
 	int			fract;
+	int			info;
 	
 	double		x_a;
 	double		x_b;
