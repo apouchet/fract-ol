@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/18 14:39:14 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/21 13:45:25 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,28 @@
 
 int		parsing(t_fract *fract, int ac, char **av)
 {
-	if (ac != 2)
+	int	i;
+
+	i = 0;
+	if (ac > 3)
 		return (0);
-	if (!(ft_strcmp("Mandelbrot", av[1])))
-		fract->fract = 0;
-	else if (!(ft_strcmp("Julia", av[1])))
-		fract->fract = 1;
-	else if (!(ft_strcmp("Burning-Ship", av[1])))
-		fract->fract = 2;
-	else if (!(ft_strcmp("Burning-Julia", av[1])))
-		fract->fract = 3;
-	else if (!(ft_strcmp("Newton", av[1])))
-		fract->fract = 4;
-	else
-		return (0);
+	while (++i < ac)
+	{
+		if (!(fract->fract) && !(ft_strcmp("Mandelbrot", av[i])))
+			fract->fract = 1;
+		else if (!(fract->fract) && !(ft_strcmp("Julia", av[i])))
+			fract->fract = 2;
+		else if (!(fract->fract) && !(ft_strcmp("Burning-Ship", av[i])))
+			fract->fract = 3;
+		else if (!(fract->fract) && !(ft_strcmp("Burning-Julia", av[i])))
+			fract->fract = 4;
+		else if (!(fract->fract) && !(ft_strcmp("Newton", av[i])))
+			fract->fract = 5;
+		else if (!(fract->opengl) && !(ft_strcmp("-gl", av[i])))
+			fract->opengl = 1;
+		else
+			return (0);
+	}
+	fract->fract--;
 	return (1);
 }

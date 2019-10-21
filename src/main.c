@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 11:12:30 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 14:56:42 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void	ft_init_newton(t_fract *fract)
 
 void	ft_start_fract(t_fract *fract)
 {
-	fract->opengl = 0;
 	fract->mlx_ptr = mlx_init();
 	fract->win_ptr =
 	mlx_new_window(fract->mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");
@@ -152,10 +151,13 @@ void	ft_start_fract(t_fract *fract)
 	fract->p.bpp /= 4;
 	fract->p.sl /= 4;
 	fract->mode = 0;
+	fract->fix = 1;
+	fract->fdf = 0;
 	fract->nb_thread = 8;
 	fract->info = 1;
 	reset_fract(fract);
-	
+	if (fract->opengl)
+		ft_key(36, fract);
 }
 
 int		main_mlx(t_fract *fract)
@@ -174,6 +176,7 @@ int		main(int argc, char **argv)
 	t_fract		fract;
 
 	fract.opengl = 0;
+	fract.fract = 0;
 	if (!(parsing(&fract, argc, argv)))
 		return (print_usage());
 	ft_start_fract(&fract);

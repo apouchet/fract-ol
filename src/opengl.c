@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opengl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 03:01:56 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 13:24:52 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		ft_init_glfw_gl(t_gl *gl)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	gl->window = glfwCreateWindow(FENETRE_X, FENETRE_X, "OpenGL", NULL, NULL);
+	gl->window = glfwCreateWindow(FENETRE_X, FENETRE_Y, "OpenGL", NULL, NULL);
 	glfwMakeContextCurrent(gl->window);
 	if (!(gl->window))
 	{

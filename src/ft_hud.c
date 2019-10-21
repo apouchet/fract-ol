@@ -12,12 +12,14 @@ static void	ft_hud_info(t_fract *fract)
 	ft_put(fract, 5, FENETRE_Y - 54, "Burning Julia: 7");
 	ft_put(fract, 5, FENETRE_Y - 37, "Burning Ship: 8");
 	ft_put(fract, 5, FENETRE_Y - 20, "Newton: 9");
-	ft_put(fract, FENETRE_X - 275, FENETRE_Y - 173, "Controls");
-	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 156, "Reset: r");
-	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 139,
+	ft_put(fract, FENETRE_X - 275, FENETRE_Y - 207, "Controls");
+	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 190, "Swap Mlx/Open GL: enter/return");
+	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 173, "Reset: r");
+	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 156,
 		"Zoom: w/s or +/- or point and scroll");
-	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 122, "Accuracy: a/d");
-	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 105, "Screenshot: p");
+	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 139, "Accuracy: a/d");
+	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 122, "Screenshot: p");
+	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 105, "Convert to .fdf: f");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 88,
 		"Calcul mode 1/2/3: 1, 2, 3");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 71, "Change color: c/v");

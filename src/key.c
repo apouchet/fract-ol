@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 09:39:54 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 15:57:42 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,45 @@ static int		ft_key_color_and_mode(int key, t_fract *fract)
 	return (1);
 }
 
+void	ft_build_fdf(t_fract *f)
+{
+	int		fd;
+	int		i;
+	int		mode_tmp;
+	int		info_tmp;
+	char	*tmp;
+	
+	time_t curtime;
+	time(&curtime);
+	printf("Current time = %s", ctime(&curtime));
+
+	if (!(fd = open(ft_strcat(&ctime(&curtime)[4], ".fdf")
+		, O_RDWR | O_CREAT, 0777)))
+		perror("Error ");
+	f->fdf = 1;
+	info_tmp = f->info;
+	mode_tmp = f->mode;
+	f->info = 0;
+	f->mode = 0;
+	ft_affich(f);
+	f->info = info_tmp;
+	f->mode = mode_tmp;
+	f->fdf = 0;
+	i = -1;
+	while (++i / FENETRE_X < FENETRE_Y)
+	{
+			tmp = ft_itoa(f->img[i]);
+			write(fd, tmp, ft_strlen(tmp));
+			ft_strdel(&tmp);
+			write(fd, ",0x", 3);
+			tmp = ft_itoa_base(ft_color(f->img[i], *f, i % FENETRE_X, i / FENETRE_X), "0123456789ABCDEF");
+			write(fd, tmp, ft_strlen(tmp));
+			ft_strdel(&tmp);
+			write(fd, (i % FENETRE_X == FENETRE_X - 1 ? "\n" : " "), 1);
+	}
+	close(fd);
+}
+
 int		ft_key(int key, t_fract *fract)
 {
 	printf("key = %d\n", key);
@@ -132,6 +171,8 @@ int		ft_key(int key, t_fract *fract)
 		fract->nb_thread++;	
 	if (key == 35)
 		ft_screen(fract);
+	if (key == 49)
+		fract->fix = (fract->fix + 1) % 2;
 	else if (key == 36)
 	{
 		fract->opengl = 1;
@@ -145,6 +186,8 @@ int		ft_key(int key, t_fract *fract)
 	}
 	else if (key == 53)
 		exit(0);
+	else if (key == 3)
+		ft_build_fdf(fract);
 	else if (key == 2)
 		fract->iteration_max += 1;
 	else if (key == 0 && fract->iteration_max > 1)
