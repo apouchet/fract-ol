@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:53 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/18 14:34:57 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 02:56:51 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 #include <fcntl.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "libftprintf/include/libprintf.h"
+#include "fract.h"
+// #include "libprintf.h"
+#include "../libftprintf/include/libprintf.h"
 
-# define FENETRE_X 1286
-# define FENETRE_Y 1500
+// # define FENETRE_X 1286
+// # define FENETRE_Y 1500
 
 typedef struct		s_gl
 {
@@ -65,7 +67,7 @@ int					ft_size_file(char *name);
 
 char				*ft_get_file(char *name, char *file);
 
-void				ft_control(t_gl *gl, t_gldata *data);
+int					ft_control(t_gl *gl, t_gldata *data);
 
 void				ft_init_data(t_gldata *data);
 

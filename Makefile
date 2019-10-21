@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/16 18:30:36 by floblanc         ###   ########.fr        #
+#    Updated: 2019/10/20 22:38:54 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,21 +18,25 @@ SRC_NAME =	main.c 			\
 			key.c			\
 			mouse.c 		\
 			parsing.c		\
+			opengl.c		\
+			file.c			\
+			ft_control_gl.c	\
+			ft_shader_opengl.c
 
 SRC_PATH = ./src/
 
 OBJ_PATH = ./obj/
 
 INC_PATH = ./include/
-INC_NAME = fract.h
+INC_NAME =	fract.h
 
 
 LIBFT				=	./libftprintf/
 LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
 
-FDF_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
-
+FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
+OPENGL_FLAGS = -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
@@ -62,13 +66,13 @@ $(LIBFT)/$(LIBFTA):
 	@echo "$(_GREEN)[ LIBPRINTF DONE ]$(_END)"
 
 $(NAME) : $(LIBFT)/$(LIBFTA) $(OBJ)
-		@echo "\n"
-		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
-		@echo "|    COMPILING FRACT-OL  |"
-		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
-		@echo "\n"
-		@$(CC) $(FDF_FLAGS) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)/$(LIBFTA)
-		@echo "$(_GREEN)[ FRACT-OL DONE ]$(_END)"
+# 		@echo "\n"
+# 		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
+# 		@echo "|    COMPILING FRACT-OL  |"
+# 		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
+# 		@echo "\n"
+		$(CC) $(FRACT_FLAGS) $(OPENGL_FLAGS) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)/$(LIBFTA)
+# 		@echo "$(_GREEN)[ FRACT-OL DONE ]$(_END)"
 
 clean :
 	@make clean -C $(LIBFT)
@@ -85,7 +89,7 @@ re : fclean all
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -c $< -o $@
 
 # opengl compilation:
 # gcc -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew -framework AppKit -framework OpenGl opengl.c ft_shader_opengl.c file.c ft_control_gl.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fract.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/20 17:40:08 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/21 03:05:05 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 # include <pthread.h>
 # include <strings.h>
 # include <math.h>
-# include "../libftprintf/include/libprintf.h"
+# include "libprintf.h"
+# include <time.h>
 
-# define FENETRE_X (1500)
-# define FENETRE_Y (1286)
+# define FENETRE_X (1500 / 2)
+# define FENETRE_Y (1286 / 2)
 # define R 0x00FF0000
 # define G 0x0000FF00
 # define B 0x000000FF
@@ -71,6 +72,7 @@ typedef struct	s_fract
 	double		step_y;
 	int			fract;
 	int			info;
+	int			opengl;
 	
 	double		x_a;
 	double		x_b;
@@ -85,8 +87,6 @@ typedef struct	s_fract
 	double		c_i;
 	double		z_r;
 	double		z_i;
-	double		size_x;
-	double		size_y;
 	int			div;
 	int			div_q;
 	int			mouse_button;
@@ -121,7 +121,10 @@ void	ft_init_newton(t_fract *fract);
 
 void	ft_mdb_julia_semi_opti(t_fract *f);
 
-// void	ft_start_fract(t_fract *fract, int mode);
+void	ft_start_fract(t_fract *fract);
 
+int		main_mlx(t_fract *fract);
+
+int		main_opengl(void);
 
 #endif

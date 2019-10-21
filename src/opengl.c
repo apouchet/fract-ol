@@ -6,13 +6,13 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/17 13:39:04 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 03:01:56 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gl.h"
 
-int		ft_init_glfw_gl(t_gl *gl)
+static int		ft_init_glfw_gl(t_gl *gl)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -35,7 +35,7 @@ int		ft_init_glfw_gl(t_gl *gl)
 	return (ft_shaders("shader.vs", "shader.fs", gl));
 }
 
-void	ft_gl_buffer(t_gl *gl)
+static void	ft_gl_buffer(t_gl *gl)
 {
 	static float points[] = {1.0f, 1.0f, 0.0f, -1.0f, 1.0f, 0.0f,
 		-1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f};
@@ -65,26 +65,29 @@ void	ft_init_data(t_gldata *data)
 	data->y = 0;
 }
 
-int		main(void)
+int		main_opengl(void)
 {
 	t_gl		gl;
 	t_gldata	data;
+	int			exit;
 
+	exit = 0;
 	if (ft_init_glfw_gl(&gl) < 0)
 		return (-1);
 	ft_gl_buffer(&gl);
 	ft_bzero(&data, sizeof(t_gldata));
 	ft_init_data(&data);
 	while (glfwGetKey(gl.window, GLFW_KEY_ESCAPE) != GLFW_PRESS
-		&& !glfwWindowShouldClose(gl.window))
+		&& !glfwWindowShouldClose(gl.window) && !exit)
 	{
 		glUseProgram(gl.program_id);
-		ft_control(&gl, &data);
+		if (ft_control(&gl, &data) == 1)
+			exit = 1;
 		glBindVertexArray(gl.vao);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		glfwPollEvents();
 		glfwSwapBuffers(gl.window);
 	}
 	glfwTerminate();
-	return (0);
+	return (exit);
 }

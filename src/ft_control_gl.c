@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/20 18:40:41 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 02:59:41 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static void		ft_move_zoom(t_gl *gl, t_gldata *data)
 		data->y = data->y - data->step;
 }
 
-void			ft_control(t_gl *gl, t_gldata *data)
+int		ft_control(t_gl *gl, t_gldata *data)
 {
 	if (glfwGetKey(gl->window, GLFW_KEY_D) == GLFW_PRESS)
 	{
@@ -124,4 +124,7 @@ void			ft_control(t_gl *gl, t_gldata *data)
 	ft_mouse(gl, data);
 	ft_move_zoom(gl, data);
 	ft_color_fractal(gl, data);
+	if (glfwGetKey(gl->window, GLFW_KEY_ENTER) == GLFW_PRESS)
+		return (1);
+	return (0);
 }

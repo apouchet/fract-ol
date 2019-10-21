@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/20 19:46:06 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/21 02:51:25 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int		ft_key_color_and_mode(int key, t_fract *fract)
 
 int		ft_key(int key, t_fract *fract)
 {
-	// printf("key = %d\n", key);
+	printf("key = %d\n", key);
 	//printf("%d\n", key);
 	// printf("iteration_max = %d\n", fract->iteration_max);
 	// printf("nb thread = %d\n", fract->nb_thread);
@@ -132,6 +132,17 @@ int		ft_key(int key, t_fract *fract)
 		fract->nb_thread++;	
 	if (key == 35)
 		ft_screen(fract);
+	else if (key == 36)
+	{
+		fract->opengl = 1;
+		mlx_destroy_window(fract->mlx_ptr, fract->win_ptr);
+		if (main_opengl() == 0)
+			exit(0);
+		fract->win_ptr =
+		mlx_new_window(fract->mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");
+		main_mlx(fract);
+		fract->opengl = 0;
+	}
 	else if (key == 53)
 		exit(0);
 	else if (key == 2)

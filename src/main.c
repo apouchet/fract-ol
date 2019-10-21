@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/20 19:40:39 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/21 03:31:29 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int		print_usage(void)
 
 int		ft_affich(t_fract *fract)
 {
+	if (fract->opengl == 1)
+		return (1);
 	int	i;
 	int	j;
 	char *tmp;
@@ -94,34 +96,40 @@ void	ft_screen(t_fract *fract)
 	int		fd;
 	int		*print;
 	int		mode_tmp;
+	int		info_tmp;
 
-	if (!(print = (int*)malloc(sizeof(int) * (FENETRE_X * FENETRE_Y * 4))))
-		return ;
+	time_t curtime;
+	time(&curtime);
+	printf("Current time = %s", ctime(&curtime));
+
+	
+	info_tmp = fract->info;
 	mode_tmp = fract->mode;
+	fract->info = 0;
 	fract->mode = 0;
 	ft_affich(fract);
+	fract->info = info_tmp;
 	fract->mode = mode_tmp;
 
-	tga.id_length = 0;
-	tga.colour_map = 0;
+	ft_bzero(&tga, sizeof(t_tga));
 	tga.data_type = 2;
-	tga.colour_origin = 0;
-	tga.colour_length = 0;
-	tga.colour_depth = 0;
-	tga.x_origin = 0;
-	tga.y_origin = 0;
 	tga.width = FENETRE_X;
 	tga.height = FENETRE_Y;
 	tga.bpp = 8 * 4;
 	tga.imagedescriptor = 32;
-	fd = open("a.tga", O_RDWR | O_CREAT , 0777);
-	write(fd, &tga, 7);
-	write(fd, &tga.colour_depth, 1);
-	write(fd, &tga.x_origin, 10);
+	
+	if (!(print = (int*)malloc(sizeof(int) * (FENETRE_X * FENETRE_Y * 4))))
+		return ;
 	for (int i = 0; i < FENETRE_X * FENETRE_Y; i++)
 		print[i] = fract->img[i] + 0xFF000000;
-	if (write(fd, print, FENETRE_X * FENETRE_Y * 4) == -1)
+	if ((fd = open(ft_strcat(&ctime(&curtime)[4], ".tga"), O_RDWR | O_CREAT, 0777))
+		|| write(fd, &tga, 7) < 0 || write(fd, &tga.colour_depth, 1) < 0
+		|| write(fd, &tga.x_origin, 10) < 0
+		|| write(fd, print, FENETRE_X * FENETRE_Y * 4) < 0)
 		perror("Error : ");
+	
+	// if (write(fd, print, FENETRE_X * FENETRE_Y * 4) < 0)
+		// perror("Error : ");
 	close(fd);
 	free(print);
 }
@@ -156,10 +164,12 @@ void	ft_init_newton(t_fract *fract)
 	fract->y_b = 1;
 }
 
-static void	ft_start_fract(t_fract *fract)
+void	ft_start_fract(t_fract *fract)
 {
+	fract->opengl = 0;
 	fract->mlx_ptr = mlx_init();
-	fract->win_ptr = mlx_new_window(fract->mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");
+	fract->win_ptr =
+	mlx_new_window(fract->mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");
 	fract->p_img = mlx_new_image(fract->mlx_ptr, FENETRE_X, FENETRE_Y);
 	fract->img = (int*)mlx_get_data_addr(fract->p_img, &fract->p.bpp,
 		&fract->p.sl, &fract->p.endian);
@@ -172,22 +182,27 @@ static void	ft_start_fract(t_fract *fract)
 	
 }
 
+int		main_mlx(t_fract *fract)
+{
+	mlx_loop_hook(fract->mlx_ptr, &ft_affich, fract);
+	mlx_hook(fract->win_ptr, 6, 0, mouse_release_hook, fract);
+	mlx_hook(fract->win_ptr, 5, 0, &mouse_release, fract);
+	mlx_mouse_hook(fract->win_ptr, &mouse_hook, fract);
+	mlx_hook(fract->win_ptr, 17, 0, red_cross, NULL);
+	mlx_hook(fract->win_ptr, 2, 0, &ft_key, fract);
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_fract		fract;
 
-	fract.fract = 0;
+	fract.opengl = 0;
 	if (!(parsing(&fract, argc, argv)))
 		return (print_usage());
 	ft_start_fract(&fract);
-	mlx_hook(fract.win_ptr, 2, 0, &ft_key, &fract);
-	mlx_loop_hook(fract.mlx_ptr, &ft_affich, &fract);
-	mlx_hook(fract.win_ptr, 6, 0, mouse_release_hook, &fract);
-	mlx_hook(fract.win_ptr, 5, 0, &mouse_release, &fract);
-	mlx_mouse_hook(fract.win_ptr, &mouse_hook, &fract);
-	mlx_hook(fract.win_ptr, 17, 0, red_cross, NULL);
+	main_mlx(&fract);
 	mlx_loop(fract.mlx_ptr);
-	return (0);
 }
 
 // gcc -lmlx -framework OpenGL -framework AppKit main.c ft_mandelbrot.c
