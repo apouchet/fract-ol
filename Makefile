@@ -29,6 +29,7 @@ SRC_PATH = ./src/
 OBJ_PATH = ./obj/
 
 INC_PATH = ./include/
+INC_BREW = ~/.brew/include/
 INC_NAME =	fract.h
 
 
@@ -36,8 +37,9 @@ LIBFT				=	./libftprintf/
 LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
 
-FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
-OPENGL_FLAGS = -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew
+FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
+OPENGL_FLAGS = -L /Users/apouchet/.brew/lib -lglfw -lglew
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
@@ -54,9 +56,9 @@ _GREY = $'\033[37m$'
 _END=$'\033[0m$'
 
 
-INC	=	$(addprefix $(INC_PATH), $(INC_NAME))
-SRC =	$(addprefix $(SRC_PATH), $(SRC_NAME))
-OBJ =	$(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
+INC	= $(addprefix $(INC_PATH), $(INC_NAME))
+SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
+OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 .PHONY :	all clean fclean re
 
@@ -90,7 +92,7 @@ re : fclean all
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
-	$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -I $(INC_BREW) -c $< -o $@
 
 # opengl compilation:
 # gcc -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew -framework AppKit -framework OpenGl opengl.c ft_shader_opengl.c file.c ft_control_gl.c
