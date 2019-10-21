@@ -22,7 +22,8 @@ SRC_NAME =	main.c 			\
 			file.c			\
 			ft_control_gl.c	\
 			ft_shader_opengl.c\
-			ft_hud.c
+			ft_hud.c 		\
+			ft_screenshot.c
 
 SRC_PATH = ./src/
 

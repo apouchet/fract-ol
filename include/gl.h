@@ -20,9 +20,6 @@
 // #include "libprintf.h"
 #include "../libftprintf/include/libprintf.h"
 
-// # define FENETRE_X 1286
-// # define FENETRE_Y 1500
-
 typedef struct		s_gl
 {
 	GLuint			vertex_id;

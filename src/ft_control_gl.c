@@ -81,7 +81,6 @@ static void		ft_mouse(t_gl *gl, t_gldata *data)
 		data->c_i = (data->c_i - FENETRE_X / 2) / (FENETRE_X / 2);
 	}
 	glfwGetCursorPos(gl->window, &x_prec, &y_prec);
-		printf("data->c_r = %lf, data->c_i = %lf\n", data->c_r, data->c_i);
 }
 
 static void		ft_move_zoom(t_gl *gl, t_gldata *data)
@@ -111,6 +110,7 @@ static void		ft_move_zoom(t_gl *gl, t_gldata *data)
 
 void		ft_control(t_gl *gl, t_gldata *data)
 {
+	char *buff;
 	if (glfwGetKey(gl->window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		ft_printf("MaxIterations = %f\n", data->maxIt);
@@ -121,6 +121,14 @@ void		ft_control(t_gl *gl, t_gldata *data)
 	{
 		ft_printf("MaxIterations = %f\n", data->maxIt);
 		data->maxIt--;
+	}
+
+	else if (glfwGetKey(gl->window, GLFW_KEY_P) == GLFW_PRESS)
+	{
+		buff = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3));
+		glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buff);
+		ft_screen_gl(buff);
+		free(buff);
 	}
 	ft_mouse(gl, data);
 	ft_move_zoom(gl, data);

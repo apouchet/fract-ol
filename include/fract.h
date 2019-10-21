@@ -25,8 +25,8 @@
 # include "libprintf.h"
 # include <time.h>
 
-# define FENETRE_X (1500)
-# define FENETRE_Y (1286)
+# define FENETRE_X 1500
+# define FENETRE_Y 1286
 # define SCREENSHOT "Desktop"
 # define R 0x00FF0000
 # define G 0x0000FF00
@@ -75,6 +75,7 @@ typedef struct	s_fract
 	double		step_x;
 	double		step_y;
 	int			fract;
+	int			size;
 	int			info;
 	int			opengl;
 	
@@ -134,5 +135,12 @@ int		main_opengl(t_fract *fract);
 int		ft_color(int i, t_fract f, int x, int y);
 
 void		ft_hud(t_fract *fract);
+
+void	ft_init_screenshot(t_tga *tga, t_fract *fract);
+
+void	ft_screen_gl(char *buff);
+
+char	*ft_create_path(char *target, char *type, char *name, int offset);
+
 
 #endif

@@ -20,7 +20,7 @@ static int		ft_init_glfw_gl(t_gl *gl)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	gl->window = glfwCreateWindow(FENETRE_X, FENETRE_Y, "OpenGL", NULL, NULL);
+	gl->window = glfwCreateWindow(FENETRE_X, FENETRE_X, "OpenGL", NULL, NULL);
 	glfwMakeContextCurrent(gl->window);
 	if (!(gl->window))
 	{
