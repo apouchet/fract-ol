@@ -33,6 +33,8 @@ int		mouse_release_hook(int x, int y, t_fract *fract)
 	{
 		fract->c_r = (x - FENETRE_X / 2) / (FENETRE_X / (fract->x_b - fract->x_a));
 		fract->c_i = (y - FENETRE_Y / 2) / (FENETRE_Y / (fract->y_b - fract->y_a));
+		printf("fract->c_r = %lf, fract->c_i = %lf\n", fract->c_r, fract->c_i);
+
 	}
 	fract->mouse_x = (x - FENETRE_X / 2) / (FENETRE_X / (fract->x_b - fract->x_a));
 	fract->mouse_y = (y - FENETRE_Y / 2) / (FENETRE_Y / (fract->y_b - fract->y_a));

@@ -47,6 +47,7 @@ typedef struct		s_gldata
 	double			step;
 	int				nb_zoom;
 	int				fractal;
+	int				exit;
 }					t_gldata;
 
 typedef struct		s_shd
@@ -67,8 +68,8 @@ int					ft_size_file(char *name);
 
 char				*ft_get_file(char *name, char *file);
 
-int					ft_control(t_gl *gl, t_gldata *data);
+void				ft_control(t_gl *gl, t_gldata *data);
 
-void				ft_init_data(t_gldata *data);
+void				ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl);
 
 #endif

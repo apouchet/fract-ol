@@ -57,7 +57,7 @@ static void		ft_color_fractal(t_gl *gl, t_gldata *data)
 		|| glfwGetKey(gl->window, GLFW_KEY_3) == GLFW_PRESS
 		|| glfwGetKey(gl->window, GLFW_KEY_4) == GLFW_PRESS
 		|| glfwGetKey(gl->window, GLFW_KEY_SPACE) == GLFW_PRESS)
-		ft_init_data(data);
+		ft_init_data(data, NULL, gl);
 	ft_send_data(gl, data, color);
 }
 
@@ -81,6 +81,7 @@ static void		ft_mouse(t_gl *gl, t_gldata *data)
 		data->c_i = (data->c_i - FENETRE_X / 2) / (FENETRE_X / 2);
 	}
 	glfwGetCursorPos(gl->window, &x_prec, &y_prec);
+		printf("data->c_r = %lf, data->c_i = %lf\n", data->c_r, data->c_i);
 }
 
 static void		ft_move_zoom(t_gl *gl, t_gldata *data)
@@ -103,12 +104,12 @@ static void		ft_move_zoom(t_gl *gl, t_gldata *data)
 	else if (glfwGetKey(gl->window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		data->x = data->x + data->step;
 	else if (glfwGetKey(gl->window, GLFW_KEY_UP) == GLFW_PRESS)
-		data->y = data->y + data->step;
-	else if (glfwGetKey(gl->window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		data->y = data->y - data->step;
+	else if (glfwGetKey(gl->window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		data->y = data->y + data->step;
 }
 
-int		ft_control(t_gl *gl, t_gldata *data)
+void		ft_control(t_gl *gl, t_gldata *data)
 {
 	if (glfwGetKey(gl->window, GLFW_KEY_D) == GLFW_PRESS)
 	{
@@ -125,6 +126,5 @@ int		ft_control(t_gl *gl, t_gldata *data)
 	ft_move_zoom(gl, data);
 	ft_color_fractal(gl, data);
 	if (glfwGetKey(gl->window, GLFW_KEY_ENTER) == GLFW_PRESS)
-		return (1);
-	return (0);
+		data->exit = 1;
 }

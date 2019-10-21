@@ -27,6 +27,7 @@
 
 # define FENETRE_X (1500)
 # define FENETRE_Y (1286)
+# define SCREENSHOT "Desktop"
 # define R 0x00FF0000
 # define G 0x0000FF00
 # define B 0x000000FF
@@ -128,7 +129,7 @@ void	ft_start_fract(t_fract *fract);
 
 int		main_mlx(t_fract *fract);
 
-int		main_opengl(void);
+int		main_opengl(t_fract *fract);
 
 int		ft_color(int i, t_fract f, int x, int y);
 

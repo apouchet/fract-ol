@@ -55,9 +55,9 @@ void main()
 	else if (color_switch == 0)
 		color = vec3(float(iter) / (MaxIterations / 10), float(iter) / (MaxIterations / 2), float(iter) / MaxIterations);
 	else if (color_switch == 1)
-		color = vec3(float(iter) / (MaxIterations / 2), float(iter) / (MaxIterations / 10), float(iter) / (MaxIterations));
-	else if (color_switch == 2)
 		color = vec3(float(iter) / MaxIterations, float(iter) / (MaxIterations / 2), float(iter) / (MaxIterations / 10));
+	else if (color_switch == 2)
+		color = vec3(float(iter) / (MaxIterations / 2), float(iter) / (MaxIterations / 10), float(iter) / (MaxIterations));
 
 	pixelColor = vec4(color, 1.0);
 }
