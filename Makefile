@@ -6,7 +6,7 @@
 #    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/20 22:38:54 by apouchet         ###   ########.fr        #
+#    Updated: 2019/10/21 11:13:34 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC_NAME =	main.c 			\
 			opengl.c		\
 			file.c			\
 			ft_control_gl.c	\
-			ft_shader_opengl.c
+			ft_shader_opengl.c\
+			ft_hud.c
 
 SRC_PATH = ./src/
 

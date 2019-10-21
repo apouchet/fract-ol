@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 03:05:05 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 11:14:08 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define R 0x00FF0000
 # define G 0x0000FF00
 # define B 0x000000FF
+# define W 0x00FFFFFF
 
 typedef struct	s_picture
 {
@@ -126,5 +127,7 @@ void	ft_start_fract(t_fract *fract);
 int		main_mlx(t_fract *fract);
 
 int		main_opengl(void);
+
+void	ft_hud(t_fract *fract);
 
 #endif
