@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fract.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 11:14:08 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 16:21:46 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct	s_fract
 	int			scale;
 	int			iteration_max;
 	int			mode;
+	int			fix;
+	int			fdf;
 	double		mouse_x;
 	double		mouse_y;
 	double		step_x;
@@ -128,6 +130,8 @@ int		main_mlx(t_fract *fract);
 
 int		main_opengl(void);
 
-void	ft_hud(t_fract *fract);
+int		ft_color(int i, t_fract f, int x, int y);
+
+void		ft_hud(t_fract *fract);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mandelbrot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 11:11:27 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/21 16:21:07 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,12 @@ static int	ft_calcul_mdb_julia(t_fract fract, int x, int y)
 	return (i);
 }
 
-static int	ft_color(int i, t_fract f, int x, int y)
+int		ft_color(int i, t_fract f, int x, int y)
 {
 	int		color;
 
+	if (f.fdf)
+		return (i);
 	if (i == f.iteration_max)
 		color = 0;
 	else if (i % (f.div) <= f.div / 6)
@@ -128,7 +130,7 @@ static int	ft_color(int i, t_fract f, int x, int y)
 		color = R + G - ((G * 3 * (1 - i / f.div)) & G);
 	else
 		color = R + ((B * 6 * (1 - i / f.div)) & B);
-	if (f.info == 2 && ((x > FENETRE_X - 475 && y > FENETRE_Y - 175)
+	if (f.info == 2 && ((x > FENETRE_X - 475 && y > FENETRE_Y - 210)
 		|| (x < 175 && y > FENETRE_Y - 90)))
 			color = ((int)((color & R) * 0.3) & R)
 		+ ((int)((color & G) * 0.3) & G) + ((int)((color & B) * 0.3) & B);

@@ -3,6 +3,7 @@ fractol
 # Prerequisites
 *.d
 *.tga
+*.fdf
 
 # Object files
 *.o

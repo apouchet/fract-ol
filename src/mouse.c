@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:35 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/16 13:44:56 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/21 14:21:25 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		mouse_release_hook(int x, int y, t_fract *fract)
 	static int y_prec;
 	double tmp;
 
-	if (fract->mouse_button == 1)
+	if (fract->mouse_button == 1 && fract->fix)
 	{
 		tmp = (x - x_prec) / (FENETRE_X / (fract->x_b - fract->x_a));
 		fract->x_a -= (x - x_prec) / (FENETRE_X / (fract->x_b - fract->x_a));
@@ -29,7 +29,7 @@ int		mouse_release_hook(int x, int y, t_fract *fract)
 	}
 	x_prec = x;
 	y_prec = y;
-	if (fract->mouse_button == 2)
+	if (fract->mouse_button == 2 || !(fract->fix))
 	{
 		fract->c_r = (x - FENETRE_X / 2) / (FENETRE_X / (fract->x_b - fract->x_a));
 		fract->c_i = (y - FENETRE_Y / 2) / (FENETRE_Y / (fract->y_b - fract->y_a));
