@@ -136,7 +136,7 @@ int		ft_key(int key, t_fract *fract)
 	{
 		fract->opengl = 1;
 		mlx_destroy_window(fract->mlx_ptr, fract->win_ptr);
-		if (main_opengl() == 0)
+		if (main_opengl(fract) == 0)
 			exit(0);
 		fract->win_ptr =
 		mlx_new_window(fract->mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");

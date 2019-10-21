@@ -21,7 +21,10 @@ int		ft_size_file(char *name)
 
 	len = 0;
 	if ((fd = open(name, O_RDONLY)) < 0)
+	{
+		ft_printf("Error fail to open file - %s\n", name);
 		return (-1);
+	}
 	while ((rd = read(fd, buff, 1000)) > 0)
 		len += rd;
 	close(fd);
