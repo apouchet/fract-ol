@@ -3,15 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/21 13:16:39 by floblanc         ###   ########.fr        #
+#    Updated: 2019/10/22 00:23:13 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
-
+APP_NAME = fract-ol
+FRAMEWORK = /System/Library/Frameworks/OpenGL.framework /System/Library/Frameworks/AppKit.framework
+SHADER = ./shader/
 SRC_NAME =	main.c 			\
 			ft_mandelbrot.c	\
 			ft_zoom.c		\
@@ -38,9 +40,10 @@ LIBFT				=	./libftprintf/
 LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
 
-FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
-# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
-OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
+# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
+# OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
+OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
@@ -95,5 +98,24 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
 	$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -I $(INC_BREW) -c $< -o $@
 
+app : all
+	mkdir -p "./build/$(NAME).app"/Contents/{MacOS,Resources}
+	cp -R $(FRAMEWORK) "./build/$(NAME).app/Contents/Resources/"
+	cp -R $(SHADER) "./build/$(NAME).app/Contents/Resources/$(SHADER)"
+	cp Info.plist "./build/$(NAME).app/Contents/"
+	sed -e "s/NAME/$(NAME)/g" -i "" "./build/$(NAME).app/Contents/Info.plist"
+	cp $(NAME) "./build/$(NAME).app/Contents/MacOS/$(NAME)"
+
+app_clean :
+	rm -rf "./build/$(NAME).app/"
+
+app_re : app_clean app
+
+
 # opengl compilation:
 # gcc -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew -framework AppKit -framework OpenGl opengl.c ft_shader_opengl.c file.c ft_control_gl.c
+
+#  /Users/AntoinePouchet/Desktop/Project/fract-ol/build/fractol.app/Contents/MacOS/fractol
+# gcc -I ./include -I ./libftprintf/include -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit -L /usr/local/Cellar/ -lglfw -lglew -Wall -Werror -Wextra -o test  ./src/main.c  ./src/ft_mandelbrot.c  ./src/ft_zoom.c  ./src/key.c  ./src/mouse.c  ./src/parsing.c  ./src/opengl.c  ./src/file.c  ./src/ft_control_gl.c ./src/ft_shader_opengl.c ./src/ft_hud.c  ./src/ft_screenshot.c ./libftprintf/libprintf.a
+
+

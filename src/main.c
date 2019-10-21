@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 14:56:42 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/21 23:05:08 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int		main(int argc, char **argv)
 	t_fract		fract;
 
 	fract.opengl = 0;
-	fract.fract = 0;
+	fract.fract = 1;
 	if (!(parsing(&fract, argc, argv)))
 		return (print_usage());
 	ft_start_fract(&fract);

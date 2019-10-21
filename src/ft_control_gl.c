@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 02:59:41 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/22 00:25:37 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void		ft_mouse(t_gl *gl, t_gldata *data)
 	{
 		glfwGetCursorPos(gl->window, &x, &y);
 		data->x -= (x - x_prec) * data->step / 3.2;
-		data->y += (y - y_prec) * data->step / 3.2;
+		data->y -= (y - y_prec) * data->step / 3.2;
 	}
 	else if (glfwGetMouseButton(gl->window, GLFW_MOUSE_BUTTON_2) == GLFW_PRESS)
 	{

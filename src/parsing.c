@@ -3,22 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/21 13:45:25 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/22 00:27:21 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 
-int		parsing(t_fract *fract, int ac, char **av)
+// Contents/MacOS/
+int		ft_check_app(char *exe)
 {
 	int	i;
 
-	i = 0;
-	if (ac > 3)
+	i = ft_strlen(exe);
+	while (i > 0 && exe[i] != '/')
+		i--;
+	if (i > 15 && !ft_strncmp(&exe[i - 15], "/Contents/MacOS/", 15))
+		return (1);
+	else
 		return (0);
+}
+
+int		parsing(t_fract *fract, int ac, char **av)
+{
+	int i;
+
+	i = 0;
+	if (ac > 3 || (ac == 1 && !ft_check_app(av[0])) || ac < 1)
+		return (0);
+	fract->fract = (ac == 1 ? 1 : 0);
 	while (++i < ac)
 	{
 		if (!(fract->fract) && !(ft_strcmp("Mandelbrot", av[i])))
@@ -39,3 +54,4 @@ int		parsing(t_fract *fract, int ac, char **av)
 	fract->fract--;
 	return (1);
 }
+

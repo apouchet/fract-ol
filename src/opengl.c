@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opengl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 13:24:52 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/21 23:00:59 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int		ft_init_glfw_gl(t_gl *gl)
 	ft_printf("OpenGL version: %s\n", glGetString(GL_VERSION));
 	ft_printf("Shader version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	return (ft_shaders("./shader/shader.vs", "./shader/shader.fs", gl));
+	// return (ft_shaders("./shader/shader.vs", "./shader/shader.fs", gl));
 }
 
 static void	ft_gl_buffer(t_gl *gl)
