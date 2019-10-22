@@ -40,10 +40,10 @@ LIBFT				=	./libftprintf/
 LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
 
-# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
-FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
-# OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
-OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
+FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
+OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
+# OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
@@ -73,13 +73,13 @@ $(LIBFT)/$(LIBFTA):
 	@echo "$(_GREEN)[ LIBPRINTF DONE ]$(_END)"
 
 $(NAME) : $(LIBFT)/$(LIBFTA) $(OBJ)
-# 		@echo "\n"
-# 		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
-# 		@echo "|    COMPILING FRACT-OL  |"
-# 		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
-# 		@echo "\n"
-		$(CC) $(FRACT_FLAGS) $(OPENGL_FLAGS) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)/$(LIBFTA)
-# 		@echo "$(_GREEN)[ FRACT-OL DONE ]$(_END)"
+		@echo "\n"
+		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
+		@echo "|    COMPILING FRACT-OL  |"
+		@echo "$(_RED)|_-_-_-_-_-_-_-_-_-_-_-_-|$(_END)"
+		@echo "\n"
+		@$(CC) $(FRACT_FLAGS) $(OPENGL_FLAGS) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)/$(LIBFTA)
+		@echo "$(_GREEN)[ FRACT-OL DONE ]$(_END)"
 
 clean :
 	@make clean -C $(LIBFT)
@@ -96,18 +96,18 @@ re : fclean all
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
-	$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -I $(INC_BREW) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -I $(INC_BREW) -c $< -o $@
 
 app : all
-	mkdir -p "./build/$(NAME).app"/Contents/{MacOS,Resources}
-	cp -R $(FRAMEWORK) "./build/$(NAME).app/Contents/Resources/"
-	cp -R $(SHADER) "./build/$(NAME).app/Contents/Resources/$(SHADER)"
-	cp Info.plist "./build/$(NAME).app/Contents/"
-	sed -e "s/NAME/$(NAME)/g" -i "" "./build/$(NAME).app/Contents/Info.plist"
-	cp $(NAME) "./build/$(NAME).app/Contents/MacOS/$(NAME)"
+	mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
+	cp -Rf $(FRAMEWORK) "./$(NAME).app/Contents/Resources/"
+	cp -R $(SHADER) "./$(NAME).app/Contents/Resources/$(SHADER)"
+	cp Info.plist "./$(NAME).app/Contents/"
+	sed -e "s/NAME/$(NAME)/g" -i "" "./$(NAME).app/Contents/Info.plist"
+	cp $(NAME) "./$(NAME).app/Contents/MacOS/$(NAME)"
 
 app_clean :
-	rm -rf "./build/$(NAME).app/"
+	rm -rf "./$(NAME).app/"
 
 app_re : app_clean app
 

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 16:21:07 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/22 19:02:31 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,45 @@
 
 static void	ft_switch(t_fract *fract, int x, int y)
 {
-	if (fract->fract == 0  || fract->fract == 2 || fract->fract == 4)
+	if (fract->fract == 0  || fract->fract == 2)
 	{
 		fract->z_r = 0;
 		fract->z_i = 0;
 		fract->c_r = x / fract->ratio_x + fract->x_a;
 		fract->c_i = y / fract->ratio_y + fract->y_a;
 	}
-	else if (fract->fract == 1 || fract->fract == 3)
+	else if (fract->fract == 1 || fract->fract == 3 || fract->fract == 4)
 	{
 		fract->z_r = x / fract->ratio_x + fract->x_a;
 		fract->z_i = y / fract->ratio_y + fract->y_a;
 	}
 }
 
-#include <complex.h>
-
 static int	ft_calcul_newton(t_fract fract, int x, int y)
 {
-	complex double	z;
-	complex double	r1;
-	complex double	r2;
-	complex double	r3;
+	double tmp;
+	double div;
 	int i;
-	
+	double pow_r;
+	double pow_i;
+
 	i = 0;
 	ft_switch(&fract, x, y);
-
-	z = fract.c_r + fract.c_i * I;
-	r1 = 1;
-	r2 = -0.5 + sin(2 * M_PI / 3) * I;
-	r3 = -0.5 - sin(2 * M_PI / 3) * I;
 	while (++i < fract.iteration_max)
 	{
-		 z = z-(z*z*z-1.0)/(z*z*3.0);
-		 if (cabs(z - r1) < 0.0001)
-		 	return (R - (int)(((double)i / fract.iteration_max) * (double)R) & R);
-		else if (cabs(z - r2) < 0.0001)
+		pow_r = fract.z_r * fract.z_r;
+		pow_i = fract.z_i * fract.z_i;
+		div = 3.0 * (pow_r + pow_i) * (pow_r + pow_i);
+		tmp = fract.z_r;
+		fract.z_r -= (pow_r * pow_r * fract.z_r + 2.0 * pow_r * fract.z_r * pow_i + fract.z_r * pow_i * pow_i - pow_r + pow_i) / div;
+		fract.z_i -= (pow_i * pow_i * fract.z_i + pow_r * pow_r * fract.z_i + 2 * pow_r * pow_i * fract.z_i + 2 * tmp * fract.z_i) / div;
+		if (sqrt(pow(fract.z_r - 1, 2) + pow(fract.z_i, 2)) < 0.0001)
+	 		return (R - (int)(((double)i / fract.iteration_max) * (double)R) & R);
+		else if (sqrt(pow(fract.z_r + 0.5, 2)
+			+ pow(fract.z_i - sqrt(3) / 2, 2)) < 0.0001)
 		 	return (G - (int)(((double)i / fract.iteration_max) * (double)G) & G);
-		else if (cabs(z - r3) < 0.0001) 
+		else if (sqrt(pow(fract.z_r + 0.5, 2)
+			+ pow(fract.z_i + sqrt(3) / 2, 2)) < 0.0001)
 		 	return (B - (int)(((double)i / fract.iteration_max) * (double)B) & B);
 	}
 	return (i);

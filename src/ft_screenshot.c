@@ -32,7 +32,7 @@ char	*ft_create_path(char *target, char *type, char *name, int offset)
 	}
 	path = ft_strcat(ft_strcat(ft_strcat(path, target), "/"), name);
 	path[len - ft_strlen(type) - offset] = 0;
-	path = ft_strcat(path, ".tga");
+	path = ft_strcat(path, type);
 	return (path);
 }
 

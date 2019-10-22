@@ -123,37 +123,33 @@ void	ft_build_fdf(t_fract *f)
 {
 	int		fd;
 	int		i;
-	int		mode_tmp;
-	int		info_tmp;
+	char	*name;
 	char	*tmp;
-	
+
 	time_t curtime;
 	time(&curtime);
 	printf("Current time = %s", ctime(&curtime));
-
-	if (!(fd = open(ft_strcat(&ctime(&curtime)[4], ".fdf")
-		, O_RDWR | O_CREAT, 0777)))
+	if (!(name = ft_create_path(BUILD_FDF, ".fdf", &ctime(&curtime)[4], 0)))
+	{
+		printf("fail to malloc for fdf\n");
+		return ;
+	}
+	if (!(fd = open(name, O_RDWR | O_CREAT, 0777)))
 		perror("Error ");
 	f->fdf = 1;
-	info_tmp = f->info;
-	mode_tmp = f->mode;
-	f->info = 0;
-	f->mode = 0;
 	ft_affich(f);
-	f->info = info_tmp;
-	f->mode = mode_tmp;
 	f->fdf = 0;
 	i = -1;
 	while (++i / FENETRE_X < FENETRE_Y)
-	{
-			tmp = ft_itoa(f->img[i]);
-			write(fd, tmp, ft_strlen(tmp));
-			ft_strdel(&tmp);
-			write(fd, ",0x", 3);
-			tmp = ft_itoa_base(ft_color(f->img[i], *f, i % FENETRE_X, i / FENETRE_X), "0123456789ABCDEF");
-			write(fd, tmp, ft_strlen(tmp));
-			ft_strdel(&tmp);
-			write(fd, (i % FENETRE_X == FENETRE_X - 1 ? "\n" : " "), 1);
+	{		
+		tmp = ft_itoa(f->img[i]);
+		write(fd, tmp, ft_strlen(tmp));
+		ft_strdel(&tmp);
+		write(fd, ",0x", 3);
+		tmp = ft_itoa_base(ft_color(f->img[i], *f, i % FENETRE_X, i / FENETRE_X), "0123456789ABCDEF");
+		write(fd, tmp, ft_strlen(tmp));
+		ft_strdel(&tmp);
+		write(fd, (i % FENETRE_X == FENETRE_X - 1 ? "\n" : " "), 1);
 	}
 	close(fd);
 }
