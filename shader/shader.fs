@@ -70,19 +70,19 @@ void main()
 			tmp = Creal;
 			Creal -= (power_r * power_r * Creal + 2.0 * power_r * Creal * power_i + Creal * power_i * power_i - power_r + power_i) / div;
 			Cimag -= (power_i * power_i * Cimag + power_r * power_r * Cimag + 2 * power_r * power_i * Cimag + 2 * tmp * Cimag) / div;
-			if (sqrt((Creal - 1) * (Creal - 1) + power_i) < 0.00001)
+			if (sqrt((Creal - 1) * (Creal - 1) + (Cimag * Cimag)) < 0.0001)
 			{
 				color = vec3(1 - 1 / ((MaxIterations / iter) / 4), 0, 0);
 				break ;
 			}
 			else if (sqrt((Creal + 0.5) * (Creal + 0.5)
-				+ (Cimag - sqrt(3) / 2) * (Cimag - sqrt(3) / 2)) < 0.00001)
+				+ (Cimag - sqrt(3) / 2) * (Cimag - sqrt(3) / 2)) < 0.0001)
 			{
 				color = vec3(0, 1 - 1 / ((MaxIterations / iter) / 4), 0);
 				break ;
 			}
-			else if (sqrt(pow(Creal + 0.5, 2)
-				+ (Cimag + sqrt(3) / 2) * (Cimag + sqrt(3) / 2)) < 0.00001)
+			else if (sqrt((Creal + 0.5) * (Creal + 0.5)
+				+ (Cimag + sqrt(3) / 2) * (Cimag + sqrt(3) / 2)) < 0.0001)
 			{
 				color = vec3(0, 0,1 - 1 / ((MaxIterations / iter) / 4));
 				break ;

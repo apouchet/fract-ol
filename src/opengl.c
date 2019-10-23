@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 15:13:49 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:28:32 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl)
 		data->fractal = fract->fract;
 	}
 	data->exit = 0;
-	data->maxIt = 100.0f;
+	data->max_it = 100.0f;
 	data->zoom = 2.0f;
 	data->step = 0.01;
 	data->nb_zoom = 2;

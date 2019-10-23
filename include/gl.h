@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   gl.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:53 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 02:56:51 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:28:32 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GL_H
-#define GL_H
+# define GL_H
 
-#include <fcntl.h>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include "fract.h"
-// #include "libprintf.h"
-#include "../libftprintf/include/libprintf.h"
+# include <fcntl.h>
+# include <GL/glew.h>
+# include <GLFW/glfw3.h>
+# include "fract.h"
+# include "../libftprintf/include/libprintf.h"
 
 typedef struct		s_gl
 {
@@ -38,7 +37,7 @@ typedef struct		s_gldata
 	double			c_r;
 	double			c_i;
 	double			zoom;
-	double			maxIt;
+	double			max_it;
 	double			x;
 	double			y;
 	double			step;
@@ -55,7 +54,6 @@ typedef struct		s_shd
 	GLint			vertex_size;
 	GLint			fragment_size;
 }					t_shd;
-
 
 int					ft_delete_shader(t_gl *gl);
 

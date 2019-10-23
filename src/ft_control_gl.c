@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 14:36:54 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:28:32 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 	unsigned int matloc;
 
 	matloc = glGetUniformLocation(gl->program_id, "MaxIterations");
-	glUniform1f(matloc, data->maxIt);
+	glUniform1f(matloc, data->max_it);
 	matloc = glGetUniformLocation(gl->program_id, "zoom");
 	glUniform1f(matloc, data->zoom);
 	matloc = glGetUniformLocation(gl->program_id, "x");
@@ -114,14 +114,14 @@ void			ft_control(t_gl *gl, t_gldata *data)
 
 	if (glfwGetKey(gl->w, GLFW_KEY_D))
 	{
-		ft_printf("MaxIterations = %f\n", data->maxIt);
-		data->maxIt++;
+		ft_printf("MaxIterations = %f\n", data->max_it);
+		data->max_it++;
 	}
-	else if (data->maxIt > 2
+	else if (data->max_it > 2
 		&& glfwGetKey(gl->w, GLFW_KEY_A))
 	{
-		ft_printf("MaxIterations = %f\n", data->maxIt);
-		data->maxIt--;
+		ft_printf("MaxIterations = %f\n", data->max_it);
+		data->max_it--;
 	}
 	else if (glfwGetKey(gl->w, GLFW_KEY_P))
 	{

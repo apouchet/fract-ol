@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 15:51:05 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:19:14 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,32 @@ static void	ft_switch(t_fract *fract, int x, int y)
 	}
 }
 
-static int	ft_calcul_newton(t_fract f, int x, int y)
+void		newtons_calc(t_fract *f)
 {
 	double	tmp;
-	double	div;
-	int		i;
 	double	pow_r;
 	double	pow_i;
+	double	div;
+
+	pow_r = f->z_r * f->z_r;
+	pow_i = f->z_i * f->z_i;
+	div = 3.0 * (pow_r + pow_i) * (pow_r + pow_i);
+	tmp = f->z_r;
+	f->z_r -= (pow_r * pow_r * f->z_r + 2.0 * pow_r * f->z_r
+	* pow_i + f->z_r * pow_i * pow_i - pow_r + pow_i) / div;
+	f->z_i -= (pow_i * pow_i * f->z_i + pow_r * pow_r * f->z_i + 2
+	* pow_r * pow_i * f->z_i + 2 * tmp * f->z_i) / div;
+}
+
+static int	ft_calcul_newton(t_fract f, int x, int y)
+{
+	int		i;
 
 	i = 0;
 	ft_switch(&f, x, y);
 	while (++i < f.iteration_max)
 	{
-		pow_r = f.z_r * f.z_r;
-		pow_i = f.z_i * f.z_i;
-		div = 3.0 * (pow_r + pow_i) * (pow_r + pow_i);
-		tmp = f.z_r;
-		f.z_r -= (pow_r * pow_r * f.z_r + 2.0 * pow_r * f.z_r
-		* pow_i + f.z_r * pow_i * pow_i - pow_r + pow_i) / div;
-		f.z_i -= (pow_i * pow_i * f.z_i + pow_r * pow_r * f.z_i + 2
-		* pow_r * pow_i * f.z_i + 2 * tmp * f.z_i) / div;
+		newtons_calc(&f);
 		if (sqrt(pow(f.z_r - 1, 2) + pow(f.z_i, 2)) < 0.0001)
 			return (R - (int)(((double)i / f.iteration_max) * (double)R) & R);
 		else if (sqrt(pow(f.z_r + 0.5, 2)

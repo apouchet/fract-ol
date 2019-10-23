@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 14:21:00 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:48:31 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include "libprintf.h"
 # include <time.h>
 
-# define FENETRE_X (1500 / 2)
-# define FENETRE_Y (1286 / 2)
+# define FENETRE_X (1500)
+# define FENETRE_Y (1286)
 # define SCREENSHOT "Desktop"
 # define BUILD_FDF "."
 # define R 0x00FF0000
@@ -41,21 +41,21 @@ typedef struct	s_picture
 	int			endian;
 }				t_picture;
 
-typedef struct		s_tga
+typedef struct	s_tga
 {
-	char			id_length;
-	char			colour_map;
-	char			data_type;
-	short int		colour_origin;
-	short int		colour_length;
-	char			colour_depth;
-	short int		x_origin;
-	short int		y_origin;
-	short int		width;
-	short int		height;
-	char			bpp;
-	char			imagedescriptor;
-}					t_tga;
+	char		id_length;
+	char		colour_map;
+	char		data_type;
+	short int	colour_origin;
+	short int	colour_length;
+	char		colour_depth;
+	short int	x_origin;
+	short int	y_origin;
+	short int	width;
+	short int	height;
+	char		bpp;
+	char		imagedescriptor;
+}				t_tga;
 
 typedef struct	s_fract
 {
@@ -79,7 +79,6 @@ typedef struct	s_fract
 	int			size;
 	int			info;
 	int			opengl;
-	
 	double		x_a;
 	double		x_b;
 	double		y_a;
@@ -88,7 +87,6 @@ typedef struct	s_fract
 	double		ratio_y;
 	int			nb_thread;
 	int			x;
-	
 	double		c_r;
 	double		c_i;
 	double		z_r;
@@ -99,51 +97,51 @@ typedef struct	s_fract
 	t_picture	p;
 }				t_fract;
 
-int		parsing(t_fract *fract, int ac, char ** av);
+int				parsing(t_fract *fract, int ac, char **av);
 
-void	*ft_mandelbrot_julia(void *fract);
+void			*ft_mandelbrot_julia(void *fract);
 
-void	reset_fract(t_fract *fract);
+void			reset_fract(t_fract *fract);
 
-int		ft_key(int key,	t_fract *fract);
+int				ft_key(int key, t_fract *fract);
 
-int		mouse_release_hook(int x, int y, t_fract *fract);
+int				mouse_release_hook(int x, int y, t_fract *fract);
 
-int		mouse_hook(int button, int x, int y, t_fract *fract);
+int				mouse_hook(int button, int x, int y, t_fract *fract);
 
-int		mouse_release(int button, int x, int y, t_fract *fract);
+int				mouse_release(int button, int x, int y, t_fract *fract);
 
-int		ft_affich(t_fract *fract);
+int				ft_affich(t_fract *fract);
 
-void	ft_screen(t_fract *fract);
+void			ft_screen(t_fract *fract);
 
-void	ft_zoom(int key, t_fract *fract);
+void			ft_zoom(int key, t_fract *fract);
 
-void	ft_init_mandelbrot(t_fract *fract);
+void			ft_init_mandelbrot(t_fract *fract);
 
-void	ft_init_julia(t_fract *fract);
+void			ft_init_julia(t_fract *fract);
 
-void	ft_init_bns(t_fract *fract);
+void			ft_init_bns(t_fract *fract);
 
-void	ft_init_newton(t_fract *fract);
+void			ft_init_newton(t_fract *fract);
 
-void	ft_mdb_julia_semi_opti(t_fract *f);
+void			ft_mdb_julia_semi_opti(t_fract *f);
 
-void	ft_start_fract(t_fract *fract);
+void			ft_start_fract(t_fract *fract);
 
-int		main_mlx(t_fract *fract);
+int				main_mlx(t_fract *fract);
 
-int		main_opengl(t_fract *fract);
+int				main_opengl(t_fract *fract);
 
-int		ft_color(int i, t_fract f, int x, int y);
+int				ft_color(int i, t_fract f, int x, int y);
 
-void		ft_hud(t_fract *fract);
+void			ft_hud(t_fract *fract);
 
-void	ft_init_screenshot(t_tga *tga, t_fract *fract);
+void			ft_init_screenshot(t_tga *tga, t_fract *fract);
 
-void	ft_screen_gl(char *buff);
+void			ft_screen_gl(char *buff);
 
-char	*ft_create_path(char *target, char *type, char *name, int offset);
-
+char			*ft_create_path(char *target, char *type, char *name
+, int offset);
 
 #endif
