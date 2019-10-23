@@ -87,7 +87,7 @@ void main()
 			else if (sqrt(pow(Creal + 0.5, 2)
 				+ (Cimag + sqrt(3) / 2) * (Cimag + sqrt(3) / 2)) < 0.0001)
 			{
-				color = vec3(0, 0, float(1 - float(iter) / float(MaxIterations)));
+				color = vec3(0, 0, float(float(1) - (float(iter) / float(MaxIterations))));
 				// color = vec3(float(iter) / (MaxIterations / 2), float(iter) / (MaxIterations / 10), float(iter) / (MaxIterations));
 				break ;
 			}

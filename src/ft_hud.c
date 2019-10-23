@@ -7,11 +7,11 @@ static void	ft_put(t_fract *fract, int x, int y, char *str)
 
 static void	ft_hud_info(t_fract *fract)
 {
-	ft_put(fract, 5, FENETRE_Y - 88, "Julia: 5");
-	ft_put(fract, 5, FENETRE_Y - 71, "Mandelbrot: 6");
-	ft_put(fract, 5, FENETRE_Y - 54, "Burning Julia: 7");
-	ft_put(fract, 5, FENETRE_Y - 37, "Burning Ship: 8");
-	ft_put(fract, 5, FENETRE_Y - 20, "Newton: 9");
+	ft_put(fract, 5, FENETRE_Y - 88, "Mandelbrot: 1");
+	ft_put(fract, 5, FENETRE_Y - 71, "Julia: 2");
+	ft_put(fract, 5, FENETRE_Y - 54, "Burning Ship: 3");
+	ft_put(fract, 5, FENETRE_Y - 37, "Burning Julia: 4");
+	ft_put(fract, 5, FENETRE_Y - 20, "Newton: 5");
 	ft_put(fract, FENETRE_X - 275, FENETRE_Y - 207, "Controls");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 190, "Swap Mlx/Open GL: enter/return");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 173, "Reset: r");
@@ -21,7 +21,7 @@ static void	ft_hud_info(t_fract *fract)
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 122, "Screenshot: p");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 105, "Convert to .fdf: f");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 88,
-		"Calcul mode 1/2/3: 1, 2, 3");
+		"Calcul mode basic/semi-opti/opti: 7, 8, 9");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 71, "Change color: c/v");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 54, "Thread number: q/e");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 37,
