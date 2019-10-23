@@ -70,30 +70,26 @@ void main()
 			tmp = Creal;
 			Creal -= (power_r * power_r * Creal + 2.0 * power_r * Creal * power_i + Creal * power_i * power_i - power_r + power_i) / div;
 			Cimag -= (power_i * power_i * Cimag + power_r * power_r * Cimag + 2 * power_r * power_i * Cimag + 2 * tmp * Cimag) / div;
-			if (sqrt((Creal - 1) * (Creal - 1) + power_i) < 0.0001)
+			if (sqrt((Creal - 1) * (Creal - 1) + power_i) < 0.00001)
 			{
-				color = vec3(1 - float(iter) / MaxIterations, 0, 0);
-				// color = vec3(float(iter) / (MaxIterations / 10), float(iter) / (MaxIterations / 2), float(iter) / MaxIterations);
+				color = vec3(1 - 1 / ((MaxIterations / iter) / 4), 0, 0);
 				break ;
 			}
 			else if (sqrt((Creal + 0.5) * (Creal + 0.5)
-				+ (Cimag - sqrt(3) / 2) * (Cimag - sqrt(3) / 2)) < 0.0001)
+				+ (Cimag - sqrt(3) / 2) * (Cimag - sqrt(3) / 2)) < 0.00001)
 			{
-				// color = vec3(0, 1 - float(iter) / MaxIterations, 0);
-				color = vec3(0, MaxIterations / iter, 0);
-				// color = vec3(float(iter) / MaxIterations, float(iter) / (MaxIterations / 2), float(iter) / (MaxIterations / 10));
+				color = vec3(0, 1 - 1 / ((MaxIterations / iter) / 4), 0);
 				break ;
 			}
 			else if (sqrt(pow(Creal + 0.5, 2)
-				+ (Cimag + sqrt(3) / 2) * (Cimag + sqrt(3) / 2)) < 0.0001)
+				+ (Cimag + sqrt(3) / 2) * (Cimag + sqrt(3) / 2)) < 0.00001)
 			{
-				color = vec3(0, 0, float(1 - float(iter) / float(MaxIterations)));
-				// color = vec3(float(iter) / (MaxIterations / 2), float(iter) / (MaxIterations / 10), float(iter) / (MaxIterations));
+				color = vec3(0, 0,1 - 1 / ((MaxIterations / iter) / 4));
 				break ;
 			}
-			else
-				color = vec3(0.0f, 0.0f, 0.0f);
 		}
+		if (iter == MaxIterations)
+			color = vec3(0.0f, 0.0f, 0.0f);
 	}
 	pixelColor = vec4(color, 1.0);
 }

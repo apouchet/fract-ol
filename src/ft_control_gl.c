@@ -36,27 +36,27 @@ static void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 
 static void		ft_color_fractal(t_gl *gl, t_gldata *data)
 {
-	static int color = 0;
+	static int	color = 0;
+	int			fract_pre;
 
-	if (glfwGetKey(gl->window, GLFW_KEY_R) == GLFW_PRESS)
+	fract_pre = data->fractal;
+	if (glfwGetKey(gl->w, GLFW_KEY_R) == GLFW_PRESS)
 		color = 0;
-	else if (glfwGetKey(gl->window, GLFW_KEY_B) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_B) == GLFW_PRESS)
 		color = 1;
-	else if (glfwGetKey(gl->window, GLFW_KEY_G) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_G) == GLFW_PRESS)
 		color = 2;
-	else if (glfwGetKey(gl->window, GLFW_KEY_1) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_1) || glfwGetKey(gl->w, GLFW_KEY_KP_1))
 		data->fractal = 0;
-	else if (glfwGetKey(gl->window, GLFW_KEY_2) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_2) || glfwGetKey(gl->w, GLFW_KEY_KP_2))
 		data->fractal = 1;
-	else if (glfwGetKey(gl->window, GLFW_KEY_3) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_3) || glfwGetKey(gl->w, GLFW_KEY_KP_3))
 		data->fractal = 2;
-	else if (glfwGetKey(gl->window, GLFW_KEY_4) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_4) || glfwGetKey(gl->w, GLFW_KEY_KP_4))
 		data->fractal = 3;
-	if (glfwGetKey(gl->window, GLFW_KEY_1) == GLFW_PRESS 
-		|| glfwGetKey(gl->window, GLFW_KEY_2) == GLFW_PRESS
-		|| glfwGetKey(gl->window, GLFW_KEY_3) == GLFW_PRESS
-		|| glfwGetKey(gl->window, GLFW_KEY_4) == GLFW_PRESS
-		|| glfwGetKey(gl->window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_5) || glfwGetKey(gl->w, GLFW_KEY_KP_5))
+		data->fractal = 4;
+	if (fract_pre != data->fractal || glfwGetKey(gl->w, GLFW_KEY_R))
 		ft_init_data(data, NULL, gl);
 	ft_send_data(gl, data, color);
 }
@@ -68,62 +68,62 @@ static void		ft_mouse(t_gl *gl, t_gldata *data)
 	static double x;
 	static double y;
 
-	if (glfwGetMouseButton(gl->window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+	if (glfwGetMouseButton(gl->w, GLFW_MOUSE_BUTTON_1))
 	{
-		glfwGetCursorPos(gl->window, &x, &y);
+		glfwGetCursorPos(gl->w, &x, &y);
 		data->x -= (x - x_prec) * data->step / 3.2;
 		data->y -= (y - y_prec) * data->step / 3.2;
 	}
-	else if (glfwGetMouseButton(gl->window, GLFW_MOUSE_BUTTON_2) == GLFW_PRESS)
+	else if (glfwGetMouseButton(gl->w, GLFW_MOUSE_BUTTON_2))
 	{
-		glfwGetCursorPos(gl->window, &data->c_r, &data->c_i);
+		glfwGetCursorPos(gl->w, &data->c_r, &data->c_i);
 		data->c_r = (data->c_r - FENETRE_X / 2) / (FENETRE_X / 2);
 		data->c_i = (data->c_i - FENETRE_X / 2) / (FENETRE_X / 2);
 	}
-	glfwGetCursorPos(gl->window, &x_prec, &y_prec);
+	glfwGetCursorPos(gl->w, &x_prec, &y_prec);
 }
 
 static void		ft_move_zoom(t_gl *gl, t_gldata *data)
 {
-	if (data->nb_zoom > 0 && glfwGetKey(gl->window, GLFW_KEY_S) == GLFW_PRESS)
+	if ((data->nb_zoom > 0 || (data->nb_zoom > -1000 && data->fractal == 4))
+		&& glfwGetKey(gl->w, GLFW_KEY_S))
 	{
 		data->zoom = data->zoom * 1.01;
 		data->step *= 1.01;
 		data->nb_zoom--;
 	}
-	else if (data->nb_zoom < 1200
-		&& glfwGetKey(gl->window, GLFW_KEY_W) == GLFW_PRESS)
+	else if (data->nb_zoom < 1200 && glfwGetKey(gl->w, GLFW_KEY_W))
 	{
 		data->zoom = data->zoom / 1.01;
 		data->step /= 1.01;
 		data->nb_zoom++;
 	}
-	else if (glfwGetKey(gl->window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_LEFT))
 		data->x = data->x - data->step;
-	else if (glfwGetKey(gl->window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_RIGHT))
 		data->x = data->x + data->step;
-	else if (glfwGetKey(gl->window, GLFW_KEY_UP) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_UP))
 		data->y = data->y - data->step;
-	else if (glfwGetKey(gl->window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_DOWN))
 		data->y = data->y + data->step;
 }
 
 void		ft_control(t_gl *gl, t_gldata *data)
 {
 	char *buff;
-	if (glfwGetKey(gl->window, GLFW_KEY_D) == GLFW_PRESS)
+	if (glfwGetKey(gl->w, GLFW_KEY_D))
 	{
 		ft_printf("MaxIterations = %f\n", data->maxIt);
 		data->maxIt++;
 	}
 	else if (data->maxIt > 2
-		&& glfwGetKey(gl->window, GLFW_KEY_A) == GLFW_PRESS)
+		&& glfwGetKey(gl->w, GLFW_KEY_A))
 	{
 		ft_printf("MaxIterations = %f\n", data->maxIt);
 		data->maxIt--;
 	}
 
-	else if (glfwGetKey(gl->window, GLFW_KEY_P) == GLFW_PRESS)
+	else if (glfwGetKey(gl->w, GLFW_KEY_P))
 	{
 		buff = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3));
 		glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buff);
@@ -133,6 +133,6 @@ void		ft_control(t_gl *gl, t_gldata *data)
 	ft_mouse(gl, data);
 	ft_move_zoom(gl, data);
 	ft_color_fractal(gl, data);
-	if (glfwGetKey(gl->window, GLFW_KEY_ENTER) == GLFW_PRESS)
+	if (glfwGetKey(gl->w, GLFW_KEY_ENTER))
 		data->exit = 1;
 }

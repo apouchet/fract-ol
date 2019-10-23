@@ -20,9 +20,9 @@ static int		ft_init_glfw_gl(t_gl *gl)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	gl->window = glfwCreateWindow(FENETRE_X, FENETRE_X, "OpenGL", NULL, NULL);
-	glfwMakeContextCurrent(gl->window);
-	if (!(gl->window))
+	gl->w = glfwCreateWindow(FENETRE_X, FENETRE_X, "OpenGL", NULL, NULL);
+	glfwMakeContextCurrent(gl->w);
+	if (!(gl->w))
 	{
 		ft_printf("Error while opening windows\n");
 		glfwTerminate();
@@ -86,15 +86,15 @@ int		main_opengl(t_fract *fract)
 		return (0);
 	}
 	ft_init_data(&data, fract, &gl);
-	while (glfwGetKey(gl.window, GLFW_KEY_ESCAPE) != GLFW_PRESS
-		&& !glfwWindowShouldClose(gl.window) && !data.exit)
+	while (glfwGetKey(gl.w, GLFW_KEY_ESCAPE) != GLFW_PRESS
+		&& !glfwWindowShouldClose(gl.w) && !data.exit)
 	{
 		glUseProgram(gl.program_id);
 		ft_control(&gl, &data);
 		glBindVertexArray(gl.vao);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		glfwPollEvents();
-		glfwSwapBuffers(gl.window);
+		glfwSwapBuffers(gl.w);
 	}
 	fract->c_r = data.c_r;
 	fract->c_i = data.c_i;

@@ -30,7 +30,7 @@ typedef struct		s_gl
 	GLchar			*log;
 	GLuint			vbo;
 	GLuint			vao;
-	GLFWwindow		*window;
+	GLFWwindow		*w;
 }					t_gl;
 
 typedef struct		s_gldata

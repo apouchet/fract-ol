@@ -25,8 +25,8 @@
 # include "libprintf.h"
 # include <time.h>
 
-# define FENETRE_X (1500)
-# define FENETRE_Y (1286)
+# define FENETRE_X (1500 / 2)
+# define FENETRE_Y (1286 / 2)
 # define SCREENSHOT "Desktop"
 # define BUILD_FDF "."
 # define R 0x00FF0000
