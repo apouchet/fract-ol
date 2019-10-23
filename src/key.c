@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 16:35:50 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/23 12:52:37 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,27 @@ static int		ft_key_move(int key, t_fract *fract)
 
 static int		ft_key_switch_fractal(int key, t_fract *fract)
 {
-	if (key == 22 && fract->fract != 0)
+	if ((key == 18 || key == 83) && fract->fract != 0)
 	{
 		fract->fract = 0;
 		ft_init_mandelbrot(fract);
 	}
-	else if (key == 23  && fract->fract != 1)
+	else if ((key == 19 || key == 84) && fract->fract != 1)
 	{
 		fract->fract = 1;
 		ft_init_julia(fract);
 	}
-	else if (key == 28  && fract->fract != 2)
+	else if ((key == 20 || key == 85) && fract->fract != 2)
 	{
 		fract->fract = 2;
 		ft_init_mandelbrot(fract);
 	}
-	else if (key == 26  && fract->fract != 3)
+	else if ((key == 21 || key == 86) && fract->fract != 3)
 	{
 		fract->fract = 3;
 		ft_init_julia(fract);
 	}
-	else if (key == 25  && fract->fract != 4)
+	else if ((key == 23 || key == 87) && fract->fract != 4)
 	{
 		fract->fract = 4;
 		ft_init_newton(fract);
@@ -96,11 +96,11 @@ static int		ft_key_switch_fractal(int key, t_fract *fract)
 
 static int		ft_key_color_and_mode(int key, t_fract *fract)
 {
-	if (key == 18 || key == 83)
+	if (key == 26 || key == 89)
 		fract->mode = 0;
-	else if (key == 19 || key == 84)
+	else if (key == 28 || key == 91)
 		fract->mode = 1;
-	else if (key == 20 || key == 85)
+	else if (key == 25 || key == 92)
 		fract->mode = 2;
 	// else if (key == 21)
 	// 	fract->mode = 3;
@@ -156,7 +156,7 @@ void	ft_build_fdf(t_fract *f)
 
 int		ft_key(int key, t_fract *fract)
 {
-	printf("key = %d\n", key);
+	//printf("key = %d\n", key);
 	//printf("%d\n", key);
 	// printf("iteration_max = %d\n", fract->iteration_max);
 	// printf("nb thread = %d\n", fract->nb_thread);
