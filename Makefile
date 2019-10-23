@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/22 00:23:13 by apouchet         ###   ########.fr        #
+#    Updated: 2019/10/23 14:52:02 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,19 @@ NAME = fractol
 APP_NAME = fract-ol
 FRAMEWORK = /System/Library/Frameworks/OpenGL.framework /System/Library/Frameworks/AppKit.framework
 SHADER = ./shader/
-SRC_NAME =	main.c 			\
-			ft_mandelbrot.c	\
-			ft_zoom.c		\
-			key.c			\
-			mouse.c 		\
-			parsing.c		\
-			opengl.c		\
-			file.c			\
-			ft_control_gl.c	\
-			ft_shader_opengl.c\
-			ft_hud.c 		\
-			ft_screenshot.c
+SRC_NAME =	main.c 				\
+			ft_mandelbrot.c		\
+			ft_zoom.c			\
+			key.c				\
+			mouse.c 			\
+			parsing.c			\
+			opengl.c			\
+			file.c				\
+			ft_control_gl.c		\
+			ft_shader_opengl.c	\
+			ft_hud.c 			\
+			ft_screenshot.c		\
+			init.c
 
 SRC_PATH = ./src/
 

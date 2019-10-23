@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_hud.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/23 14:32:06 by floblanc          #+#    #+#             */
+/*   Updated: 2019/10/23 14:32:56 by floblanc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fract.h"
 
 static void	ft_put(t_fract *fract, int x, int y, char *str)
@@ -13,7 +25,8 @@ static void	ft_hud_info(t_fract *fract)
 	ft_put(fract, 5, FENETRE_Y - 37, "Burning Julia: 4");
 	ft_put(fract, 5, FENETRE_Y - 20, "Newton: 5");
 	ft_put(fract, FENETRE_X - 275, FENETRE_Y - 207, "Controls");
-	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 190, "Swap Mlx/Open GL: enter/return");
+	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 190
+	, "Swap Mlx/Open GL: enter/return");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 173, "Reset: r");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 156,
 		"Zoom: w/s or +/- or point and scroll");

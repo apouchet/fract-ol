@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   opengl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 23:00:59 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:13:49 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gl.h"
 
-static int		ft_init_glfw_gl(t_gl *gl)
+static int	ft_init_glfw_gl(t_gl *gl)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -33,7 +33,6 @@ static int		ft_init_glfw_gl(t_gl *gl)
 	ft_printf("OpenGL version: %s\n", glGetString(GL_VERSION));
 	ft_printf("Shader version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	return (ft_shaders("./shader/shader.vs", "./shader/shader.fs", gl));
-	// return (ft_shaders("./shader/shader.vs", "./shader/shader.fs", gl));
 }
 
 static void	ft_gl_buffer(t_gl *gl)
@@ -53,7 +52,7 @@ static void	ft_gl_buffer(t_gl *gl)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 }
 
-void	ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl)
+void		ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl)
 {
 	if (fract != NULL)
 	{
@@ -75,7 +74,7 @@ void	ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl)
 	data->y = 0;
 }
 
-int		main_opengl(t_fract *fract)
+int			main_opengl(t_fract *fract)
 {
 	t_gl		gl;
 	t_gldata	data;

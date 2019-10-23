@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/22 19:02:31 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:51:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_switch(t_fract *fract, int x, int y)
 {
-	if (fract->fract == 0  || fract->fract == 2)
+	if (fract->fract == 0 || fract->fract == 2)
 	{
 		fract->z_r = 0;
 		fract->z_i = 0;
@@ -28,49 +28,50 @@ static void	ft_switch(t_fract *fract, int x, int y)
 	}
 }
 
-static int	ft_calcul_newton(t_fract fract, int x, int y)
+static int	ft_calcul_newton(t_fract f, int x, int y)
 {
-	double tmp;
-	double div;
-	int i;
-	double pow_r;
-	double pow_i;
+	double	tmp;
+	double	div;
+	int		i;
+	double	pow_r;
+	double	pow_i;
 
 	i = 0;
-	ft_switch(&fract, x, y);
-	while (++i < fract.iteration_max)
+	ft_switch(&f, x, y);
+	while (++i < f.iteration_max)
 	{
-		pow_r = fract.z_r * fract.z_r;
-		pow_i = fract.z_i * fract.z_i;
+		pow_r = f.z_r * f.z_r;
+		pow_i = f.z_i * f.z_i;
 		div = 3.0 * (pow_r + pow_i) * (pow_r + pow_i);
-		tmp = fract.z_r;
-		fract.z_r -= (pow_r * pow_r * fract.z_r + 2.0 * pow_r * fract.z_r * pow_i + fract.z_r * pow_i * pow_i - pow_r + pow_i) / div;
-		fract.z_i -= (pow_i * pow_i * fract.z_i + pow_r * pow_r * fract.z_i + 2 * pow_r * pow_i * fract.z_i + 2 * tmp * fract.z_i) / div;
-		if (sqrt(pow(fract.z_r - 1, 2) + pow(fract.z_i, 2)) < 0.0001)
-	 		return (R - (int)(((double)i / fract.iteration_max) * (double)R) & R);
-		else if (sqrt(pow(fract.z_r + 0.5, 2)
-			+ pow(fract.z_i - sqrt(3) / 2, 2)) < 0.0001)
-		 	return (G - (int)(((double)i / fract.iteration_max) * (double)G) & G);
-		else if (sqrt(pow(fract.z_r + 0.5, 2)
-			+ pow(fract.z_i + sqrt(3) / 2, 2)) < 0.0001)
-		 	return (B - (int)(((double)i / fract.iteration_max) * (double)B) & B);
+		tmp = f.z_r;
+		f.z_r -= (pow_r * pow_r * f.z_r + 2.0 * pow_r * f.z_r
+		* pow_i + f.z_r * pow_i * pow_i - pow_r + pow_i) / div;
+		f.z_i -= (pow_i * pow_i * f.z_i + pow_r * pow_r * f.z_i + 2
+		* pow_r * pow_i * f.z_i + 2 * tmp * f.z_i) / div;
+		if (sqrt(pow(f.z_r - 1, 2) + pow(f.z_i, 2)) < 0.0001)
+			return (R - (int)(((double)i / f.iteration_max) * (double)R) & R);
+		else if (sqrt(pow(f.z_r + 0.5, 2)
+			+ pow(f.z_i - sqrt(3) / 2, 2)) < 0.0001)
+			return (G - (int)(((double)i / f.iteration_max) * (double)G) & G);
+		else if (sqrt(pow(f.z_r + 0.5, 2)
+			+ pow(f.z_i + sqrt(3) / 2, 2)) < 0.0001)
+			return (B - (int)(((double)i / f.iteration_max) * (double)B) & B);
 	}
 	return (i);
 }
 
 static int	ft_calcul_bns_juliabns(t_fract fract, int x, int y)
 {
-	double tmp;
-	double pow_r;
-	double pow_i;
-	int i;
+	double	tmp;
+	double	pow_r;
+	double	pow_i;
+	int		i;
 
 	i = 0;
 	ft_switch(&fract, x, y);
 	tmp = fract.z_r;
 	fract.z_r = fract.z_r * fract.z_r - fract.z_i * fract.z_i + fract.c_r;
 	fract.z_i = 2 * ft_abs_double(fract.z_i * tmp) + fract.c_i;
-
 	pow_r = fract.z_r * fract.z_r;
 	pow_i = fract.z_i * fract.z_i;
 	while (pow_r + pow_i < 4 && ++i < fract.iteration_max)
@@ -86,17 +87,16 @@ static int	ft_calcul_bns_juliabns(t_fract fract, int x, int y)
 
 static int	ft_calcul_mdb_julia(t_fract fract, int x, int y)
 {
-	double tmp;
-	double pow_r;
-	double pow_i;
-	int i;
+	double	tmp;
+	double	pow_r;
+	double	pow_i;
+	int		i;
 
 	i = 0;
 	ft_switch(&fract, x, y);
 	tmp = fract.z_r;
 	fract.z_r = fract.z_r * fract.z_r - fract.z_i * fract.z_i + fract.c_r;
 	fract.z_i = 2 * fract.z_i * tmp + fract.c_i;
-
 	pow_r = fract.z_r * fract.z_r;
 	pow_i = fract.z_i * fract.z_i;
 	while (pow_r + pow_i < 4 && ++i < fract.iteration_max)
@@ -110,7 +110,7 @@ static int	ft_calcul_mdb_julia(t_fract fract, int x, int y)
 	return (i);
 }
 
-int		ft_color(int i, t_fract f, int x, int y)
+int			ft_color(int i, t_fract f, int x, int y)
 {
 	int		color;
 
@@ -132,12 +132,12 @@ int		ft_color(int i, t_fract f, int x, int y)
 		color = R + ((B * 6 * (1 - i / f.div)) & B);
 	if (f.info == 2 && ((x > FENETRE_X - 475 && y > FENETRE_Y - 210)
 		|| (x < 175 && y > FENETRE_Y - 90)))
-			color = ((int)((color & R) * 0.3) & R)
-		+ ((int)((color & G) * 0.3) & G) + ((int)((color & B) * 0.3) & B);
+		color = ((int)((color & R) * 0.3) & R) + ((int)((color & G) * 0.3) & G)
+		+ ((int)((color & B) * 0.3) & B);
 	return (color);
 }
 
-int		select_calc(t_fract *f, int x, int y)
+int			select_calc(t_fract *f, int x, int y)
 {
 	if (f->fract < 2)
 		return (ft_color(ft_calcul_mdb_julia(*f, x, y), *f, x, y));
@@ -149,13 +149,12 @@ int		select_calc(t_fract *f, int x, int y)
 
 static int	ft_check_opti(t_fract *f, int x, int y, int type)
 {
-
-	if (type == 1) // semi opti
+	if (type == 1)
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
 				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * (y - 1) + x]
 				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * (y + 1) + x]
 				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * y + x + 1]);
-	else // opti
+	else
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
 				&& f->img[f->p.sl * (y - 1) + x - 1]
 				== f->img[f->p.sl * (y - 1) + x + 1]
@@ -163,7 +162,6 @@ static int	ft_check_opti(t_fract *f, int x, int y, int type)
 				== f->img[f->p.sl * (y + 1) + x + 1]
 				&& f->img[f->p.sl * (y - 1) + x - 1]
 				== f->img[f->p.sl * (y + 1) + x - 1]);
-
 }
 
 static void	ft_mdb_julia_opti(t_fract *f)
@@ -212,11 +210,11 @@ void		ft_mdb_julia_semi_opti(t_fract *f)
 
 void		*ft_mandelbrot_julia(void *fract)
 {
-	int x;
-	int y;
-	int x_step;
-	int y_step;
-	t_fract *f;
+	int		x;
+	int		y;
+	int		x_step;
+	int		y_step;
+	t_fract	*f;
 
 	f = (t_fract*)fract;
 	x = f->x++;

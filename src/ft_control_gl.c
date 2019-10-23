@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_control_gl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/22 00:25:37 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:36:54 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ static void		ft_color_fractal(t_gl *gl, t_gldata *data)
 
 static void		ft_mouse(t_gl *gl, t_gldata *data)
 {
-	static double x_prec;
-	static double y_prec;
-	static double x;
-	static double y;
+	static double	x_prec;
+	static double	y_prec;
+	static double	x;
+	static double	y;
 
 	if (glfwGetMouseButton(gl->w, GLFW_MOUSE_BUTTON_1))
 	{
@@ -108,9 +108,10 @@ static void		ft_move_zoom(t_gl *gl, t_gldata *data)
 		data->y = data->y + data->step;
 }
 
-void		ft_control(t_gl *gl, t_gldata *data)
+void			ft_control(t_gl *gl, t_gldata *data)
 {
-	char *buff;
+	char *buf;
+
 	if (glfwGetKey(gl->w, GLFW_KEY_D))
 	{
 		ft_printf("MaxIterations = %f\n", data->maxIt);
@@ -122,13 +123,12 @@ void		ft_control(t_gl *gl, t_gldata *data)
 		ft_printf("MaxIterations = %f\n", data->maxIt);
 		data->maxIt--;
 	}
-
 	else if (glfwGetKey(gl->w, GLFW_KEY_P))
 	{
-		buff = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3));
-		glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buff);
-		ft_screen_gl(buff);
-		free(buff);
+		buf = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3));
+		glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buf);
+		ft_screen_gl(buf);
+		free(buf);
 	}
 	ft_mouse(gl, data);
 	ft_move_zoom(gl, data);

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 14:27:32 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:52:56 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ int		print_usage(void)
 {
 	char	*str;
 
-	str = "Usage : ./fractol Mandelbrot\n\t\t  Julia\n\t\t  Burning-Ship\n\t\t  Burning-Julia\n\t\t  Newton\n\n\tFlag : -gl : open with OpenGL\n";
+	str = "Usage : ./fractol Mandelbrot\n\t\t  Julia\n\t\t  Burning-Ship\n\t\t";
+	write(2, str, ft_strlen(str));
+	str = "  Burning-Julia\n\t\t  Newton\n\n\tFlag : -gl : open with OpenGL\n";
 	write(2, str, ft_strlen(str));
 	return (0);
 }
 
 int		ft_affich(t_fract *fract)
 {
-	int	i;
+	int			i;
 	pthread_t	thread[64];
 
 	if (fract->opengl == 1)
@@ -36,7 +38,7 @@ int		ft_affich(t_fract *fract)
 		pthread_create(&thread[i], NULL, ft_mandelbrot_julia, (void*)fract);
 	i = -1;
 	while (++i < fract->nb_thread)
-			pthread_join(thread[i], NULL);
+		pthread_join(thread[i], NULL);
 	if (fract->mode == 1 || fract->mode == 2)
 		ft_mdb_julia_semi_opti(fract);
 	mlx_put_image_to_window(fract->mlx_ptr, fract->win_ptr, fract->p_img, 0, 0);
@@ -48,38 +50,6 @@ int		red_cross(void)
 {
 	exit(0);
 	return (0);
-}
-
-void	ft_init_mandelbrot(t_fract *fract)
-{
-	fract->x_a = -2.1;
-	fract->x_b = 0.6;
-	fract->y_a = -1.2;
-	fract->y_b = 1.2;
-}
-
-void	ft_init_julia(t_fract *fract)
-{
-	fract->x_a = -1.9965;
-	fract->x_b = 1.9965;
-	fract->y_a = -1.5972;
-	fract->y_b = 1.5972;
-}
-
-void	ft_init_bns(t_fract *fract)
-{
-	fract->x_a = -2.041;
-	fract->x_b = 1.226;
-	fract->y_a = -1.952;
-	fract->y_b = 0.952;
-}
-
-void	ft_init_newton(t_fract *fract)
-{
-	fract->x_a = -1.5;
-	fract->x_b = 1.5;
-	fract->y_a = -1;
-	fract->y_b = 1;
 }
 
 void	ft_start_fract(t_fract *fract)
@@ -125,6 +95,3 @@ int		main(int argc, char **argv)
 	main_mlx(&fract);
 	mlx_loop(fract.mlx_ptr);
 }
-
-// gcc -lmlx -framework OpenGL -framework AppKit main.c ft_mandelbrot.c
-// man /usr/share/man/man3/

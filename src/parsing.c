@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/22 00:27:21 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:01:13 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
 
-// Contents/MacOS/
 int		ft_check_app(char *exe)
 {
 	int	i;
@@ -54,4 +53,3 @@ int		parsing(t_fract *fract, int ac, char **av)
 	fract->fract--;
 	return (1);
 }
-

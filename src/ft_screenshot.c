@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_screenshot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:13:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 18:13:01 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:39:36 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "fract.h"
 
 char	*ft_create_path(char *target, char *type, char *name, int offset)
 {
 	char	*path;
-	size_t len;
+	size_t	len;
 
 	if (target[0] != '.')
 		len = ft_strlen("/Users/") + ft_strlen(getlogin()) + ft_strlen(target)
@@ -67,7 +66,7 @@ void	ft_screen_gl(char *buff)
 	int		fd;
 	char	*name;
 	time_t	curtime;
-	
+
 	time(&curtime);
 	ft_init_screenshot(&tga, NULL);
 	tga.bpp = 8 * 3;
@@ -88,11 +87,11 @@ void	ft_screen_gl(char *buff)
 
 void	ft_screen(t_fract *fract)
 {
-	t_tga	tga;
 	int		fd;
 	char	*name;
+	int		i;
 	time_t	curtime;
-	int 	i;
+	t_tga	tga;
 
 	i = -1;
 	time(&curtime);
