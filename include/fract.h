@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fract.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 22:13:22 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:21:00 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	ft_zoom(int key, t_fract *fract);
 void	ft_init_mandelbrot(t_fract *fract);
 
 void	ft_init_julia(t_fract *fract);
+
+void	ft_init_bns(t_fract *fract);
 
 void	ft_init_newton(t_fract *fract);
 
