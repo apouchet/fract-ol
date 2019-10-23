@@ -103,7 +103,9 @@ app : all
 	mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
 	cp -Rf $(FRAMEWORK) "./$(NAME).app/Contents/Resources/"
 	cp -R $(SHADER) "./$(NAME).app/Contents/Resources/$(SHADER)"
-	cp Info.plist "./$(NAME).app/Contents/"
+	cp app/fract.icns	"./$(NAME).app/Contents/Resources/"
+	cp app/PkgInfo	"./$(NAME).app/Contents/"
+	cp app/Info.plist "./$(NAME).app/Contents/"
 	sed -e "s/NAME/$(NAME)/g" -i "" "./$(NAME).app/Contents/Info.plist"
 	cp $(NAME) "./$(NAME).app/Contents/MacOS/$(NAME)"
 
