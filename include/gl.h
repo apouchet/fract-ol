@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gl.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:53 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 17:28:32 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:27:38 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define GL_H
 
 # include <fcntl.h>
-# include <GL/glew.h>
-# include <GLFW/glfw3.h>
+# include <OpenGL/gl3.h>
+# include <SDL2/SDL.h>
+
+// # include <GL/glew.h>
+// # include <GLFW/glfw3.h>
 # include "fract.h"
 # include "../libftprintf/include/libprintf.h"
 
@@ -29,7 +32,10 @@ typedef struct		s_gl
 	GLchar			*log;
 	GLuint			vbo;
 	GLuint			vao;
-	GLFWwindow		*w;
+	// GLFWwindow		*w;
+	SDL_Window		*w;
+	SDL_GLContext	contexte_opengl;
+	SDL_Event		evenements;
 }					t_gl;
 
 typedef struct		s_gldata

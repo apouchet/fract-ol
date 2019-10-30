@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/23 14:52:02 by floblanc         ###   ########.fr        #
+#    Updated: 2019/10/25 12:18:09 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,10 @@ SRC_NAME =	main.c 				\
 			parsing.c			\
 			opengl.c			\
 			file.c				\
-			ft_control_gl.c		\
 			ft_shader_opengl.c	\
 			ft_hud.c 			\
 			ft_screenshot.c		\
+			ft_control_gl.c		\
 			init.c
 
 SRC_PATH = ./src/
@@ -41,10 +41,13 @@ LIBFT				=	./libftprintf/
 LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
 
-FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 # FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
-OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
+# OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
 # OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
+FRACT_FLAGS = -I ~/.brew/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit 
+OPENGL_FLAGS = -lglew -lsdl2 
+# OPENGL_FLAGS = -L /usr/local/lib -lglfw -lglew -lsdl2
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
@@ -97,7 +100,7 @@ re : fclean all
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(CFLAGS) -I $(LIBFTINCLUDES) -I $(INC_PATH) -I $(INC_BREW) -c $< -o $@
+	@$(CC) $(CFLAGS) -Wno-deprecated-declarations -I $(LIBFTINCLUDES) -I $(INC_PATH) -I $(INC_BREW) -c $< -o $@
 
 app : all
 	mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
@@ -117,6 +120,8 @@ app_re : app_clean app
 
 # opengl compilation:
 # gcc -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew -framework AppKit -framework OpenGl opengl.c ft_shader_opengl.c file.c ft_control_gl.c
+
+# gcc sdl.c -lsdl2 libftprintf/libprintf.a -framework Opengl -framework AppKit -lglew -I ~/.brew/include -Wno-deprecated-declarations
 
 #  /Users/AntoinePouchet/Desktop/Project/fract-ol/build/fractol.app/Contents/MacOS/fractol
 # gcc -I ./include -I ./libftprintf/include -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit -L /usr/local/Cellar/ -lglfw -lglew -Wall -Werror -Wextra -o test  ./src/main.c  ./src/ft_mandelbrot.c  ./src/ft_zoom.c  ./src/key.c  ./src/mouse.c  ./src/parsing.c  ./src/opengl.c  ./src/file.c  ./src/ft_control_gl.c ./src/ft_shader_opengl.c ./src/ft_hud.c  ./src/ft_screenshot.c ./libftprintf/libprintf.a

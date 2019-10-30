@@ -6,7 +6,7 @@
 /*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:58 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 02:48:57 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:42:32 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int		ft_check_shader_compilation(GLuint shader_id, t_gl *gl)
 			return (0);
 		}
 		glGetShaderInfoLog(shader_id, gl->log_size, &gl->log_size, gl->log);
-		ft_printf("Compilation error :\n%s", gl->log);
+		ft_printf("Compilation Error :\n%s", gl->log);
 		free(gl->log);
 		return (0);
 	}
@@ -49,12 +49,16 @@ static int		ft_shader_start(t_gl *gl, t_shd *shd)
 {
 	shd->vertex_size = ft_strlen(shd->vertex_s);
 	shd->fragment_size = ft_strlen(shd->fragment_s);
+	printf("1 = %d - %d\n", shd->vertex_size, shd->fragment_size);
 	glShaderSource(gl->vertex_id, 1, (const GLchar**)(&shd->vertex_s),
 		&shd->vertex_size);
+	printf("1\n");
 	glShaderSource(gl->fragment_id, 1, (const GLchar**)(&shd->fragment_s),
 		&shd->fragment_size);
+	printf("2\n");
 	glCompileShader(gl->vertex_id);
 	glCompileShader(gl->fragment_id);
+	printf("3\n");
 	if (!ft_check_shader_compilation(gl->vertex_id, gl)
 		|| !ft_check_shader_compilation(gl->fragment_id, gl))
 		return (ft_delete_shader(gl));

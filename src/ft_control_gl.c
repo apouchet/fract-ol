@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_control_gl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 17:28:32 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:30:58 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,105 +34,126 @@ static void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 	glUniform1f(matloc, color);
 }
 
-static void		ft_color_fractal(t_gl *gl, t_gldata *data)
+static void		ft_color_fractal(t_gl *gl, const unsigned char *KeyStates, t_gldata *data, int *color)
 {
-	static int	color = 0;
 	int			fract_pre;
 
+	// printf("la\n");
 	fract_pre = data->fractal;
-	if (glfwGetKey(gl->w, GLFW_KEY_R) == GLFW_PRESS)
-		color = 0;
-	else if (glfwGetKey(gl->w, GLFW_KEY_B) == GLFW_PRESS)
-		color = 1;
-	else if (glfwGetKey(gl->w, GLFW_KEY_G) == GLFW_PRESS)
-		color = 2;
-	else if (glfwGetKey(gl->w, GLFW_KEY_1) || glfwGetKey(gl->w, GLFW_KEY_KP_1))
+	if (KeyStates[SDL_SCANCODE_R])
+		*color = 0;
+	else if (KeyStates[SDL_SCANCODE_B])
+		*color = 1;
+	else if (KeyStates[SDL_SCANCODE_G])
+		*color = 2;
+	else if (KeyStates[SDL_SCANCODE_1] || KeyStates[SDL_SCANCODE_KP_1])// || KeyStates[SDL_SCANCODE_AMPERSAND])
 		data->fractal = 0;
-	else if (glfwGetKey(gl->w, GLFW_KEY_2) || glfwGetKey(gl->w, GLFW_KEY_KP_2))
+	else if (KeyStates[SDL_SCANCODE_2] || KeyStates[SDL_SCANCODE_KP_2])
 		data->fractal = 1;
-	else if (glfwGetKey(gl->w, GLFW_KEY_3) || glfwGetKey(gl->w, GLFW_KEY_KP_3))
+	else if (KeyStates[SDL_SCANCODE_3] || KeyStates[SDL_SCANCODE_KP_3])// || KeyStates[SDL_SCANCODE_QUOTEDBL])
 		data->fractal = 2;
-	else if (glfwGetKey(gl->w, GLFW_KEY_4) || glfwGetKey(gl->w, GLFW_KEY_KP_4))
+	else if (KeyStates[SDL_SCANCODE_4] || KeyStates[SDL_SCANCODE_KP_4])// || KeyStates[SDL_SCANCODE_QUOTE])
 		data->fractal = 3;
-	else if (glfwGetKey(gl->w, GLFW_KEY_5) || glfwGetKey(gl->w, GLFW_KEY_KP_5))
+	else if (KeyStates[SDL_SCANCODE_5] || KeyStates[SDL_SCANCODE_KP_5])// || KeyStates[SDL_SCANCODE_LEFTPAREN])
 		data->fractal = 4;
-	if (fract_pre != data->fractal || glfwGetKey(gl->w, GLFW_KEY_R))
+	if (fract_pre != data->fractal || KeyStates[SDL_SCANCODE_SPACE])
 		ft_init_data(data, NULL, gl);
-	ft_send_data(gl, data, color);
 }
 
-static void		ft_mouse(t_gl *gl, t_gldata *data)
+static void		ft_mouse(t_gldata *data)
 {
-	static double	x_prec;
-	static double	y_prec;
-	static double	x;
-	static double	y;
+	int	x;
+	int	y;
+	int state;
 
-	if (glfwGetMouseButton(gl->w, GLFW_MOUSE_BUTTON_1))
+	// SDL_PumpEvents();
+	state = SDL_GetMouseState(NULL, NULL);
+	SDL_GetRelativeMouseState(&x, &y);
+	if (state & SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
-		glfwGetCursorPos(gl->w, &x, &y);
-		data->x -= (x - x_prec) * data->step / 3.2;
-		data->y -= (y - y_prec) * data->step / 3.2;
+		printf("left clique\n");
+		data->x -= x * data->step / 3;
+		data->y -= y * data->step / 3;
 	}
-	else if (glfwGetMouseButton(gl->w, GLFW_MOUSE_BUTTON_2))
+	else if (state & SDL_BUTTON(SDL_BUTTON_RIGHT))
 	{
-		glfwGetCursorPos(gl->w, &data->c_r, &data->c_i);
-		data->c_r = (data->c_r - FENETRE_X / 2) / (FENETRE_X / 2);
-		data->c_i = (data->c_i - FENETRE_X / 2) / (FENETRE_X / 2);
+		printf("right clique\n");
+		data->c_r = (x - FENETRE_X / 2) / (FENETRE_X / 2);
+		data->c_i = (y - FENETRE_X / 2) / (FENETRE_X / 2);
 	}
-	glfwGetCursorPos(gl->w, &x_prec, &y_prec);
 }
 
-static void		ft_move_zoom(t_gl *gl, t_gldata *data)
+static void		ft_move_zoom(const unsigned char *KeyStates, t_gldata *data)
 {
 	if ((data->nb_zoom > 0 || (data->nb_zoom > -1000 && data->fractal == 4))
-		&& glfwGetKey(gl->w, GLFW_KEY_S))
+		&& KeyStates[SDL_SCANCODE_S])//( || (e.wheel.y > 0 && e.type == SDL_MOUSEWHEEL)))
 	{
 		data->zoom = data->zoom * 1.01;
 		data->step *= 1.01;
 		data->nb_zoom--;
 	}
-	else if (data->nb_zoom < 1200 && glfwGetKey(gl->w, GLFW_KEY_W))
+	else if (data->nb_zoom < 1200 && KeyStates[SDL_SCANCODE_W])//( || (e.wheel.y < 0 && e.type == SDL_MOUSEWHEEL)))
 	{
 		data->zoom = data->zoom / 1.01;
 		data->step /= 1.01;
 		data->nb_zoom++;
 	}
-	else if (glfwGetKey(gl->w, GLFW_KEY_LEFT))
+	else if (KeyStates[SDL_SCANCODE_LEFT])
 		data->x = data->x - data->step;
-	else if (glfwGetKey(gl->w, GLFW_KEY_RIGHT))
+	else if (KeyStates[SDL_SCANCODE_RIGHT])
 		data->x = data->x + data->step;
-	else if (glfwGetKey(gl->w, GLFW_KEY_UP))
+	else if (KeyStates[SDL_SCANCODE_UP])
 		data->y = data->y - data->step;
-	else if (glfwGetKey(gl->w, GLFW_KEY_DOWN))
+	else if (KeyStates[SDL_SCANCODE_DOWN])
 		data->y = data->y + data->step;
 }
 
-void			ft_control(t_gl *gl, t_gldata *data)
+static	void	ft_iter_exit(const unsigned char *KeyStates, t_gldata *data)
 {
-	char *buf;
+	char		*buf;
 
-	if (glfwGetKey(gl->w, GLFW_KEY_D))
+	if (KeyStates[SDL_WINDOWEVENT_CLOSE] || KeyStates[SDL_SCANCODE_ESCAPE])
+	{
+		printf("exit\n");
+		data->exit = 2;
+	}
+	if (KeyStates[SDL_SCANCODE_D])
 	{
 		ft_printf("MaxIterations = %f\n", data->max_it);
 		data->max_it++;
 	}
-	else if (data->max_it > 2
-		&& glfwGetKey(gl->w, GLFW_KEY_A))
+	else if (data->max_it > 2 && KeyStates[SDL_SCANCODE_A])
 	{
 		ft_printf("MaxIterations = %f\n", data->max_it);
 		data->max_it--;
 	}
-	else if (glfwGetKey(gl->w, GLFW_KEY_P))
+	else if (KeyStates[SDL_SCANCODE_P])
 	{
-		buf = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3));
-		glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buf);
-		ft_screen_gl(buf);
-		free(buf);
+		if ((buf = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3))))
+		{
+			glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buf);
+			ft_screen_gl(buf);
+			free(buf);
+		}
+		else
+			ft_printf("Error : fail to malloc for screenshot\n");
 	}
-	ft_mouse(gl, data);
-	ft_move_zoom(gl, data);
-	ft_color_fractal(gl, data);
-	if (glfwGetKey(gl->w, GLFW_KEY_ENTER))
+	if (KeyStates[SDL_SCANCODE_RETURN])
+	{
+		printf("return\n");
 		data->exit = 1;
+	}
+}
+
+void			ft_control(t_gl *gl, t_gldata *data)
+{
+	static int	color;
+
+	SDL_PumpEvents();
+	const unsigned char *KeyStates = SDL_GetKeyboardState(NULL);
+	ft_mouse(data);
+	ft_iter_exit(KeyStates, data);
+	ft_move_zoom(KeyStates, data);
+	ft_color_fractal(gl, KeyStates, data, &color);
+	ft_send_data(gl, data, color);
 }
