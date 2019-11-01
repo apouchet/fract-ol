@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opengl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/30 19:28:43 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/01 12:20:31 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl)
 
 void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 {
-	unsigned int matloc;
+	long int matloc;
 
 	matloc = glGetUniformLocation(gl->program_id, "MaxIterations");
 	glUniform1f(matloc, data->max_it);
@@ -109,8 +109,10 @@ void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 	glUniform1f(matloc, data->zoom);
 	matloc = glGetUniformLocation(gl->program_id, "x");
 	glUniform1f(matloc, data->x);
+	printf("x = %ld ",matloc);
 	matloc = glGetUniformLocation(gl->program_id, "y");
 	glUniform1f(matloc, data->y);
+	printf("y = %ld\n",matloc);
 	matloc = glGetUniformLocation(gl->program_id, "c_r");
 	glUniform1f(matloc, data->c_r);
 	matloc = glGetUniformLocation(gl->program_id, "c_i");

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/10/25 12:18:09 by apouchet         ###   ########.fr        #
+#    Updated: 2019/11/01 12:09:54 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,11 @@ INC_NAME =	fract.h
 LIBFT				=	./libftprintf/
 LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
-
-# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
-# FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
-# OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
-# OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
-FRACT_FLAGS = -I ~/.brew/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit 
-OPENGL_FLAGS = -lglew -lsdl2 
+ FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+#FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
+OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew -lsdl2
+#OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
+#OPENGL_FLAGS = -lglew -lsdl2 
 # OPENGL_FLAGS = -L /usr/local/lib -lglfw -lglew -lsdl2
 CC = gcc
 

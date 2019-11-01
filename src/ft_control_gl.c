@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_control_gl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/30 19:30:58 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/01 13:39:45 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,67 @@ static void		ft_mouse(t_gldata *data)
 	SDL_GetRelativeMouseState(&x, &y);
 	if (state & SDL_BUTTON(SDL_BUTTON_LEFT))
 	{
-		printf("left clique\n");
 		data->x -= x * data->step / 3;
 		data->y -= y * data->step / 3;
 	}
 	else if (state & SDL_BUTTON(SDL_BUTTON_RIGHT))
 	{
-		printf("right clique\n");
-		data->c_r = (x - FENETRE_X / 2) / (FENETRE_X / 2);
-		data->c_i = (y - FENETRE_X / 2) / (FENETRE_X / 2);
+		SDL_GetMouseState(&x, &y);
+		data->c_r = ((float)x - FENETRE_X / 2) / (FENETRE_X / 2);
+		data->c_i = ((float)y - FENETRE_X / 2) / (FENETRE_X / 2);
 	}
 }
+
+// void		hud_print(t_gldata *data)
+// {
+// 	SDL_Surface *ecran = NULL, *texte = NULL, *fond = NULL;
+//     SDL_Rect position;
+//     SDL_Event event;
+//     TTF_Font *police = NULL;
+//     SDL_Color couleurNoire = {0, 0, 0};
+//     int continuer = 1;
+
+//     SDL_Init(SDL_INIT_VIDEO);
+//     TTF_Init();
+
+//     ecran = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+//     SDL_WM_SetCaption("Gestion du texte avec SDL_ttf", NULL);
+
+//     fond = IMG_Load("moraira.jpg");
+
+//     /* Chargement de la police */
+//     police = TTF_OpenFont("angelina.ttf", 65);
+//     /* Écriture du texte dans la SDL_Surface texte en mode Blended (optimal) */
+//     texte = TTF_RenderText_Blended(police, "Salut les Zér0s !", couleurNoire);
+
+//     while (continuer)
+//     {
+//         SDL_WaitEvent(&event);
+//         switch(event.type)
+//         {
+//             case SDL_QUIT:
+//                 continuer = 0;
+//                 break;
+//         }
+
+//         SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 255, 255, 255));
+
+//         position.x = 0;
+//         position.y = 0;
+//         SDL_BlitSurface(fond, NULL, ecran, &position); /* Blit du fond */
+
+//         position.x = 60;
+//         position.y = 370;
+//         SDL_BlitSurface(texte, NULL, ecran, &position); /* Blit du texte */
+//         SDL_Flip(ecran);
+//     }
+
+//     TTF_CloseFont(police);
+//     TTF_Quit();
+
+//     SDL_FreeSurface(texte);
+//     SDL_Quit();
+// }
 
 static void		ft_move_zoom(const unsigned char *KeyStates, t_gldata *data)
 {
@@ -91,6 +141,7 @@ static void		ft_move_zoom(const unsigned char *KeyStates, t_gldata *data)
 		data->zoom = data->zoom * 1.01;
 		data->step *= 1.01;
 		data->nb_zoom--;
+		// hud_print(data);
 	}
 	else if (data->nb_zoom < 1200 && KeyStates[SDL_SCANCODE_W])//( || (e.wheel.y < 0 && e.type == SDL_MOUSEWHEEL)))
 	{
@@ -150,6 +201,10 @@ void			ft_control(t_gl *gl, t_gldata *data)
 	static int	color;
 
 	SDL_PumpEvents();
+	SDL_Event e;
+	SDL_PollEvent(&e);
+	if (e.type == SDL_QUIT)
+		data->exit = 2;
 	const unsigned char *KeyStates = SDL_GetKeyboardState(NULL);
 	ft_mouse(data);
 	ft_iter_exit(KeyStates, data);
