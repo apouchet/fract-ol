@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 14:52:56 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/01 17:31:10 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ft_affich(t_fract *fract)
 	i = -1;
 	while (++i < fract->nb_thread)
 		pthread_join(thread[i], NULL);
-	if (fract->mode == 1 || fract->mode == 2)
+	if (fract->mode > 0)
 		ft_mdb_julia_semi_opti(fract);
 	mlx_put_image_to_window(fract->mlx_ptr, fract->win_ptr, fract->p_img, 0, 0);
 	ft_hud(fract);

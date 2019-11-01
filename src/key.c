@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/25 14:56:04 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:32:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ static int	ft_key_color_and_mode(int key, t_fract *fract)
 		fract->mode = 1;
 	else if (key == 25 || key == 92)
 		fract->mode = 2;
+	else if (key == 29 || key == 82)
+		fract->mode = 3;
 	else if (key == 8 && fract->div_q < fract->iteration_max)
 	{
 		fract->div_q++;

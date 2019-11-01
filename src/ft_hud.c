@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 14:32:06 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/23 14:32:56 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:31:49 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_hud_info(t_fract *fract)
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 122, "Screenshot: p");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 105, "Convert to .fdf: f");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 88,
-		"Calcul mode basic/semi-opti/opti: 7, 8, 9");
+		"Opti rank: none/semi/full/over: 7, 8, 9, 0");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 71, "Change color: c/v");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 54, "Thread number: q/e");
 	ft_put(fract, FENETRE_X - 465, FENETRE_Y - 37,
@@ -59,6 +59,15 @@ void		ft_hud(t_fract *fract)
 		ft_put(fract, 5, 22, "Thread number:");
 		ft_put(fract, 150, 22, tmp);
 		ft_strdel(&tmp);
+		ft_put(fract, 5, 39, "Opti rank:");
+		if (fract->mode == 0)
+			ft_put(fract, 110, 39, "none");
+		else if (fract->mode == 1)
+			ft_put(fract, 110, 39, "semi");
+		else if (fract->mode == 2)
+			ft_put(fract, 110, 39, "full");
+		else if (fract->mode == 3)
+			ft_put(fract, 110, 39, "over");
 	}
 	if (fract->info == 2)
 		ft_hud_info(fract);

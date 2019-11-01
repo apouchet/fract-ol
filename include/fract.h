@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fract.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/24 15:33:56 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/01 15:31:21 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include "libprintf.h"
 # include <time.h>
 
-# define FENETRE_X (1500 / 2)
-# define FENETRE_Y (1286 / 2)
+# define FENETRE_X (1500)
+# define FENETRE_Y (1286)
 # define SCREENSHOT "Desktop"
 # define BUILD_FDF "."
 # define R 0x00FF0000

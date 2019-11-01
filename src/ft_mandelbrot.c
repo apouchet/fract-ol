@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mandelbrot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/24 07:58:46 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:21:20 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,12 +155,12 @@ int			select_calc(t_fract *f, int x, int y)
 
 static int	ft_check_opti(t_fract *f, int x, int y, int type)
 {
-	if (type == 1)
+	if (type == 0)
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
 				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * (y - 1) + x]
 				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * (y + 1) + x]
 				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * y + x + 1]);
-	else
+	else if (type == 1)
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
 				&& f->img[f->p.sl * (y - 1) + x - 1]
 				== f->img[f->p.sl * (y - 1) + x + 1]
@@ -168,6 +168,57 @@ static int	ft_check_opti(t_fract *f, int x, int y, int type)
 				== f->img[f->p.sl * (y + 1) + x + 1]
 				&& f->img[f->p.sl * (y - 1) + x - 1]
 				== f->img[f->p.sl * (y + 1) + x - 1]);
+	else if (type == 2)
+		return (x != 0 && y != 0 && x < FENETRE_X - 2 && y < FENETRE_Y - 2
+				&& f->img[f->p.sl * (y - 2) + x - 2]
+				== f->img[f->p.sl * (y - 2) + x + 2]
+				&& f->img[f->p.sl * (y - 2) + x - 2]
+				== f->img[f->p.sl * (y + 2) + x + 2]
+				&& f->img[f->p.sl * (y - 2) + x - 2]
+				== f->img[f->p.sl * (y + 2) + x - 2]);
+	else
+		return (x != 0 && y != 0 && x < FENETRE_X - 2 && y < FENETRE_Y - 2
+				&& f->img[f->p.sl * y + x - 2]
+				== f->img[f->p.sl * (y - 2) + x]
+				&& f->img[f->p.sl * y + x - 2]
+				== f->img[f->p.sl * y + x + 2]
+				&& f->img[f->p.sl * y + x - 2]
+				== f->img[f->p.sl * (y + 2) + x]);
+}
+
+static void	ft_mdb_julia_over_opti(t_fract *f)
+{
+	int x;
+	int y;
+
+	x = 2;
+	while (x < FENETRE_X)
+	{
+		y = 2;
+		while (y < FENETRE_Y)
+		{
+			if (ft_check_opti(f, x, y, 2))
+				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 2) + x - 2];
+			else
+				f->img[f->p.sl * y + x] = select_calc(f, x, y);
+			y += 4;
+		}
+		x += 4;
+	}
+	x = 0;
+	while (x < FENETRE_X)
+	{
+		y = 2 - (x % 4);
+		while (y < FENETRE_Y)
+		{
+			if (ft_check_opti(f, x, y, 3))
+				f->img[f->p.sl * y + x] = f->img[f->p.sl * y + x - 2];
+			else
+				f->img[f->p.sl * y + x] = select_calc(f, x, y);
+			y += 4;
+		}
+		x += 2;
+	}
 }
 
 static void	ft_mdb_julia_opti(t_fract *f)
@@ -176,12 +227,14 @@ static void	ft_mdb_julia_opti(t_fract *f)
 	int y;
 
 	x = 1;
+	if (f->mode == 3)
+		ft_mdb_julia_over_opti(f);
 	while (x < FENETRE_X)
 	{
 		y = 1;
 		while (y < FENETRE_Y)
 		{
-			if (ft_check_opti(f, x, y, 0))
+			if (ft_check_opti(f, x, y, 1))
 				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 1) + x + 1];
 			else
 				f->img[f->p.sl * y + x] = select_calc(f, x, y);
@@ -196,7 +249,7 @@ void		ft_mdb_julia_semi_opti(t_fract *f)
 	int x;
 	int y;
 
-	if (f->mode == 2)
+	if (f->mode == 2 || f->mode == 3)
 		ft_mdb_julia_opti(f);
 	x = 0;
 	while (x < FENETRE_X)
@@ -204,7 +257,7 @@ void		ft_mdb_julia_semi_opti(t_fract *f)
 		y = ((x + 1) % 2);
 		while (y < FENETRE_Y)
 		{
-			if (ft_check_opti(f, x, y, 1))
+			if (ft_check_opti(f, x, y, 0))
 				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 1) + x];
 			else
 				f->img[f->p.sl * y + x] = select_calc(f, x, y);
@@ -224,11 +277,11 @@ void		*ft_mandelbrot_julia(void *fract)
 
 	f = (t_fract*)fract;
 	x = f->x++;
-	x *= (f->mode >= 2 ? 2 : 1);
+	x *= (f->mode >= 2 ? 2 + ((f->mode - 2) * 2) : 1);
 	x_step = (f->mode >= 2 ? 2 : 1) * f->nb_thread;
 	y_step = (f->mode == 0 ? 1 : 2);
-	if (f->mode == 3)
-		bzero(f->img, FENETRE_X * FENETRE_Y * 4);
+	x_step = (f->mode == 3 ? x_step * 2 : x_step);
+	y_step = (f->mode == 3 ? 4 : y_step);
 	while (x < FENETRE_X)
 	{
 		y = (f->mode == 1 ? x % 2 : 0);

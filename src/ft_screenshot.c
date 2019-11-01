@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_screenshot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:13:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/21 18:13:01 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/01 15:04:52 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_screen_gl(char *buff)
 	int		fd;
 	char	*name;
 	time_t	curtime;
-	
+
 	time(&curtime);
 	ft_init_screenshot(&tga, NULL);
 	tga.bpp = 8 * 3;
@@ -91,7 +91,7 @@ void	ft_screen(t_fract *fract)
 	int		fd;
 	char	*name;
 	time_t	curtime;
-	int 	i;
+	int		i;
 
 	i = -1;
 	time(&curtime);
