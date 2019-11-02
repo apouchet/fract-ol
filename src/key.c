@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/01 18:32:05 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 11:40:05 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,17 @@ static void	ft_key_switch_fractal(int key, t_fract *fract)
 
 static int	ft_key_color_and_mode(int key, t_fract *fract)
 {
-	if (key == 26 || key == 89)
+	//printf("key = %d\n", key);
+	if (key == 22 || key == 88)
 		fract->mode = 0;
-	else if (key == 28 || key == 91)
+	else if (key == 26 || key == 89)
 		fract->mode = 1;
-	else if (key == 25 || key == 92)
+	else if (key == 28 || key == 91)
 		fract->mode = 2;
-	else if (key == 29 || key == 82)
+	else if (key == 25 || key == 92)
 		fract->mode = 3;
+	else if (key == 29 || key == 82)
+		fract->mode = 4;
 	else if (key == 8 && fract->div_q < fract->iteration_max)
 	{
 		fract->div_q++;

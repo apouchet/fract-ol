@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/01 18:21:20 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 11:32:41 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ static void	ft_mdb_julia_over_opti(t_fract *f)
 		y = 2;
 		while (y < FENETRE_Y)
 		{
-			if (ft_check_opti(f, x, y, 2))
+			if (f->mode == 4 && ft_check_opti(f, x, y, 2))
 				f->img[f->p.sl * y + x] = f->img[f->p.sl * (y - 2) + x - 2];
 			else
 				f->img[f->p.sl * y + x] = select_calc(f, x, y);
@@ -227,7 +227,7 @@ static void	ft_mdb_julia_opti(t_fract *f)
 	int y;
 
 	x = 1;
-	if (f->mode == 3)
+	if (f->mode == 3 || f->mode == 4)
 		ft_mdb_julia_over_opti(f);
 	while (x < FENETRE_X)
 	{
@@ -249,7 +249,7 @@ void		ft_mdb_julia_semi_opti(t_fract *f)
 	int x;
 	int y;
 
-	if (f->mode == 2 || f->mode == 3)
+	if (f->mode == 2 || f->mode == 3 || f->mode == 4)
 		ft_mdb_julia_opti(f);
 	x = 0;
 	while (x < FENETRE_X)
@@ -277,11 +277,12 @@ void		*ft_mandelbrot_julia(void *fract)
 
 	f = (t_fract*)fract;
 	x = f->x++;
-	x *= (f->mode >= 2 ? 2 + ((f->mode - 2) * 2) : 1);
+	x *= (f->mode == 2 ? 2  : 1);
+	x *= (f->mode >= 3 ? 4  : 1);
 	x_step = (f->mode >= 2 ? 2 : 1) * f->nb_thread;
 	y_step = (f->mode == 0 ? 1 : 2);
-	x_step = (f->mode == 3 ? x_step * 2 : x_step);
-	y_step = (f->mode == 3 ? 4 : y_step);
+	x_step = (f->mode >= 3 ? x_step * 2 : x_step);
+	y_step = (f->mode >= 3 ? 4 : y_step);
 	while (x < FENETRE_X)
 	{
 		y = (f->mode == 1 ? x % 2 : 0);
