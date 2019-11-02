@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/02 11:32:41 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 12:27:49 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void		newtons_calc(t_fract *f)
 	div = 3.0 * (pow_r + pow_i) * (pow_r + pow_i);
 	tmp = f->z_r;
 	f->z_r -= (pow_r * pow_r * f->z_r + 2.0 * pow_r * f->z_r
-	* pow_i + f->z_r * pow_i * pow_i - pow_r + pow_i) / div;
+			* pow_i + f->z_r * pow_i * pow_i - pow_r + pow_i) / div;
 	f->z_i -= (pow_i * pow_i * f->z_i + pow_r * pow_r * f->z_i + 2
-	* pow_r * pow_i * f->z_i + 2 * tmp * f->z_i) / div;
+			* pow_r * pow_i * f->z_i + 2 * tmp * f->z_i) / div;
 }
 
 static int	ft_calcul_newton(t_fract f, int x, int y)
@@ -57,10 +57,10 @@ static int	ft_calcul_newton(t_fract f, int x, int y)
 		if (sqrt(pow(f.z_r - 1, 2) + pow(f.z_i, 2)) < 0.0001)
 			return (R - (int)(((double)i / f.iteration_max) * (double)R) & R);
 		else if (sqrt(pow(f.z_r + 0.5, 2)
-			+ pow(f.z_i - sqrt(3) / 2, 2)) < 0.0001)
+					+ pow(f.z_i - sqrt(3) / 2, 2)) < 0.0001)
 			return (G - (int)(((double)i / f.iteration_max) * (double)G) & G);
 		else if (sqrt(pow(f.z_r + 0.5, 2)
-			+ pow(f.z_i + sqrt(3) / 2, 2)) < 0.0001)
+					+ pow(f.z_i + sqrt(3) / 2, 2)) < 0.0001)
 			return (B - (int)(((double)i / f.iteration_max) * (double)B) & B);
 	}
 	return (i);
@@ -137,9 +137,9 @@ int			ft_color(int i, t_fract f, int x, int y)
 	else
 		color = R + ((B * 6 * (1 - i / f.div)) & B);
 	if (f.info == 2 && ((x > FENETRE_X - 475 && y > FENETRE_Y - 210)
-		|| (x < 175 && y > FENETRE_Y - 90)))
+				|| (x < 175 && y > FENETRE_Y - 90)))
 		color = ((int)((color & R) * 0.3) & R) + ((int)((color & G) * 0.3) & G)
-		+ ((int)((color & B) * 0.3) & B);
+			+ ((int)((color & B) * 0.3) & B);
 	return (color);
 }
 
@@ -176,14 +176,31 @@ static int	ft_check_opti(t_fract *f, int x, int y, int type)
 				== f->img[f->p.sl * (y + 2) + x + 2]
 				&& f->img[f->p.sl * (y - 2) + x - 2]
 				== f->img[f->p.sl * (y + 2) + x - 2]);
-	else
-		return (x != 0 && y != 0 && x < FENETRE_X - 2 && y < FENETRE_Y - 2
-				&& f->img[f->p.sl * y + x - 2]
-				== f->img[f->p.sl * (y - 2) + x]
-				&& f->img[f->p.sl * y + x - 2]
-				== f->img[f->p.sl * y + x + 2]
-				&& f->img[f->p.sl * y + x - 2]
-				== f->img[f->p.sl * (y + 2) + x]);
+	return (x != 0 && y != 0 && x < FENETRE_X - 2 && y < FENETRE_Y - 2
+			&& f->img[f->p.sl * y + x - 2] == f->img[f->p.sl * (y - 2) + x]
+			&& f->img[f->p.sl * y + x - 2] == f->img[f->p.sl * (y + 2) + x]
+			&& f->img[f->p.sl * y + x - 2] == f->img[f->p.sl * y + x + 2]);
+}
+
+static void	ft_mdb_julia_over_opti2(t_fract *f)
+{
+	int x;
+	int y;
+
+	x = 0;
+	while (x < FENETRE_X)
+	{
+		y = 2 - (x % 4);
+		while (y < FENETRE_Y)
+		{
+			if (ft_check_opti(f, x, y, 3))
+				f->img[f->p.sl * y + x] = f->img[f->p.sl * y + x - 2];
+			else
+				f->img[f->p.sl * y + x] = select_calc(f, x, y);
+			y += 4;
+		}
+		x += 2;
+	}
 }
 
 static void	ft_mdb_julia_over_opti(t_fract *f)
@@ -205,20 +222,7 @@ static void	ft_mdb_julia_over_opti(t_fract *f)
 		}
 		x += 4;
 	}
-	x = 0;
-	while (x < FENETRE_X)
-	{
-		y = 2 - (x % 4);
-		while (y < FENETRE_Y)
-		{
-			if (ft_check_opti(f, x, y, 3))
-				f->img[f->p.sl * y + x] = f->img[f->p.sl * y + x - 2];
-			else
-				f->img[f->p.sl * y + x] = select_calc(f, x, y);
-			y += 4;
-		}
-		x += 2;
-	}
+	ft_mdb_julia_over_opti2(f);
 }
 
 static void	ft_mdb_julia_opti(t_fract *f)
@@ -277,8 +281,8 @@ void		*ft_mandelbrot_julia(void *fract)
 
 	f = (t_fract*)fract;
 	x = f->x++;
-	x *= (f->mode == 2 ? 2  : 1);
-	x *= (f->mode >= 3 ? 4  : 1);
+	x *= (f->mode == 2 ? 2 : 1);
+	x *= (f->mode >= 3 ? 4 : 1);
 	x_step = (f->mode >= 2 ? 2 : 1) * f->nb_thread;
 	y_step = (f->mode == 0 ? 1 : 2);
 	x_step = (f->mode >= 3 ? x_step * 2 : x_step);

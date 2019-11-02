@@ -6,17 +6,16 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:13:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/01 15:04:52 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 12:12:19 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "fract.h"
 
 char	*ft_create_path(char *target, char *type, char *name, int offset)
 {
 	char	*path;
-	size_t len;
+	size_t	len;
 
 	if (target[0] != '.')
 		len = ft_strlen("/Users/") + ft_strlen(getlogin()) + ft_strlen(target)

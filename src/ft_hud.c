@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 14:32:06 by floblanc          #+#    #+#             */
-/*   Updated: 2019/11/02 11:47:31 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 12:11:10 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,26 @@ void		ft_hud(t_fract *fract)
 {
 	char *tmp;
 
-	if (fract->info)
-	{
-		ft_put(fract, FENETRE_X - 250, 10, "Press i for informations");
-		tmp = ft_itoa(fract->iteration_max);
-		ft_put(fract, 5, 5, "Accuracy:");
-		ft_put(fract, 100, 5, tmp);
-		ft_strdel(&tmp);
-		tmp = ft_itoa(fract->nb_thread);
-		ft_put(fract, 5, 22, "Thread number:");
-		ft_put(fract, 150, 22, tmp);
-		ft_strdel(&tmp);
-		ft_put(fract, 5, 39, "Opti rank:");
-		if (fract->mode == 0)
-			ft_put(fract, 110, 39, "none");
-		else if (fract->mode == 1)
-			ft_put(fract, 110, 39, "low");
-		else if (fract->mode == 2)
-			ft_put(fract, 110, 39, "medium");
-		else if (fract->mode == 3)
-			ft_put(fract, 110, 39, "high");
-		else if (fract->mode == 4)
-			ft_put(fract, 110, 39, "higher");
-	}
+	ft_put(fract, FENETRE_X - 250, 10, "Press i for informations");
+	tmp = ft_itoa(fract->iteration_max);
+	ft_put(fract, 5, 5, "Accuracy:");
+	ft_put(fract, 100, 5, tmp);
+	ft_strdel(&tmp);
+	tmp = ft_itoa(fract->nb_thread);
+	ft_put(fract, 5, 22, "Thread number:");
+	ft_put(fract, 150, 22, tmp);
+	ft_strdel(&tmp);
+	ft_put(fract, 5, 39, "Opti:");
+	if (fract->mode == 0)
+		ft_put(fract, 60, 39, "none");
+	else if (fract->mode == 1)
+		ft_put(fract, 60, 39, "low");
+	else if (fract->mode == 2)
+		ft_put(fract, 60, 39, "medium");
+	else if (fract->mode == 3)
+		ft_put(fract, 60, 39, "high");
+	else if (fract->mode == 4)
+		ft_put(fract, 60, 39, "higher");
 	if (fract->info == 2)
 		ft_hud_info(fract);
 }

@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/02 11:21:57 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 12:10:10 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int		ft_affich(t_fract *fract)
 	if (fract->mode > 0)
 		ft_mdb_julia_semi_opti(fract);
 	mlx_put_image_to_window(fract->mlx_ptr, fract->win_ptr, fract->p_img, 0, 0);
-	ft_hud(fract);
+	if (fract->info)
+		ft_hud(fract);
 	return (0);
 }
 

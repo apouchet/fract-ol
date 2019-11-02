@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/01 13:39:45 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 13:13:30 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,14 +198,15 @@ static	void	ft_iter_exit(const unsigned char *KeyStates, t_gldata *data)
 
 void			ft_control(t_gl *gl, t_gldata *data)
 {
-	static int	color;
+	static int			color;
+	const unsigned char	*KeyStates;
+	SDL_Event			e;
 
 	SDL_PumpEvents();
-	SDL_Event e;
 	SDL_PollEvent(&e);
 	if (e.type == SDL_QUIT)
 		data->exit = 2;
-	const unsigned char *KeyStates = SDL_GetKeyboardState(NULL);
+	KeyStates = SDL_GetKeyboardState(NULL);
 	ft_mouse(data);
 	ft_iter_exit(KeyStates, data);
 	ft_move_zoom(KeyStates, data);

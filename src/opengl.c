@@ -6,7 +6,7 @@
 /*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/01 12:20:31 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/02 12:33:28 by floblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static int	ft_init_glfw_gl(t_gl *gl)
 	// }
 	// glewExperimental = GL_TRUE;
 	// glewInit();
-
-
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		ft_printf("Error initialisation of SDL :  %s\n", SDL_GetError());
@@ -109,10 +107,10 @@ void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 	glUniform1f(matloc, data->zoom);
 	matloc = glGetUniformLocation(gl->program_id, "x");
 	glUniform1f(matloc, data->x);
-	printf("x = %ld ",matloc);
+	printf("x = %ld ", matloc);
 	matloc = glGetUniformLocation(gl->program_id, "y");
 	glUniform1f(matloc, data->y);
-	printf("y = %ld\n",matloc);
+	printf("y = %ld\n", matloc);
 	matloc = glGetUniformLocation(gl->program_id, "c_r");
 	glUniform1f(matloc, data->c_r);
 	matloc = glGetUniformLocation(gl->program_id, "c_i");
