@@ -1,60 +1,25 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   opengl.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/17 13:39:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/02 12:33:28 by floblanc         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "gl.h"
 
 static int	ft_init_glfw_gl(t_gl *gl)
 {
-	// glfwInit();
-	// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	// glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	// glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	// gl->w = glfwCreateWindow(FENETRE_X, FENETRE_X, "OpenGL", NULL, NULL);
-	// glfwMakeContextCurrent(gl->w);
-	// if (!(gl->w))
-	// {
-	// 	ft_printf("Error while opening windows\n");
-	// 	glfwTerminate();
-	// 	return (-1);
-	// }
-	// glewExperimental = GL_TRUE;
-	// glewInit();
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	gl->w = glfwCreateWindow(FENETRE_X, FENETRE_X, "OpenGL", NULL, NULL);
+	glfwMakeContextCurrent(gl->w);
+	if (!(gl->w))
 	{
-		ft_printf("Error initialisation of SDL :  %s\n", SDL_GetError());
-		SDL_Quit();
+		ft_printf("Error while opening windows\n");
+		glfwTerminate();
 		return (-1);
 	}
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-		SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	printf("b\n");
-	if ((gl->w = SDL_CreateWindow("Scop", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, 1000, 1000,
-		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL)) == 0
-		|| (gl->contexte_opengl = SDL_GL_CreateContext(gl->w)) == 0)
-	{
-		if (gl->w == 0)
-			ft_printf("Error creation of the window : %s\n", SDL_GetError());
-		else
-			ft_printf("%s\n", SDL_GetError());
-		SDL_Quit();
-		return (-1);
-	}
-	// glEnable(GL_DEPTH_TEST); ??
-	// glDepthFunc(GL_LESS); ??
+	glewExperimental = GL_TRUE;
+	glewInit();
+	ft_printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+	ft_printf("Shader version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	return (ft_shaders("./shader/shader.vs", "./shader/shader.fs", gl));
 }
 
@@ -97,47 +62,6 @@ void		ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl)
 	data->y = 0;
 }
 
-void		ft_send_data(t_gl *gl, t_gldata *data, int color)
-{
-	long int matloc;
-
-	matloc = glGetUniformLocation(gl->program_id, "MaxIterations");
-	glUniform1f(matloc, data->max_it);
-	matloc = glGetUniformLocation(gl->program_id, "zoom");
-	glUniform1f(matloc, data->zoom);
-	matloc = glGetUniformLocation(gl->program_id, "x");
-	glUniform1f(matloc, data->x);
-	printf("x = %ld ", matloc);
-	matloc = glGetUniformLocation(gl->program_id, "y");
-	glUniform1f(matloc, data->y);
-	printf("y = %ld\n", matloc);
-	matloc = glGetUniformLocation(gl->program_id, "c_r");
-	glUniform1f(matloc, data->c_r);
-	matloc = glGetUniformLocation(gl->program_id, "c_i");
-	glUniform1f(matloc, data->c_i);
-	matloc = glGetUniformLocation(gl->program_id, "fractal");
-	glUniform1f(matloc, data->fractal);
-	matloc = glGetUniformLocation(gl->program_id, "color_switch");
-	glUniform1f(matloc, color);
-}
-
-// int			touch(SDL_Event e)
-// {
-// 	int key = 0;
-// 	// int test[256];
-// 	// if (SDL_PollEvent(&e))
-// 	if (SDL_WaitEvent(&e))
-// 	{
-// 		if (e.type == SDL_KEYDOWN)
-// 			printf("e.keysym = %d\n", e.key.keysym.sym);
-// 		key = e.key.keysym.sym;
-// 	}
-// 	printf("key = %d\n", key);
-// 	if (key == SDL_WINDOWEVENT_CLOSE || key == SDLK_ESCAPE)
-// 		return (0);
-// 	return (1);
-// }
-
 int			main_opengl(t_fract *fract)
 {
 	t_gl		gl;
@@ -148,30 +72,20 @@ int			main_opengl(t_fract *fract)
 		ft_printf("Error in the initialisation of OpenGL\n");
 		return (0);
 	}
-	ft_printf("OpenGL version: %s\n", glGetString(GL_VERSION));
-	ft_printf("Shader version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	ft_init_data(&data, fract, &gl);
-	// while (glfwGetKey(gl.w, GLFW_KEY_ESCAPE) != GLFW_PRESS
-	// 	&& !glfwWindowShouldClose(gl.w) && !data.exit)
-	while (!data.exit)
+	while (glfwGetKey(gl.w, GLFW_KEY_ESCAPE) != GLFW_PRESS
+		&& !glfwWindowShouldClose(gl.w) && !data.exit)
 	{
 		glUseProgram(gl.program_id);
-		// if (touch(gl.evenements) == 0)
-		// 	exit (0);
-		// ft_send_data(&gl, &data, 0);
 		ft_control(&gl, &data);
-		// ft_control(&gl, &data);
 		glBindVertexArray(gl.vao);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-		SDL_GL_SwapWindow(gl.w);
-		// glfwPollEvents();
-		// glfwSwapBuffers(gl.w);
+		glfwPollEvents();
+		glfwSwapBuffers(gl.w);
 	}
 	fract->c_r = data.c_r;
 	fract->c_i = data.c_i;
 	fract->fract = data.fractal;
-	SDL_DestroyWindow(gl.w);
-	SDL_Quit();
-	// glfwTerminate();
+	glfwTerminate();
 	return (data.exit);
 }

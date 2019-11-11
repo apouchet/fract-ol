@@ -91,5 +91,5 @@ void main()
 		if (iter == MaxIterations)
 			color = vec3(0.0f, 0.0f, 0.0f);
 	}
-	pixelColor = vec4(color, 1.0);
+	pixelColor = vec4(color, 1.0f);
 }

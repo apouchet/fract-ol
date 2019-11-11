@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
+#    By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/11/01 12:09:54 by floblanc         ###   ########.fr        #
+#    Updated: 2019/11/11 14:20:26 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,9 @@ INC_NAME =	fract.h
 LIBFT				=	./libftprintf/
 LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
- FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 #FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
-OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew -lsdl2
+OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew #-lsdl2
 #OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
 #OPENGL_FLAGS = -lglew -lsdl2 
 # OPENGL_FLAGS = -L /usr/local/lib -lglfw -lglew -lsdl2
@@ -102,7 +102,8 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 
 app : all
 	mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
-	cp -Rf $(FRAMEWORK) "./$(NAME).app/Contents/Resources/"
+	# cp -Rf $(FRAMEWORK) "./$(NAME).app/Contents/Resources/"
+	cp -Rf "/Users/apouchet/.brew/lib/libSDL2.a" "./$(NAME).app/Contents/Resources/"
 	cp -R $(SHADER) "./$(NAME).app/Contents/Resources/$(SHADER)"
 	cp app/fract.icns	"./$(NAME).app/Contents/Resources/"
 	cp app/PkgInfo	"./$(NAME).app/Contents/"

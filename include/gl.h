@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gl.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:53 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/01 12:09:46 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:20:04 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include <fcntl.h>
 # include <OpenGL/gl3.h>
-# include <SDL2/SDL.h>
+// # include <SDL2/SDL.h>
 
-// # include <GL/glew.h>
-// # include <GLFW/glfw3.h>
+# include <GL/glew.h>
+# include <GLFW/glfw3.h>
 # include "fract.h"
 # include "../libftprintf/include/libprintf.h"
 
