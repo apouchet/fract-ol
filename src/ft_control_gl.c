@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/12 16:36:48 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/12 18:07:36 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,18 @@ static void		ft_color_fractal(t_gl *gl, t_gldata *data)
 		data->fractal = 3;
 	else if (glfwGetKey(gl->w, GLFW_KEY_5) || glfwGetKey(gl->w, GLFW_KEY_KP_5))
 		data->fractal = 4;
-	if (fract_pre != data->fractal || glfwGetKey(gl->w, GLFW_KEY_R))
+	if (fract_pre != data->fractal || glfwGetKey(gl->w, GLFW_KEY_SPACE))
 		ft_init_data(data, NULL, gl);
-	if (glfwGetKey(gl->w, GLFW_KEY_I))
-		data->info = (data->info + 1) % 2;
 	ft_send_data(gl, data, color);
 }
 
-static void		ft_mouse(t_gl *gl, t_gldata *data)
+static void		ft_mouse_info(t_gl *gl, t_gldata *data)
 {
 	static double	x_prec;
 	static double	y_prec;
 	static double	x;
 	static double	y;
+	static int		key = 0;
 
 	if (glfwGetMouseButton(gl->w, GLFW_MOUSE_BUTTON_1))
 	{
@@ -85,6 +84,9 @@ static void		ft_mouse(t_gl *gl, t_gldata *data)
 		data->c_i = (data->c_i - FENETRE_X / 2) / (FENETRE_X / 2);
 	}
 	glfwGetCursorPos(gl->w, &x_prec, &y_prec);
+	if (key == 0 && glfwGetKey(gl->w, GLFW_KEY_I))
+			data->info = (data->info + 1) % 2;
+	key = glfwGetKey(gl->w, GLFW_KEY_I);
 }
 
 static void		ft_move_zoom(t_gl *gl, t_gldata *data)
@@ -114,7 +116,8 @@ static void		ft_move_zoom(t_gl *gl, t_gldata *data)
 
 void			ft_control(t_gl *gl, t_gldata *data)
 {
-	char *buf;
+	char		*buf;
+	static int	tmp_info;
 
 	if (glfwGetKey(gl->w, GLFW_KEY_D))
 	{
@@ -127,14 +130,23 @@ void			ft_control(t_gl *gl, t_gldata *data)
 		ft_printf("MaxIterations = %f\n", data->max_it);
 		data->max_it--;
 	}
-	else if (glfwGetKey(gl->w, GLFW_KEY_P))
+	else if (glfwGetKey(gl->w, GLFW_KEY_P) || data->info == -1)
 	{
-		buf = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3));
-		glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buf);
-		ft_screen_gl(buf);
-		free(buf);
+		if (data->info >= 0)
+		{
+			tmp_info = data->info;
+			data->info = -1;
+		}
+		else
+		{
+			buf = (char*)malloc(sizeof(char) * (FENETRE_X * FENETRE_X * 3));
+			glReadPixels(0, 0, FENETRE_X, FENETRE_X, GL_BGR, GL_UNSIGNED_BYTE, buf);
+			ft_screen_gl(buf);
+			free(buf);
+			data->info = tmp_info;
+		}
 	}
-	ft_mouse(gl, data);
+	ft_mouse_info(gl, data);
 	ft_move_zoom(gl, data);
 	ft_color_fractal(gl, data);
 	if (glfwGetKey(gl->w, GLFW_KEY_ENTER))

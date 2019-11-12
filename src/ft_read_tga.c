@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 17:16:23 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/12 15:43:28 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/12 18:03:53 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,29 +102,25 @@
 
 void						ft_read_texture(GLuint program_id, char *texture)
 {
-	t_tga			tga;
 	unsigned int	gl_texture;
 	unsigned char	*data;
 
-	ft_bzero(&tga, sizeof(t_tga));
 	gl_texture = glGetUniformLocation(program_id, "Texture");
 	glGenTextures(1, &gl_texture);
 	glBindTexture(GL_TEXTURE_2D, gl_texture);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	// int width, height, nrChannels;
-	// unsigned char *data = stbi_load("container.jpg", &width, &height, &nrChannels, 0); 
-
+	int width, height, bpp;
 	// ft_read_tga_headers(texture, &tga);
-	if ((data = stbi_load(texture, &tga.width, &tga.height, &tga.bpp, 0)))
+	if ((data = stbi_load(texture, &width, &height, &bpp, 0)))
 	// if ((data = ft_read_tga_headers(texture, &tga)))
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tga.width, tga.height, 0,
-			((tga.bpp == 4) ? GL_RGBA : GL_RGB), GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
+			((bpp == 4) ? GL_RGBA : GL_RGB), GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 		free(data);
 	}
