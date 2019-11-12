@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:53 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/11 14:20:04 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/12 16:38:12 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define GL_H
 
 # include <fcntl.h>
-# include <OpenGL/gl3.h>
-// # include <SDL2/SDL.h>
-
 # include <GL/glew.h>
 # include <GLFW/glfw3.h>
 # include "fract.h"
@@ -32,10 +29,7 @@ typedef struct		s_gl
 	GLchar			*log;
 	GLuint			vbo;
 	GLuint			vao;
-	// GLFWwindow		*w;
-	SDL_Window		*w;
-	SDL_GLContext	contexte_opengl;
-	SDL_Event		evenements;
+	GLFWwindow		*w;
 }					t_gl;
 
 typedef struct		s_gldata
@@ -49,7 +43,9 @@ typedef struct		s_gldata
 	double			step;
 	int				nb_zoom;
 	int				fractal;
+	unsigned char	*hud;
 	int				exit;
+	int				info;
 }					t_gldata;
 
 typedef struct		s_shd
@@ -72,5 +68,7 @@ char				*ft_get_file(char *name, char *file);
 void				ft_control(t_gl *gl, t_gldata *data);
 
 void				ft_init_data(t_gldata *data, t_fract *fract, t_gl *gl);
+
+void				ft_read_texture(GLuint program_id, char *texture);
 
 #endif

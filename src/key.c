@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:31:32 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/02 12:28:50 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/11 14:37:07 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int			ft_key(int key, t_fract *fract)
 	{
 		fract->opengl = 1;
 		mlx_destroy_window(fract->mlx_ptr, fract->win_ptr);
-		if (main_opengl(fract) == 2)
+		if (main_opengl(fract) == 0)
 			exit(0);
 		fract->win_ptr =
 		mlx_new_window(fract->mlx_ptr, FENETRE_X, FENETRE_Y, "mlx");

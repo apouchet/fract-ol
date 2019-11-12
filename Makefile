@@ -6,7 +6,7 @@
 #    By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/11/11 14:20:26 by apouchet         ###   ########.fr        #
+#    Updated: 2019/11/11 14:45:58 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC_NAME =	main.c 				\
 			ft_hud.c 			\
 			ft_screenshot.c		\
 			ft_control_gl.c		\
+			ft_read_tga.c		\
 			init.c
 
 SRC_PATH = ./src/
@@ -103,7 +104,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 app : all
 	mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
 	# cp -Rf $(FRAMEWORK) "./$(NAME).app/Contents/Resources/"
-	cp -Rf "/Users/apouchet/.brew/lib/libSDL2.a" "./$(NAME).app/Contents/Resources/"
+	# cp -Rf "/Users/apouchet/.brew/lib/libSDL2.a" "./$(NAME).app/Contents/Resources/"
 	cp -R $(SHADER) "./$(NAME).app/Contents/Resources/$(SHADER)"
 	cp app/fract.icns	"./$(NAME).app/Contents/Resources/"
 	cp app/PkgInfo	"./$(NAME).app/Contents/"

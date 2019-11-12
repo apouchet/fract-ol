@@ -7,7 +7,6 @@ uniform float y;
 uniform float c_r;
 uniform float c_i;
 uniform float fractal;
-uniform float info;
 uniform float color_switch;
 
 uniform sampler2D Texture;
@@ -100,54 +99,20 @@ void main()
 	}
 	// if (Texture)
 		// pixelColor = vec4(texture(Texture, textCoord).rgb, 1.0);
-	// // else
-	// if (textureSize2d.x != 512)
-    	// pixelColor = texture(Texture, textCoor);
-	// // if (Texture > 100)
- // //    	pixelColor = vec4(color, 1.0f);
- //    else
- //    {
-    	// // pixelColor = vec4(1.0f, 0.5f, 0.5f, 1.0f);
-    	// vec2 st = gl_FragCoord.xy/vec2(1000.0f, 1000.0f);
-    	// pixelColor = vec4(st.x, st.y, 0.5f, 1.0f);
-    	pixelColor = texture(Texture, textCoor);
-    	// if ((info == 1 && coord.y > 0 && pixelColor.r > 0.5f) || (coord.y < 0 && pixelColor.r > 0.5f))
-    	if (pixelColor.r > 0.2f)
-    	{
-    		if (info == 1 && coord.y > 0)
-    			pixelColor =  vec4(1.0f, 1.0f, 1.0f, 1.0f) - vec4(color, 0.0f);
-    	}
-    	else
-    		pixelColor = vec4(color, 1.0f);
-
-    	// pixelColor = vec4(color, 1.0f);
-    	// pixelColor = texture(Texture, textCoor);// * vec4(color, 1.0f);
-    	// pixelColor = mix(texture(Texture, textCoor), vec4(color, 1.0f), 0.2f);
-   		// pixelColor = texture(Texture, textCoor)
-   		// pixelColor = texture(Texture, textCoor)
-    	// if (pixelColor.rgb == vec3(0.0f, 0.0f, 0.0f))
-    		// pixelColor = vec4(color, 1.0f);
-    // }
+	// else
+	if (textureSize2d.x != 512)
+    	pixelColor = mix(texture(Texture, textCoord), vec4(color, 1.0f), 0.5f);
+	// if (Texture > 100)
+ //    	pixelColor = vec4(color, 1.0f);
+    else
+    {
+    	pixelColor = vec4(1.0f, 0.5f, 0.5f, 1.0f);
+    	vec2 st = gl_FragCoord.xy/vec2(1000.0f, 1000.0f);
+    	pixelColor = vec4(st.x, st.y, 0.5f, 1.0f);
+    }
     	// gl_FragColor = vec4(1.0f, 0.5f, 0.5f, 1.0f);
 // gl_FragColor
     
     // pixelColor = c * gl_Color;
     // else
-    // #version 330 core
-
-// out vec4 FragColor;
-  
-// in vec2 coord;
-// in vec2 textCoor;
-
-// uniform sampler2D Texture;
-
-// void main()
-// {
-// 	vec2 st = gl_FragCoord.xy/vec2(1000.0f, 1000.0f);
-//     // pixelColor = vec4(st.x, st.y, 0.5f, 1.0f);
-//     FragColor = texture(Texture, textCoor) * vec4(st.x, st.y, 0.5f, 1.0f);
-// }
-
-
 }

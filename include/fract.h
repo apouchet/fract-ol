@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fract.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/01 15:31:21 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/12 15:34:38 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # include "libprintf.h"
 # include <time.h>
 
-# define FENETRE_X (1500)
+
+# define FENETRE_X (1000)
 # define FENETRE_Y (1286)
 # define SCREENSHOT "Desktop"
 # define BUILD_FDF "."
@@ -51,9 +52,9 @@ typedef struct	s_tga
 	char		colour_depth;
 	short int	x_origin;
 	short int	y_origin;
-	short int	width;
-	short int	height;
-	char		bpp;
+	int	width;
+	int	height;
+	int		bpp;
 	char		imagedescriptor;
 }				t_tga;
 

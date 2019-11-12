@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_control_gl.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
+/*   Updated: 2019/11/12 16:36:48 by apouchet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "gl.h"
+
 static void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 {
 	unsigned int matloc;
@@ -18,6 +32,8 @@ static void		ft_send_data(t_gl *gl, t_gldata *data, int color)
 	glUniform1f(matloc, data->fractal);
 	matloc = glGetUniformLocation(gl->program_id, "color_switch");
 	glUniform1f(matloc, color);
+	matloc = glGetUniformLocation(gl->program_id, "info");
+	glUniform1f(matloc, data->info);
 }
 
 static void		ft_color_fractal(t_gl *gl, t_gldata *data)
@@ -44,6 +60,8 @@ static void		ft_color_fractal(t_gl *gl, t_gldata *data)
 		data->fractal = 4;
 	if (fract_pre != data->fractal || glfwGetKey(gl->w, GLFW_KEY_R))
 		ft_init_data(data, NULL, gl);
+	if (glfwGetKey(gl->w, GLFW_KEY_I))
+		data->info = (data->info + 1) % 2;
 	ft_send_data(gl, data, color);
 }
 
