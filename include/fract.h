@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/13 16:50:51 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:41:15 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define FENETRE_X (1500)
 # define FENETRE_Y (1286)
 # define SCREENSHOT "Desktop"
-# define BUILD_FDF "."
+# define BUILD_FDF "Desktop"
 # define R 0x00FF0000
 # define G 0x0000FF00
 # define B 0x000000FF

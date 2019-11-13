@@ -6,7 +6,7 @@
 #    By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/11/13 17:35:26 by apouchet         ###   ########.fr        #
+#    Updated: 2019/11/13 17:38:50 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ clean :
 	@echo "$(_BLUE)======< CLEAN PROJECT & LIBPRINTF DONE >======$(_END)"
 	@rm -f ./libprintf.a
 
-fclean : clean
+fclean : clean app_clean
 	@make fclean -C $(LIBFT)
 	@rm -f $(NAME)
 	@echo "$(_BLUE)======< FCLEAN PROJECT & LIBPRINTF DONE >======$(_END)"

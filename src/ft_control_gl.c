@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 18:40:39 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/13 16:20:36 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:08:56 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,13 @@ void			ft_control(t_gl *gl, t_gldata *data)
 
 	if (glfwGetKey(gl->w, GLFW_KEY_D))
 	{
-		ft_printf("MaxIterations = %f\n", data->max_it);
+		ft_printf("Accuracy = %f\n", data->max_it);
 		data->max_it++;
 	}
 	else if (data->max_it > 2
 		&& glfwGetKey(gl->w, GLFW_KEY_A))
 	{
-		ft_printf("MaxIterations = %f\n", data->max_it);
+		ft_printf("Accuracy = %f\n", data->max_it);
 		data->max_it--;
 	}
 	else if (key == 0 && glfwGetKey(gl->w, GLFW_KEY_P))
