@@ -19,9 +19,6 @@ in vec2 textCoor;
 
 void main()
 {
-	// sampler2D a;
-
-   	// a = texture(Texture, textCoord);
    	ivec2	textureSize2d = textureSize(Texture, 0);
 	float   real  = coord.x * zoom + x;
 	float   imag  = coord.y * zoom + y;
@@ -106,5 +103,5 @@ void main()
     else if (coord.x > 0 && coord.y > 0.94f && (fractal != 1 && fractal != 3))
     	pixelColor = vec4(color, 1.0f);
     else
-    	pixelColor =  vec4(1.0f, 1.0f, 1.0f, 1.0f) - vec4(color, 0.0f);
+    	pixelColor =  vec4(1.0f, 1.0f, 1.0f, 0.5f) - vec4(color, 0.0f);
 }

@@ -8,7 +8,7 @@ out vec2 textCoor;
 
 void main() {
     gl_Position = vec4(position, 0.0f, 1.0f);
-    coord.x = position.x;
+    coord.x = position.x * 1.1664;
     coord.y = -position.y;
     textCoor.x = posTexture.x;
     textCoor.y = -posTexture.y;

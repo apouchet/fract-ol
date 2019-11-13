@@ -6,22 +6,11 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/12 15:12:41 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:33:43 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
-
-int		print_usage(void)
-{
-	char	*str;
-
-	str = "Usage : ./fractol Mandelbrot\n\t\t  Julia\n\t\t  Burning-Ship\n\t\t";
-	write(2, str, ft_strlen(str));
-	str = "  Burning-Julia\n\t\t  Newton\n\n\tFlag : -gl : open with OpenGL\n";
-	write(2, str, ft_strlen(str));
-	return (0);
-}
 
 int		ft_affich(t_fract *fract)
 {

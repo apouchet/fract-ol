@@ -6,7 +6,7 @@
 #    By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/11/11 14:45:58 by apouchet         ###   ########.fr        #
+#    Updated: 2019/11/13 17:35:26 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = fractol
 APP_NAME = fract-ol
 FRAMEWORK = /System/Library/Frameworks/OpenGL.framework /System/Library/Frameworks/AppKit.framework
 SHADER = ./shader/
+HUD = ./hud/
 SRC_NAME =	main.c 				\
 			ft_mandelbrot.c		\
 			ft_zoom.c			\
@@ -26,7 +27,9 @@ SRC_NAME =	main.c 				\
 			ft_hud.c 			\
 			ft_screenshot.c		\
 			ft_control_gl.c		\
-			ft_read_tga.c		\
+			ft_opti.c			\
+			ft_other_fract.c	\
+			ft_create_fdf.c		\
 			init.c
 
 SRC_PATH = ./src/
@@ -43,10 +46,11 @@ LIBFTA				=	libprintf.a
 LIBFTINCLUDES		=	./libftprintf/include/
 FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 #FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
-OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew #-lsdl2
+OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
 #OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
 #OPENGL_FLAGS = -lglew -lsdl2 
 # OPENGL_FLAGS = -L /usr/local/lib -lglfw -lglew -lsdl2
+
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
@@ -103,8 +107,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 
 app : all
 	mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
-	# cp -Rf $(FRAMEWORK) "./$(NAME).app/Contents/Resources/"
-	# cp -Rf "/Users/apouchet/.brew/lib/libSDL2.a" "./$(NAME).app/Contents/Resources/"
+	cp -R $(HUD) "./$(NAME).app/Contents/Resources/$(HUD)"
 	cp -R $(SHADER) "./$(NAME).app/Contents/Resources/$(SHADER)"
 	cp app/fract.icns	"./$(NAME).app/Contents/Resources/"
 	cp app/PkgInfo	"./$(NAME).app/Contents/"

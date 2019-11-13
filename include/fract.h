@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:20 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/12 17:58:45 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:50:51 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <math.h>
 # include "libprintf.h"
 # include <time.h>
-
 
 # define FENETRE_X (1500)
 # define FENETRE_Y (1286)
@@ -138,11 +137,23 @@ int				ft_color(int i, t_fract f, int x, int y);
 
 void			ft_hud(t_fract *fract);
 
-void			ft_init_screenshot(t_tga *tga, t_fract *fract);
-
-void			ft_screen_gl(char *buff);
+void			ft_screen_gl();
 
 char			*ft_create_path(char *target, char *type, char *name
 , int offset);
+
+int				print_usage(void);
+
+int				select_calc(t_fract *f, int x, int y);
+
+void			newtons_calc(t_fract *f);
+
+int				ft_calcul_newton(t_fract f, int x, int y);
+
+int				ft_calcul_bns_juliabns(t_fract fract, int x, int y);
+
+void			ft_switch(t_fract *fract, int x, int y);
+
+void			ft_build_fdf(t_fract *f);
 
 #endif

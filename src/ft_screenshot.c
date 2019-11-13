@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_screenshot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:13:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/02 12:12:19 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:25:45 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract.h"
+#include "gl.h"
 
-char	*ft_create_path(char *target, char *type, char *name, int offset)
+char		*ft_create_path(char *target, char *type, char *name, int offset)
 {
 	char	*path;
 	size_t	len;
@@ -35,11 +36,13 @@ char	*ft_create_path(char *target, char *type, char *name, int offset)
 	return (path);
 }
 
-void	ft_init_screenshot(t_tga *tga, t_fract *fract)
+static void	ft_init_screenshot(t_tga *tga, t_fract *fract, char **name)
 {
 	int		mode_tmp;
 	int		info_tmp;
+	time_t	curtime;
 
+	time(&curtime);
 	if (fract != NULL)
 	{
 		info_tmp = fract->info;
@@ -51,57 +54,71 @@ void	ft_init_screenshot(t_tga *tga, t_fract *fract)
 		fract->mode = mode_tmp;
 	}
 	ft_bzero(tga, sizeof(t_tga));
+	tga->bpp = 8 * 4;
 	tga->data_type = 2;
 	tga->width = FENETRE_X;
-	if (fract == NULL)
-		tga->height = FENETRE_X;
-	else
-		tga->height = FENETRE_Y;
-}
-
-void	ft_screen_gl(char *buff)
-{
-	t_tga	tga;
-	int		fd;
-	char	*name;
-	time_t	curtime;
-
-	time(&curtime);
-	ft_init_screenshot(&tga, NULL);
-	tga.bpp = 8 * 3;
-	tga.imagedescriptor = 16;
-	if (!(name = ft_create_path(SCREENSHOT, ".tga", &ctime(&curtime)[4], 0)))
+	tga->height = FENETRE_Y;
+	if (!(*name = ft_create_path(SCREENSHOT, ".tga", &ctime(&curtime)[4], 0)))
 	{
 		printf("fail to malloc for screenshot\n");
 		return ;
 	}
+}
+
+static void	ft_clear_hud(unsigned char **buff)
+{
+	int i;
+
+	i = 0;
+	while (i < FENETRE_X * FENETRE_Y * 4)
+	{
+		if ((*buff)[i + 3] != 255)
+		{
+			(*buff)[i] = 255 - (*buff)[i];
+			(*buff)[i + 1] = 255 - (*buff)[i + 1];
+			(*buff)[i + 2] = 255 - (*buff)[i + 2];
+			(*buff)[i + 3] = 255;
+		}
+		i += 4;
+	}
+}
+
+void		ft_screen_gl(void)
+{
+	t_tga			tga;
+	int				fd;
+	char			*name;
+	unsigned char	*buff;
+
+	if (!(buff = (unsigned char*)malloc((FENETRE_X * FENETRE_Y * 4))))
+	{
+		ft_printf("Error : can't take a screenshot\n");
+		return ;
+	}
+	glReadPixels(0, 0, FENETRE_X, FENETRE_Y, GL_BGRA, GL_UNSIGNED_BYTE, buff);
+	ft_init_screenshot(&tga, NULL, &name);
+	tga.imagedescriptor = 16;
+	ft_clear_hud(&buff);
 	if ((fd = open(name, O_RDWR | O_CREAT, 0777)) < 0
 		|| write(fd, &tga, 7) < 0 || write(fd, &tga.colour_depth, 1) < 0
 		|| write(fd, &tga.x_origin, 10) < 0
-		|| write(fd, buff, FENETRE_X * FENETRE_X * 3) < 0)
+		|| write(fd, buff, FENETRE_X * FENETRE_Y * 4) < 0)
 		perror("2 Error ");
 	close(fd);
 	free(name);
+	free(buff);
 }
 
-void	ft_screen(t_fract *fract)
+void		ft_screen(t_fract *fract)
 {
 	t_tga	tga;
 	int		fd;
 	char	*name;
-	time_t	curtime;
 	int		i;
 
 	i = -1;
-	time(&curtime);
-	ft_init_screenshot(&tga, fract);
-	tga.bpp = 8 * 4;
+	ft_init_screenshot(&tga, fract, &name);
 	tga.imagedescriptor = 32;
-	if (!(name = ft_create_path(SCREENSHOT, ".tga", &ctime(&curtime)[4], 0)))
-	{
-		printf("fail to malloc for screenshot\n");
-		return ;
-	}
 	while (++i < FENETRE_X * FENETRE_Y)
 		fract->img[i] += 0xFF000000;
 	if ((fd = open(name, O_RDWR | O_CREAT, 0777)) < 0

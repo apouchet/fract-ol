@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:58 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/11 11:22:02 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:26:06 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,12 @@ static int		ft_shader_start(t_gl *gl, t_shd *shd)
 {
 	shd->vertex_size = ft_strlen(shd->vertex_s);
 	shd->fragment_size = ft_strlen(shd->fragment_s);
-	// printf("1 = %d - %d\n", shd->vertex_size, shd->fragment_size);
 	glShaderSource(gl->vertex_id, 1, (const GLchar**)(&shd->vertex_s),
 		&shd->vertex_size);
-	// printf("1\n");
 	glShaderSource(gl->fragment_id, 1, (const GLchar**)(&shd->fragment_s),
 		&shd->fragment_size);
-	// printf("2\n");
 	glCompileShader(gl->vertex_id);
 	glCompileShader(gl->fragment_id);
-	// printf("3\n");
 	if (!ft_check_shader_compilation(gl->vertex_id, gl)
 		|| !ft_check_shader_compilation(gl->fragment_id, gl))
 		return (ft_delete_shader(gl));
