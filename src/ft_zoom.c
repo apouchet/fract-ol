@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_zoom.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 15:33:42 by apouchet          #+#    #+#             */
-/*   Updated: 2019/10/23 14:41:20 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/14 11:07:06 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void			ft_zoom(int key, t_fract *fract)
 {
 	if ((key == -5 || key == 24 || key == 69 || key == 13) && fract->zoom < 150)
 	{
-		if (fract->iteration_max < 130)
+		if (fract->iteration_max < fract->zoom + 30)
 			fract->iteration_max++;
 		fract->zoom++;
 		ft_zoom_in(key, fract);
@@ -67,9 +67,9 @@ void			ft_zoom(int key, t_fract *fract)
 	else if ((key == -4 || key == 27 || key == 78 || key == 1)
 		&& (fract->x_b - fract->x_a) <= (0.6 + 2.1) * 2)
 	{
-		if (fract->iteration_max > 21
-			&& fract->zoom + 20 < fract->iteration_max)
-			fract->iteration_max--;
+		// if (fract->iteration_max > 21
+			// && fract->zoom + 20 < fract->iteration_max)
+			// fract->iteration_max--;
 		fract->zoom--;
 		ft_zoom_out(fract);
 		fract->step_x = (fract->x_b - fract->x_a) * 0.01;

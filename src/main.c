@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 16:04:17 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/13 16:33:43 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/14 13:38:57 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_start_fract(t_fract *fract)
 	fract->mode = 0;
 	fract->fix = 1;
 	fract->fdf = 0;
-	fract->nb_thread = 8;
+	fract->nb_thread = 1;
 	fract->info = 1;
 	reset_fract(fract);
 	if (fract->opengl)

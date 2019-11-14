@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 14:47:46 by floblanc          #+#    #+#             */
-/*   Updated: 2019/10/23 14:48:08 by floblanc         ###   ########.fr       */
+/*   Updated: 2019/11/14 13:33:03 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_init_mandelbrot(t_fract *fract)
 	fract->x_b = 0.6;
 	fract->y_a = -1.2;
 	fract->y_b = 1.2;
+	fract->fix = 1;
 }
 
 void	ft_init_julia(t_fract *fract)
@@ -34,6 +35,7 @@ void	ft_init_bns(t_fract *fract)
 	fract->x_b = 1.226;
 	fract->y_a = -1.952;
 	fract->y_b = 0.952;
+	fract->fix = 1;
 }
 
 void	ft_init_newton(t_fract *fract)
@@ -42,4 +44,5 @@ void	ft_init_newton(t_fract *fract)
 	fract->x_b = 1.5;
 	fract->y_a = -1;
 	fract->y_b = 1;
+	fract->fix = 1;
 }
