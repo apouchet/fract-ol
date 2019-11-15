@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+         #
+#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/11/13 17:38:50 by apouchet         ###   ########.fr        #
+#    Updated: 2019/11/15 15:05:33 by apouchet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,7 @@ LIBFTINCLUDES		=	./libftprintf/include/
 FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 #FRACT_FLAGS = -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit
 OPENGL_FLAGS = -L ~/.brew/lib -lglfw -lglew
-#OPENGL_FLAGS = -L /usr/local/Cellar/ -lglfw -lglew
-#OPENGL_FLAGS = -lglew -lsdl2 
-# OPENGL_FLAGS = -L /usr/local/lib -lglfw -lglew -lsdl2
+#OPENGL_FLAGS = -lglew -lglfw 
 
 CC = gcc
 
