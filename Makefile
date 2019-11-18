@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apouchet <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: floblanc <floblanc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/21 10:08:34 by maginist          #+#    #+#              #
-#    Updated: 2019/11/15 15:05:33 by apouchet         ###   ########.fr        #
+#    Updated: 2019/11/18 15:22:25 by floblanc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,27 +104,18 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC)
 	@$(CC) $(CFLAGS) -Wno-deprecated-declarations -I $(LIBFTINCLUDES) -I $(INC_PATH) -I $(INC_BREW) -c $< -o $@
 
 app : all
-	mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
-	cp -R $(HUD) "./$(NAME).app/Contents/Resources/$(HUD)"
-	cp -R $(SHADER) "./$(NAME).app/Contents/Resources/$(SHADER)"
-	cp app/fract.icns	"./$(NAME).app/Contents/Resources/"
-	cp app/PkgInfo	"./$(NAME).app/Contents/"
-	cp app/Info.plist "./$(NAME).app/Contents/"
-	sed -e "s/NAME/$(NAME)/g" -i "" "./$(NAME).app/Contents/Info.plist"
-	cp $(NAME) "./$(NAME).app/Contents/MacOS/$(NAME)"
+	@mkdir -p "./$(NAME).app"/Contents/{MacOS,Resources}
+	@cp -R $(HUD) "./$(NAME).app/Contents/Resources/$(HUD)"
+	@cp -R $(SHADER) "./$(NAME).app/Contents/Resources/$(SHADER)"
+	@cp app/fract.icns	"./$(NAME).app/Contents/Resources/"
+	@cp app/PkgInfo	"./$(NAME).app/Contents/"
+	@cp app/Info.plist "./$(NAME).app/Contents/"
+	@cp $(NAME) "./$(NAME).app/Contents/MacOS/$(NAME)"
+	@echo "$(_GREEN)[ APP DONE ]$(_END)"
 
 app_clean :
-	rm -rf "./$(NAME).app/"
+	@rm -rf "./$(NAME).app/"
+	@echo "$(_BLUE)======< CLEAN APP DONE >======$(_END)"
 
 app_re : app_clean app
-
-
-# opengl compilation:
-# gcc -I ~/.brew/include/ -L/Users/apouchet/.brew/lib -lglfw -lglew -framework AppKit -framework OpenGl opengl.c ft_shader_opengl.c file.c ft_control_gl.c
-
-# gcc sdl.c -lsdl2 libftprintf/libprintf.a -framework Opengl -framework AppKit -lglew -I ~/.brew/include -Wno-deprecated-declarations
-
-#  /Users/AntoinePouchet/Desktop/Project/fract-ol/build/fractol.app/Contents/MacOS/fractol
-# gcc -I ./include -I ./libftprintf/include -I /usr/local/include -L /usr/local/lib/ mlx/libmlx.a -framework OpenGL -framework AppKit -L /usr/local/Cellar/ -lglfw -lglew -Wall -Werror -Wextra -o test  ./src/main.c  ./src/ft_mandelbrot.c  ./src/ft_zoom.c  ./src/key.c  ./src/mouse.c  ./src/parsing.c  ./src/opengl.c  ./src/file.c  ./src/ft_control_gl.c ./src/ft_shader_opengl.c ./src/ft_hud.c  ./src/ft_screenshot.c ./libftprintf/libprintf.a
-
 
