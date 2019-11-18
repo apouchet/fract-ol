@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:34:53 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/13 16:50:59 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:06:14 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct		s_gldata
 	double			step;
 	int				nb_zoom;
 	int				fractal;
-	unsigned char	*hud;
 	int				exit;
 	int				info;
 }					t_gldata;

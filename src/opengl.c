@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:31:44 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/13 18:05:08 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:17:02 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int			main_opengl(t_fract *fract)
 	fract->c_r = data.c_r;
 	fract->c_i = data.c_i;
 	fract->fract = data.fractal;
+	glfwDestroyWindow(gl.w);
 	glfwTerminate();
 	return (data.exit);
 }
