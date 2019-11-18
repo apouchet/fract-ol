@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:35:57 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/13 16:37:04 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:36:17 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 static int	ft_check_opti(t_fract *f, int x, int y, int type)
 {
+	int sl;
+
+	sl = f->p.sl;
 	if (type == 0)
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
-				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * (y - 1) + x]
-				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * (y + 1) + x]
-				&& f->img[f->p.sl * y + x - 1] == f->img[f->p.sl * y + x + 1]);
+				&& f->img[sl * y + x - 1] == f->img[sl * (y - 1) + x]
+				&& f->img[sl * y + x - 1] == f->img[sl * (y + 1) + x]
+				&& f->img[sl * y + x - 1] == f->img[sl * y + x + 1]);
 	else if (type == 1)
 		return (x != 0 && y != 0 && x != FENETRE_X - 1 && y != FENETRE_Y - 1
-				&& f->img[f->p.sl * (y - 1) + x - 1]
-				== f->img[f->p.sl * (y - 1) + x + 1]
-				&& f->img[f->p.sl * (y - 1) + x - 1]
-				== f->img[f->p.sl * (y + 1) + x + 1]
-				&& f->img[f->p.sl * (y - 1) + x - 1]
-				== f->img[f->p.sl * (y + 1) + x - 1]);
+				&& f->img[sl * (y - 1) + x - 1] == f->img[sl * (y - 1) + x + 1]
+				&& f->img[sl * (y - 1) + x - 1] == f->img[sl * (y + 1) + x + 1]
+				&& f->img[sl * (y - 1) + x - 1]
+				== f->img[sl * (y + 1) + x - 1]);
 	else if (type == 2)
 		return (x != 0 && y != 0 && x < FENETRE_X - 2 && y < FENETRE_Y - 2
-				&& f->img[f->p.sl * (y - 2) + x - 2]
-				== f->img[f->p.sl * (y - 2) + x + 2]
-				&& f->img[f->p.sl * (y - 2) + x - 2]
-				== f->img[f->p.sl * (y + 2) + x + 2]
-				&& f->img[f->p.sl * (y - 2) + x - 2]
-				== f->img[f->p.sl * (y + 2) + x - 2]);
-	return (x != 0 && y != 0 && x < FENETRE_X - 2 && y < FENETRE_Y - 2
-			&& f->img[f->p.sl * y + x - 2] == f->img[f->p.sl * (y - 2) + x]
-			&& f->img[f->p.sl * y + x - 2] == f->img[f->p.sl * (y + 2) + x]
-			&& f->img[f->p.sl * y + x - 2] == f->img[f->p.sl * y + x + 2]);
+				&& f->img[sl * (y - 2) + x - 2] == f->img[sl * (y - 2) + x + 2]
+				&& f->img[sl * (y - 2) + x - 2] == f->img[sl * (y + 2) + x + 2]
+				&& f->img[sl * (y - 2) + x - 2]
+				== f->img[sl * (y + 2) + x - 2]);
+	else
+		return (x != 0 && y != 0 && x < FENETRE_X - 2 && y < FENETRE_Y - 2
+				&& f->img[sl * y + x - 2] == f->img[sl * (y - 2) + x]
+				&& f->img[sl * y + x - 2] == f->img[sl * (y + 2) + x]
+				&& f->img[sl * y + x - 2] == f->img[sl * y + x + 2]);
 }
 
 static void	ft_mdb_julia_over_opti2(t_fract *f)
