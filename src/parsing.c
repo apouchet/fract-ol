@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apouchet <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 12:24:48 by floblanc          #+#    #+#             */
-/*   Updated: 2019/11/15 15:04:56 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:05:57 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ int		parsing(t_fract *fract, int ac, char **av)
 			return (0);
 	}
 	fract->fract--;
-	return (1);
+	return (fract->fract >= 0 ? 1 : 0);
 }
