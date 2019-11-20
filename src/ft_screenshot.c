@@ -6,7 +6,7 @@
 /*   By: apouchet <apouchet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:13:00 by apouchet          #+#    #+#             */
-/*   Updated: 2019/11/13 16:25:45 by apouchet         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:03:35 by apouchet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	ft_init_screenshot(t_tga *tga, t_fract *fract, char **name)
 	tga->height = FENETRE_Y;
 	if (!(*name = ft_create_path(SCREENSHOT, ".tga", &ctime(&curtime)[4], 0)))
 	{
-		printf("fail to malloc for screenshot\n");
+		ft_printf("fail to malloc for screenshot\n");
 		return ;
 	}
 }
